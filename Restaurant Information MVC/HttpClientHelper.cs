@@ -5,13 +5,14 @@ using System.Web;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
+
 namespace Restaurant_Information_MVC
 {
     public class HttpClientHelper
     {
         public static string Seng(string methed,string apimethed,string JsonStr)
         {
-            Uri uri = new Uri("");
+            Uri uri = new Uri("http://localhost:53169/");
             HttpClient client = new HttpClient();
             client.BaseAddress = uri;
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
