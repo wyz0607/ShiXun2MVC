@@ -15,11 +15,11 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         public ActionResult ShowComment()
         {
-        
+       
             return View();
         }
         /// <summary>
-        /// 显示单个用户信息
+        /// 登录信息
         /// </summary>
         /// <returns></returns>
         public ActionResult GetLoginUser()
@@ -43,6 +43,21 @@ namespace Restaurant_Information_MVC.Controllers
            
             return View();
         }
-      
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+      public ActionResult GetOneUser()
+        {
+            return View();
+        }
+        public ActionResult GetOneComment()
+        {
+            return View();
+        }
+        public ActionResult AddGood()
+        {
+            return View();
+        }
     }
 }
