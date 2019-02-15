@@ -13,12 +13,6 @@ namespace Restaurant_Information_MVC.Controllers
         // GET: Reception
         public ActionResult ShowOrder()
         {
-            string json=HttpClientHelper.Seng("get", "api/Reception/ShowOrder",null);
-            return View();
-        }
-
-        public ActionResult ShowOrder()
-        {
             return View();
         }
 
