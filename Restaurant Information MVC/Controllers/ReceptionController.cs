@@ -12,7 +12,8 @@ namespace Restaurant_Information_MVC.Controllers
     {
         // GET: Reception
         public ActionResult ShowOrder()
-        {
+        { 
+
             return View();
         }
 
