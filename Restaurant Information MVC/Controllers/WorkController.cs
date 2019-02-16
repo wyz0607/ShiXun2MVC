@@ -59,5 +59,42 @@ namespace Restaurant_Information_MVC.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 获取所有用户信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowUser()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 修改用户信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UptUser()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 删除用户信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DelUser()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 添加支出
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddPayment()
+        {
+            return View();
+        }
+
+       
     }
 }
