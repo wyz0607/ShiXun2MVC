@@ -67,14 +67,6 @@ namespace Restaurant_Information_MVC.Controllers
         {
             return View();
         }
-        /// <summary>
-        /// 注册用户
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AddUser()
-        {
-            return View();
-        }
 
         /// <summary>
         /// 修改用户信息
@@ -90,51 +82,6 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult DelUser()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 获取单个用户信息
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult GetOneUser()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 登录账号
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult GetLoginUser()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 获取所有评论信息
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult ShowComment()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 审核评论信息
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult UptComment()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 获取单个评论信息
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult GetOneComment()
         {
             return View();
         }
