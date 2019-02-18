@@ -1,0 +1,35 @@
+﻿@model IList<Restaurant_Information_MVC.Models.BillViewModel>
+@{
+    ViewBag.Title = "ShowBill";
+}
+
+<h2>账目管理</h2>
+@using (Html.BeginForm())
+{
+    <span>开始时间：</span> <input type="date"  name="begin">
+    <span>结束时间：</span> <input type="date" name="end"/>
+    <span>客户姓名：</span><input name="name" type="text"/>
+    <input id="Button1" type="submit" value="查询" />
+}
+
+<table>
+    <tr>
+        <th>账单号</th>
+        <th>支付时间</th>
+        <th>客户名称</th>
+        <th>支付方式</th>
+        <th>金额</th>
+        <th>收款账户</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.BillID</td>
+            <td>@item.PaymentTime</td>
+            <td>@item.UserName</td>
+            <td>@item.PaymentWay</td>
+            <td>@item.BillMoney</td>
+            <td>@item.BillAccount</td>
+        </tr>
+    }
+</table>
