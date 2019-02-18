@@ -19,6 +19,20 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Index(string Name, string Password)
         {
             var result= HttpClientHelper.Seng("get","api/Login/Login?UserName="+Name+"&Pwd="+Password+"",null);
+            if (result.Equals("1"))
+            {
+                Session["UserName"] = Name;
+                return View("Show");
+            }
+            else
+            {
+                return Content("账户或密码错误");
+            }
+            
+        }
+
+        public ActionResult Show()
+        {
             return View();
         }
     }
