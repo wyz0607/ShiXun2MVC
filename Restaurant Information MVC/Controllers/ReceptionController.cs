@@ -3,116 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Restaurant_Information_MVC;
+using Newtonsoft.Json;
+using Restaurant_Information_MVC.Models;
 
 namespace Restaurant_Information_MVC.Controllers
 {
     public class ReceptionController : Controller
     {
         // GET: Reception
-        public ActionResult Index()
+        public ActionResult ShowOrder(int OrderId, int pageIndex=1,int pageSize=5)
         {
-            return View();
+            string json = HttpClientHelper.Seng("get", "api/Reception/ShowOrder", null);
+            return View(JsonConvert.DeserializeObject<List<OrderViewModel>>(json).Skip((pageIndex-1)*pageSize).Take(pageSize));
+        }                    
+
+        public ActionResult ShowFoodSelection(int OrderId,int pageIndex=1,int pageSize=5)
+        {
+            string json = HttpClientHelper.Seng("get", "api/Reception/ShowFoodSelection", null);
+            return View(JsonConvert.DeserializeObject<List<FoodSelectionViewModel>>(json).Skip((pageIndex - 1) * pageSize).Take(pageSize));
         }
 
-        public ActionResult ShowOrder()
+        public ActionResult ShowWaste(int WasteId,int pageIndex=1,int pageSize=5)
         {
-            return View();
-        }
-
-        public ActionResult AddOrder()
-        {
-            return View();
-        }
-
-        public ActionResult UptOrder()
-        {
-            return View();
-        }
-
-        public ActionResult DelOrder()
-        {
-            return View();
-        }
-
-        public ActionResult GetOneOrder()
-        {
-            return View();
-        }
-
-        public ActionResult ShowFoodSelection()
-        {
-            return View();
-        }
-
-        public ActionResult AddFoodSelection()
-        {
-            return View();
-        }
-
-        public ActionResult UptFoodSelection()
-        {
-            return View();
-        }
-
-        public ActionResult DelFoodSelection()
-        {
-            return View();
-        }
-
-        public ActionResult GetOneFoodSelection()
-        {
-            return View();
-        }
-
-        public ActionResult AddBill()
-        {
-            return View();
-        }
-
-        public ActionResult ShowWaste()
-        {
-            return View();
-        }
-
-        public ActionResult UptWaste()
-        {
-            return View();
-        }
-
-        public ActionResult AddWaste()
-        {
-            return View();
-        }
-
-        public ActionResult ShowDishes()
-        {
-            return View();
-        }
-
-        public ActionResult AddDishes()
-        {
-            return View();
-        }
-
-        public ActionResult UptDises()
-        {
-            return View();
-        }
-
-        public ActionResult DelDishes()
-        {
-            return View();
-        }
-
-        public ActionResult GetOneDishes()
-        {
-            return View();
-        }
-
-        public ActionResult AddComment()
-        {
-            return View();
-        }
+            string json = HttpClientHelper.Seng("get", "api/Reception/ShowWaste", null);
+            return View(JsonConvert.DeserializeObject<List<WasteViewModel>>(json).Skip((pageIndex - 1) * pageSize).Take(pageSize));
+        }   
 
     }
 }
