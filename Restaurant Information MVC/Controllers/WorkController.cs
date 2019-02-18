@@ -16,22 +16,29 @@ namespace Restaurant_Information_MVC.Controllers
         /// 显示所有的评论
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShowComment(int pageindex=1)
+        public ActionResult ShowComment(int pageindex = 1, int pagesize = 2)
         {
-            var str = HttpClientHelper.Seng("get", "api/WorkApi/Comment", null);
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
             List<CommentViewModel> list = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
-            var list1 = from s in list
-                        select new CommentViewModel
-                        {
-                            OrderID = s.OrderID,
-                            CommentId = s.CommentId,
-                            Comments = s.Comments,
-                            ReviewState = s.ReviewState=0
-                        };
+            //var list1 = from s in list
+            //            select new CommentViewModel
+            //            {
+            //                OrderID = s.OrderID,
+            //                MenuID=s.MenuID,
+            //                CommentId = s.CommentId,
+            //                Comments = s.Comments,
+            //                ReviewState = s.ReviewState
+            //            };
+
+            //List<CommentViewModel> ce = new List<CommentViewModel>(){ new CommentViewModel{ CommentId=1,Comments="好样的",MenuID=1,OrderID=1,ReviewState=0},
+            //     new CommentViewModel{ CommentId=2,Comments="好的",MenuID=2,OrderID=2,ReviewState=1},
+            //     new CommentViewModel{ CommentId=3,Comments="bu好样的",MenuID=3,OrderID=3,ReviewState=0} };
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = list.Count;
-            ViewBag.totalpage = (Math.Floor((list1.Count() * 1.0) / 5)) + 1;
-            return View(list1.Skip((pageindex - 1) * 5).Take(5).ToList());
+            ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 2)) + 1;
+
+            return View(list.Skip((pageindex - 1) * 2).Take(2).ToList());
+            
            
         }
         /// <summary>
@@ -46,9 +53,26 @@ namespace Restaurant_Information_MVC.Controllers
         /// 审核评论
         /// </summary>
         /// <returns></returns>
-        public ActionResult UptComment()
+        [HttpGet]
+        public ActionResult UptComment(int id)
         {
-            return View();
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
+            CommentViewModel list = JsonConvert.DeserializeObject<List<CommentViewModel>>(str).Where(m => m.CommentId == id).FirstOrDefault();
+            return View(list);
+        }
+        [HttpPost]
+        public ActionResult UptComment(CommentViewModel comment)
+        {
+            var str = JsonConvert.SerializeObject(comment);
+            string jsonstr = HttpClientHelper.Seng("put", "api/WorkApi/UptComment", str);
+            if(jsonstr.Contains("成功"))
+            {
+                return Content("操作成功");
+            }
+            else
+            {
+                return Content("操作失败");
+            }
         }
         /// <summary>
         /// 修改密码

@@ -1,0 +1,128 @@
+﻿@model List<Restaurant_Information_MVC.Models.CommentViewModel>
+@using Restaurant_Information_MVC.Controllers
+@{
+    ViewBag.Title = "ShowComment";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<h2>显示所有的评论</h2>
+<span>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</span>
+@foreach (var item in Model)
+{
+    <div style="width:200px;height:200px;border:1px;">
+        <p>
+
+            <span> @item.OrderID</span>
+        </p>
+       <div style="width:200px;height:100px;">
+           @item.Comments
+
+       </div>
+       <p>
+           <label id="state">
+               @{Stateinfo s = (Stateinfo)item.ReviewState;}
+               @s
+           </label>
+           @if (s == Stateinfo.审核通过)
+           {
+
+           }
+           else if (s == Stateinfo.驳回)
+           {
+
+           }
+           else
+           {
+               <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptComment?id=@item.CommentId'">审核</button>
+
+           }
+       </p>
+    </div>
+}
+    <p>
+        <span>
+            <span>当前第</span>
+            <span id="currentindex">@ViewBag.currentindex</span>
+            <span>页，总共</span>
+            <span id="totalpage"></span>
+            <span>页</span>
+
+        </span>
+        <button class="layui-btn" onclick="BtnUp()">
+            <i class="layui-icon">上一页</i>
+        </button>
+        <button class="layui-btn" onclick="BtnDown()">
+            <i class="layui-icon">下一页</i>
+        </button>
+
+    </p>
+<script>
+    $(function () {
+        $("#totalpage").text(Math.floor((Number($("#totaldata").text()) / 2)) + 1);
+    })
+    function BtnUp() {
+        if ($("#currentindex").text() != 1) {
+            location.href = "/Work/ShowComment?pageindex=" + Number(Number($("#currentindex").text()) - 1);
+        }
+        else {
+            layer.alert('已经是首页了');
+        }
+    }
+    function BtnDown() {
+        if ($("#currentindex").text() != $("#totalpage").text()) {
+            location.href = "/Work/ShowComment?pageindex=" + Number(Number($("#currentindex").text()) + 1);
+        }
+        else {
+            layer.alert('已经是尾页了');
+        }
+    }
+    function Tong(id) {
+        var o = new Object();
+       
+            $.ajax({
+                url: "/Work/UptComment/id",
+                success: function (data) {
+                    o = data
+      
+                }
+            })
+        o.ReviewState = 1;
+        confirm("确认审核通过？")
+        {
+            $.ajax({
+                url: "/Work/UptComment",
+                data: { comment: o },
+                type: "post",
+                success: function (data) {
+                    alert(data);
+                }
+            })
+        }
+
+    }
+
+
+    function Bo(id) {
+        var o = new Object();
+        confirm("确认驳回？")
+        {
+            $.ajax({
+                url: "/Work/UptComment/id",
+                success: function (data) {
+                    o = data;
+                }
+            })
+            o.ReviewState = 2;
+            $.ajax({
+                url: "/Work/UptComment",
+                data: { comment: o },
+                type: "post",
+                success: function (data) {
+                    alert(data);
+                }
+            })
+        }
+
+    }
+</script>
+
+

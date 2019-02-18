@@ -5,8 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Restaurant_Information_MVC.Models;
 using Newtonsoft.Json;
-
-
+using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
@@ -26,7 +25,6 @@ namespace Restaurant_Information_MVC.Controllers
         //添加
         public ActionResult AddMenu()
         {
-            //分类下拉列表
             return View();
         }
         [HttpPost]

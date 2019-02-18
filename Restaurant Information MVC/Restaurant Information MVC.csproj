@@ -278,6 +278,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Img.PNG" />
     <Content Include="i\app-icon72x72%402x.png" />
     <Content Include="i\examples\admin-chrome.png" />
     <Content Include="i\examples\admin-firefox.png" />
@@ -326,7 +327,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="css\app.less" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\Restaurant Information MVC.csproj.CopyComplete" />
+    <Content Include="obj\Debug\Restaurant Information MVC.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\Restaurant Information MVC.csprojAssemblyReference.cache" />
+    <Content Include="obj\Release\Restaurant Information MVC.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Release\Restaurant Information MVC.csprojAssemblyReference.cache" />
     <Content Include="bin\ApplicationInsights.config" />
     <Content Include="bin\Restaurant Information MVC.dll.config" />
     <Content Include="bin\roslyn\csc.exe.config" />
@@ -339,10 +345,7 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="obj\Debug\Restaurant Information MVC.csproj.CopyComplete" />
-    <Content Include="obj\Debug\Restaurant Information MVC.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\Restaurant Information MVC.csprojAssemblyReference.cache" />
+    <Content Include="css\app.less" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -370,16 +373,14 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Kitchen\ShowMenu.cshtml" />
-    <Content Include="Views\Kitchen\AddMenu.cshtml" />
     <Content Include="Views\Kitchen\GetOneMenu.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Login\Show.cshtml" />
-    <Content Include="Views\Finance\ShowBill.cshtml" />
+    <Content Include="Views\Kitchen\AddMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\Finance\" />
     <Folder Include="Views\Reception\" />
     <Folder Include="Views\Work\" />
   </ItemGroup>
