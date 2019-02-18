@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Restaurant_Information_MVC.Models.KitchenViewModel>
+
+@{
+    ViewBag.Title = "ShowMenu";
+}
+
+<h2>ShowMenu</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuPhoto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuIntroduce)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuIngredients)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuCuisine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuKind)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SalesVolume)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuPhoto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuIntroduce)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuIngredients)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuCuisine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuKind)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalesVolume)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
