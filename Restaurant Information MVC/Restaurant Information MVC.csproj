@@ -374,12 +374,12 @@
     <Content Include="Views\Kitchen\GetOneMenu.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Show.cshtml" />
+    <Content Include="Views\Finance\ShowBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\Finance\" />
     <Folder Include="Views\Reception\" />
     <Folder Include="Views\Work\" />
   </ItemGroup>
