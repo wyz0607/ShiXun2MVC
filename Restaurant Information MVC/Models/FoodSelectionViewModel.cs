@@ -11,5 +11,8 @@ namespace Restaurant_Information_MVC.Models
         public int OrderID { get; set; }
         public int MenuID { get; set; }
         public int Amount { get; set; }
+
+        public MenuViewModel Menu { get; set; }
+        public OrderViewModel Order { get; set; }
     }
 }
