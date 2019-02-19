@@ -377,6 +377,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Kitchen\AddMenu.cshtml" />
     <Content Include="Views\Finance\ShowBill.cshtml" />
+    <Content Include="Views\Finance\ShowCost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

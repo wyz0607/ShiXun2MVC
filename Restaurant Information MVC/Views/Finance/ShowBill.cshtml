@@ -24,7 +24,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.BillID</td>
+            <td>@item.BillID.ToString().PadLeft(4,'0')</td>
             <td>@item.PaymentTime</td>
             <td>@item.UserName</td>
             <td>@item.PaymentWay</td>
