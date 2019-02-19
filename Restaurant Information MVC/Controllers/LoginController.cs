@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Restaurant_Information_MVC.Models;
+using Newtonsoft.Json;
 namespace Restaurant_Information_MVC.Controllers
 {
     public class LoginController : Controller
@@ -19,9 +20,11 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Index(string Name, string Password)
         {
             var result= HttpClientHelper.Seng("get","api/Login/Login?UserName="+Name+"&Pwd="+Password+"",null);
+            UserInfo user = JsonConvert.DeserializeObject<List<UserInfo>>(result).FirstOrDefault();
             if (result.Equals("1"))
             {
                 Session["UserName"] = Name;
+                Session["UserID"] = user.UserID;
                 return View("Show");
             }
             else

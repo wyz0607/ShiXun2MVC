@@ -4,91 +4,88 @@
     ViewBag.Title = "UptComment";
 }
 <script src="~/Scripts/jquery-3.3.1.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layui/layui.js"></script>
 <h2>审核页面</h2>
 
 <div>
-    <h4>CommentViewModel</h4>
-    
+    <i class="layui-icon layui-icon-return" style="font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowComment'"></i>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayName("评论编号")
-        </dt>
+    <input id="menu" type="hidden" value="@Model.MenuID" />
+    <table class="table-hover" style=" width:500px;height:350px;margin-left:400px;">
+        <tr>
+            <td>@Html.DisplayName("评论编号")</td>
+            <td><label id="commentid">@Model.CommentId</label></td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayName("订单号")</td>
+            <td><label id="orderid">@Model.OrderID</label></td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayName("评论信息")</td>
+            <td><label id="comments">@Model.Comments</label></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Tong(@Model.CommentId)" />
+                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
+            </td>
+        </tr>
+    </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.CommentId)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("订单号")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderID)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("评论信息")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
-        </dd>
-
-        <dt>
-
-        </dt>
-        <dd>
-            <input id="Button1" type="button" value="审核通过" onclick="Tong(@Model.CommentId)" />
-            <input id="Button1" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("返回列表", "ShowComment")
-</p>
+
 <script>
     function Tong(id) {
         var o = {
             CommentId: id,
-            MenuID:@Model.MenuID,
-            OrderID:@Model.OrderID,
-            Comments:@Model.Comments,
+            MenuID: $("#menu").val(),
+            OrderID: $("#orderid").text(),
+            Comments: $("#comments").text(),
             ReviewState:1
         };
-        confirm("确认审核通过？")
-        {
-            $.ajax({
-                url: "/Work/UptComment",
-                data: { comment: o },
-                type: "post",
-                success: function (data) {
-                    alert(data);
-                    location.href = '/Work/ShowComment';
-                }
+        layui.use('layer', function () {
+            layer.confirm('确认审核通过？', {
+                btn: ['确定', '取消']
+            }, function (index, layero) {
+                $.ajax({
+                    url: "/Work/UptComment",
+                    data: { comment: o },
+                    type: "post",
+                    success: function (data) {
+                        layer.alert(data);
+                        location.href = '/Work/ShowComment';
+                    }
+                })
             })
-        }
+            
+        })
+        
     }
      function Bo(id) {
         var o = {
             CommentId: id,
-            MenuID:@Model.MenuID,
-            OrderID:@Model.OrderID,
-            Comments:@Model.Comments,
+            MenuID: $("#menu").val(),
+            OrderID: $("#orderid").text(),
+            Comments: $("#comments").text(),
             ReviewState:2
          };
-         confirm("确认审核驳回？")
-         {
-             $.ajax({
-                 url: "/Work/UptComment",
-                 data: { comment: o },
-                 type: "post",
-                 success: function (data) {
-                     alert(data);
-                     location.href = '/Work/ShowComment';
-                 }
+         layui.use('layer', function () {
+             layer.confirm('确认审核驳回？', {
+                 btn: ['确定', '取消']
+             }, function (index, layero) {
+                 $.ajax({
+                     url: "/Work/UptComment",
+                     data: { comment: o },
+                     type: "post",
+                     success: function (data) {
+                         layer.alert(data);
+                         location.href = '/Work/ShowComment';
+                     }
+                 })
              })
-         }
+
+         })
     }
 </script>

@@ -86,15 +86,17 @@
         <div class="nav-navicon admin-main admin-sidebar">
 
 
-            <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;"> 欢迎系统管理员:@Session["UserName"]</div>
+            <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;"> 欢迎系统管理员:@Session["UserName"]
+                <input id="Hidden1" type="hidden" value="@Session["UserID"]"/>
+            </div>
             <div class="sideMenu">
-                <h3 class="am-icon-flag"><em></em> <a href="#">前台管理</a></h3>
+                <h3 class="am-icon-cart-plus"><em></em> <a href="#">前台管理</a></h3>
                 <ul>
                     <li><a href="">订餐管理</a></li>
                     <li><a href="">点餐管理</a></li>
                     <li><a href="">废单管理</a></li>
                 </ul>
-                <h3 class="am-icon-cart-plus"><em></em> <a href="#"> 办公管理</a></h3>
+                <h3  class="am-icon-flag"><em></em> <a href="#"> 办公管理</a></h3>
                 <ul>
                     <li><a href="">用户评论</a></li>
                     <li><a href="">用户管理</a></li>

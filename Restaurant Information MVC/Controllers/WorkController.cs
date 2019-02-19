@@ -78,10 +78,29 @@ namespace Restaurant_Information_MVC.Controllers
         /// 修改密码
         /// </summary>
         /// <returns></returns>
-        public ActionResult Uptuser()
+        [HttpGet]
+        public ActionResult Uptuser(int id=1)
         {
-           
-            return View();
+            //id =Convert.ToInt32(Session["UserID"]);
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetOneUser/?userid="+id, null);
+            UserInfo user = JsonConvert.DeserializeObject<UserInfo>(str);
+
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult Uptuser(UserInfo userInfo)
+        {
+            var str = JsonConvert.SerializeObject(userInfo);
+            string jsonstr = HttpClientHelper.Seng("put", "api/WorkApi/Uptuser", str);
+            if(jsonstr.Contains("成功"))
+            {
+                return Content("修改成功");
+            }
+            else
+            {
+                return Content("修改失败");
+            }
+   
         }
         /// <summary>
         /// 用户注册
