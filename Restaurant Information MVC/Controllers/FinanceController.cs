@@ -46,8 +46,8 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult ShowBill()
         {
             bList = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
-            blist = bList;
-            return View(bList);
+            blist = bList.OrderByDescending(m => m.BillID).ToList();
+            return View(blist);
         }
         /// <summary>
         /// 查询
