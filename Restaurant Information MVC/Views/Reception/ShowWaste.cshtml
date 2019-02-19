@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Restaurant_Information_MVC.Models.WasteViewModel>
+@{
+    ViewBag.Title = "ShowWaste";
+}
+
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layui/layui.js"></script>
+
+<h2>ShowWaste</h2>
+
+<form action="/Reception/ShowWaste" method="get">
+    <input type="hidden" id="pCount" value="@ViewBag.pCount" />
+    <input type="hidden" id="pSize" value="@ViewBag.pSize" />
+    <input type="hidden" id="pIndex" value="@ViewBag.pIndex" />
+    <input type="text" placeholder="请输入您要查询的废单号" name="WasteId" style="width:240px;height:37px;float:left;margin-left:500px" value="" />
+    <input type="submit" class="layui-btn" style="float:left" value="查询" />
+</form>
+<table id="tb" style="margin-top:60px" class="layui-table">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>废单号</th>
+            <th>时间</th>
+            <th>客户名称</th>
+            <th>退款金额</th>
+            <th>退款金额</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody Name="tr1">
+            <tr>
+                <td>@item.WasteID</td>
+                <td>@item.WasteTime</td>
+                <td>@item.UserName</td>
+                <td>@item.WasteMoney</td>
+                <td>@item.WasteCause</td>
+            </tr>
+        </tbody>
+    }
+</table>
+<div id="test1" style="margin-left:500px"></div>
+<script>
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            , count: $("#pCount").val() //数据总数，从服务端得到
+            , limit: $("#pSize").val() //每页显示条数
+            , prev: "上一页"
+            , next: "下一页"
+            , hash: "?pageIndex"
+            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            , jump: function (obj, first) {
+                if (!first) {
+                    //alert('第 ' + obj.curr + ' 页');
+                    //location.href = "/Reception/ShowOrder?pageIndex=" + obj.curr
+
+                    $.ajax({
+                        url: "/Reception/Waste?pageIndex=" + obj.curr,
+                        dataType: "json",
+                        success: function (data) {
+                            var tbody = '';
+                            for (var i in data) {
+                                tbody += ' <tbody Name="tr1">'
+                                    + ' <tr>'
+                                    + '<td>' + data[i].WasteID + '</td> '
+                                    + '<td>' + data[i].WasteTime + '</td>'
+                                    + '<td>' + data[i].UserName + '</td>'
+                                    + '<td>' + data[i].WasteMoney + '</td>'
+                                    + '<td>' + data[i].WasteCause + '</td>'
+                                    + '</tr>'
+                                    + '</tbody>';
+                            }
+                            $("[name=tr1]").remove();
+                            $("#tb").append(tbody);
+                        }
+                    })
+                }
+
+            }
+        });
+    });
+
+
+</script>
