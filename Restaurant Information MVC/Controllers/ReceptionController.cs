@@ -32,6 +32,7 @@ namespace Restaurant_Information_MVC.Controllers
             }
             else
             {
+                ViewBag.pCount = 1;
                 return View(order.Where(c=>c.OrderID==OrderId).ToList());
             }
             
@@ -65,6 +66,7 @@ namespace Restaurant_Information_MVC.Controllers
             }
             else
             {
+                ViewBag.pCount = 1;
                 return View(list.Where(c => c.OrderID == OrderId).ToList());
             }
         }
@@ -105,7 +107,7 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Waste(int WasteId = 0, int pageIndex = 1, int pageSize = 3)
         {
             ViewBag.pIndex = pageIndex;
-            string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWaste", null);
+            string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWastes", null);
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
             //List<WasteViewModel> wastes = new List<WasteViewModel>() {
             //    new WasteViewModel(){  WasteID=1,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
