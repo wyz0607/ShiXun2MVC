@@ -1,16 +1,18 @@
 ﻿@model Restaurant_Information_MVC.Models.KitchenViewModel
 
 @{
-    ViewBag.Title = "GetOneMenu";
+    ViewBag.Title = "UptMenu";
 }
 
-<h2>GetOneMenu</h2>
+
+<h2>UptMenu</h2>
 
 
-@using (Html.BeginForm())
+
+@using (Html.BeginForm("UptMenu", "Kitchen", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+    @*@Html.HiddenFor(model => model.MenuID)*@
     <div class="form-horizontal">
         <h4>KitchenViewModel</h4>
         <hr />
@@ -34,7 +36,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MenuPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MenuPhoto, new { htmlAttributes = new { @class = "form-control" } })
+                <img src="@Model.MenuPhoto" alt="Alternate Text" style="width:80px;height:80px;" />
+                <!--不选择新图片时 旧图片的路径再返还给Controller-->
+                @Html.HiddenFor(model => model.MenuPhoto)
+                <input id="File1" type="file" name="img" />
                 @Html.ValidationMessageFor(model => model.MenuPhoto, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -89,7 +94,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -99,6 +104,4 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
