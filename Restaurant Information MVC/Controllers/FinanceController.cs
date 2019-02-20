@@ -76,6 +76,31 @@ namespace Restaurant_Information_MVC.Controllers
             return View(bList);
         }
         /// <summary>
+        /// 收入消费查询视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowEarning()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 获取到今天的日期
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetDate()
+        {
+            string[] str = new string[0];
+            List<string> list;
+            string dt = DateTime.Now.ToString("dd");
+            for (int i = Convert.ToInt32(dt); i >0 ; i--)
+            {
+                list = str.ToList();
+                list.Add(i.ToString());
+                str = list.ToArray();
+            }
+            return str;
+        }
+        /// <summary>
         /// 审核账单
         /// </summary>
         /// <returns></returns>

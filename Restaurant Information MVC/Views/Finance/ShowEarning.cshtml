@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "ShowEarning";
+}
+
+<h2>收入消费查询</h2>
+
+<script src="~/Scripts/Chart.bundle.js"></script>
+<script src="~/Scripts/utils.js"></script>
+
+<style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+</style>
+
+<div id="container" style="width:60%;margin-left:300px">
+    <canvas id="canvas"></canvas>
+</div>
+
+<script>
+    var arr = [];
+    var Chartdata = [];
+    $.ajax({
+        url: "/Finance/GetDate",
+        dataType: "json",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+            for (var i in data) {
+                arr.push(i+"日");
+                //Chartdata.push(data[i].PresentMoney);
+            }
+        }
+    })
+    var color = Chart.helpers.color;
+    var barChartData = {
+        labels: arr,
+        datasets: [{
+            label: '本月度收入支出情况',
+            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: Chartdata
+        }]
+    };
+
+
+    window.onload = function () {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+
+
+    };
+</script>
