@@ -14,29 +14,41 @@
         -ms-user-select: none;
     }
 </style>
-
+<label style="margin-left:260px">单位：元</label>
 <div id="container" style="width:60%;margin-left:300px">
     <canvas id="canvas"></canvas>
 </div>
+<label style="margin-left:1330px">单位：日</label>
 <script>
     var arr = [];
     var Chartdata = [];
     $.ajax({
         url: "/Finance/GetDate",
-        dataType: "text",
+        contentType: "application/json",
+        dataType: "json",
         async: false,
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
-                arr.push(data[i] + '日');
-
+                arr.push(data[i]);
             }
         }
-    })
+    });
+    $.ajax({
+        url: "/Finance/GetDayIncome",
+        contentType: "application/json",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                Chartdata.push(data[i]);
+            }
+        }
+    });
     var color = Chart.helpers.color;
     var barChartData = {
         labels: arr,
         datasets: [{
-            label: '@DateTime.Now.ToString("yyyy年MM月")月度收入支出情况',
+            label: '@DateTime.Now.ToString("yyyy年MM月")月度收入情况',
             backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
