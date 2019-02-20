@@ -78,7 +78,7 @@ namespace Restaurant_Information_MVC.Controllers
             string str2 = HttpClientHelper.Seng("get","api/KitchensApi/ShowMenu",null);
             List<KitchenViewModel> list = JsonConvert.DeserializeObject<List<KitchenViewModel>>(str2);
             KitchenViewModel list1 = list.Where(c => c.MenuID == id).FirstOrDefault();
-            return View();
+            return View(list1);
         }
         [HttpPost]
         public ActionResult UptMenu(KitchenViewModel kit, HttpPostedFileBase img)
