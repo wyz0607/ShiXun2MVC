@@ -79,9 +79,9 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Uptuser(int id=1)
+        public ActionResult Uptuser(int id)
         {
-            //id =Convert.ToInt32(Session["UserID"]);
+            id =Convert.ToInt32(Response.Cookies["UserID"].Value);
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetOneUser/?userid="+id, null);
             UserInfo user = JsonConvert.DeserializeObject<UserInfo>(str);
 

@@ -24,7 +24,9 @@ namespace Restaurant_Information_MVC.Controllers
             if (result.Equals("1"))
             {
                 Session["UserName"] = Name;
-                Session["UserID"] = user.UserID;
+                Response.Cookies["UserID"].Value = $"{user.UserID}";
+
+              
                 return View("Show");
             }
             else
