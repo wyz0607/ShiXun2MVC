@@ -1,11 +1,11 @@
 ﻿@model Restaurant_Information_MVC.Models.CommentViewModel
-
+@using Restaurant_Information_MVC.Controllers
 @{
     ViewBag.Title = "UptComment";
 }
-<script src="~/Scripts/jquery-3.3.1.js"></script>
+@*<script src="~/Scripts/jquery-3.3.1.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
-<script src="~/layui/layui.js"></script>
+<script src="~/layui/layui.js"></script>*@
 <h2>审核页面</h2>
 
 <div>
@@ -14,22 +14,38 @@
     <input id="menu" type="hidden" value="@Model.MenuID" />
     <table class="table-hover" style=" width:500px;height:350px;margin-left:400px;">
         <tr>
-            <td>@Html.DisplayName("评论编号")</td>
+            <td>@Html.DisplayName("评论编号:")</td>
             <td><label id="commentid">@Model.CommentId</label></td>
         </tr>
         <tr>
-            <td>@Html.DisplayName("订单号")</td>
+            <td>@Html.DisplayName("订单号:")</td>
             <td><label id="orderid">@Model.OrderID</label></td>
         </tr>
         <tr>
-            <td>@Html.DisplayName("评论信息")</td>
+            <td>@Html.DisplayName("评论信息:")</td>
             <td><label id="comments">@Model.Comments</label></td>
         </tr>
         <tr>
             <td></td>
             <td>
-                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Tong(@Model.CommentId)" />
-                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
+                @{Stateinfo s = (Stateinfo)Model.ReviewState;}
+                @if (s == Stateinfo.审核通过)
+                {
+                    <b style="color:#60c336;margin-bottom:10px;">@s</b>
+
+                }
+                else if (s == Stateinfo.驳回)
+                {
+                    <b style="color:red;margin-bottom:10px;">@s</b>
+
+                }
+                else
+                {
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Tong(@Model.CommentId)" />
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
+
+                }
+                
             </td>
         </tr>
     </table>

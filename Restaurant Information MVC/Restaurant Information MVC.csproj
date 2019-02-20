@@ -611,14 +611,10 @@
     <Content Include="Views\Kitchen\ShowMenu.cshtml" />
     <Content Include="Views\Finance\ShowBill.cshtml" />
     <Content Include="Views\Finance\ShowCost.cshtml" />
-    <Content Include="Views\Work\Uptuser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\Finance\" />
-    <Folder Include="Views\Reception\" />
-    <Folder Include="Views\Work\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

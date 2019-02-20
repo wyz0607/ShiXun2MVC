@@ -3,18 +3,18 @@
 @{
     ViewBag.Title = "ShowComment";
 }
-<script src="~/Scripts/jquery-3.3.1.js"></script>
+@*<script src="~/Scripts/jquery-3.3.1.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
-<script src="~/layui/layui.js"></script>
-<h2>显示所有的评论</h2>
-<span>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</span>
+<script src="~/layui/layui.js"></script>*@
+<h1>显示所有的评论</h1>
+<h2 style="margin-left:40px;">总记录数<span id="totaldata">@ViewBag.totaldata</span>条</h2>
 @foreach (var item in Model)
 {
-    <div style="width:400px;height:200px;border:solid 1px;margin-left:20px;">
+    <div style="width:600px;height:200px;border:solid 1px;margin-left:80px;">
         <p>
             <span style="margin-left:70%; color:blue;float:right">订单号：@item.OrderID</span>
         </p>
-       <div style="width:80%;height:100px;margin-top:20px;">
+       <div style="width:80%;height:130px;margin-top:20px;">
            <h3><b>@item.Comments</b></h3>
            
 
@@ -22,19 +22,21 @@
        <p>
            <label id="state" style="margin-bottom:10px;">
                @{Stateinfo s = (Stateinfo)item.ReviewState;}
-    
+
            </label>
            @if (s == Stateinfo.审核通过)
            {
-               <i style="color:#60c336;margin-bottom:10px;">@s</i>
+               <b style="color:#60c336;float:left;margin-right:50px;">@s</b>
+               <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptComment?id=@item.CommentId'" style="float:right;">详情</button>
            }
            else if (s == Stateinfo.驳回)
            {
-               <i style="color:red;margin-bottom:10px;">@s</i>
+               <b style="color:red;margin-right:50px;">@s</b>
+               <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptComment?id=@item.CommentId'" style="float:right;">详情</button>
            }
            else
            {
-               <i style="color:#ceca37">@s</i>
+               <b style="color:#ceca37;margin-right:50px;">@s</b>
                <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptComment?id=@item.CommentId'" style="float:right;">审核</button>
 
            }
