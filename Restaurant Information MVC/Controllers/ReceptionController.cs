@@ -40,7 +40,7 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Order(int OrderId = 0, int pageIndex = 1, int pageSize = 3)
         {
             ViewBag.pIndex = pageIndex;
-            string json = HttpClientHelper.Seng("get", "api/Reception/ShowOrder", null);
+            string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
             //List<OrderViewModel> order = new List<OrderViewModel>() {
             //    new OrderViewModel{ OrderID=1,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
@@ -81,7 +81,7 @@ namespace Restaurant_Information_MVC.Controllers
         {
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
-            string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWastes", null);
+            string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWaste", null);
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
             //List<WasteViewModel> wastes = new List<WasteViewModel>() {
             //    new WasteViewModel(){  WasteID=1,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
