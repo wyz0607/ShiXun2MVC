@@ -16,9 +16,17 @@ namespace Restaurant_Information_MVC.Controllers
         
         [HttpGet]
         //显示
-        public ActionResult ShowMenu()
+        public ActionResult ShowMenu(int pageindex = 1)
         {
-            return View();
+            //显示菜品信息
+            string result = HttpClientHelper.Seng("get", "api/Kitchens/ShowMenu", null);
+            List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            ViewBag.currentindex = pageindex;
+            ViewBag.totaldata = kit.Count;
+            ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
+            return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
+
+         
         }
 
         [HttpGet]
@@ -40,7 +48,7 @@ namespace Restaurant_Information_MVC.Controllers
                 kit.MenuPhoto = "http://localhost:53169/Images/" + fileName;
             }
             string strJson = JsonConvert.SerializeObject(kit);
-            string result = HttpClientHelper.Seng("post", "api/Kitchen/AddMenu",strJson);
+            string result = HttpClientHelper.Seng("post", "api/Kitchens/AddMenu",strJson);
             if (result.Contains("成功"))
             {
                 return Redirect("/Kitchen/ShowMenu");
