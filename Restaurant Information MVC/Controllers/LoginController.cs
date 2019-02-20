@@ -20,11 +20,17 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Index(string Name, string Password)
         {
             var result= HttpClientHelper.Seng("get","api/Login/Login?UserName="+Name+"&Pwd="+Password+"",null);
-            UserInfo user = JsonConvert.DeserializeObject<List<UserInfo>>(result).FirstOrDefault();
+           
             if (result.Equals("1"))
             {
+                var str = HttpClientHelper.Seng("get", "api/Login/GetUser?Username=" + Name + "&Pwd=" + Password + "", null);
+
+                UserInfo user = JsonConvert.DeserializeObject<UserInfo>(str);
                 Session["UserName"] = Name;
                 Session["UserID"] = user.UserID;
+                Response.Cookies["UserID"].Value = $"{user.UserID}";
+
+              
                 return View("Show");
             }
             else

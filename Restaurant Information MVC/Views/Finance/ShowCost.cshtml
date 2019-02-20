@@ -2,16 +2,16 @@
 @{
     ViewBag.Title = "ShowCost";
 }
-
+<script src="~/layui/layui.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
 <h2>成本查询</h2>
 
 @using (Html.BeginForm())
 {
-    <span>菜式名称：</span>
-    <input id="Text1" type="text" name="name"/>
-    <input id="Submit1" type="submit" value="查询" />
+    <input id="Text1" type="text" placeholder="请输入菜式名称" style="width:240px;height:37px;float:left;margin-left:500px"  name="name"/>
+    <input id="Submit1" type="submit" class="layui-btn layui-btn-normal" value="查询" />
 }
-<table>
+<table class="layui-table">
     <tr>
         <th>商品编号</th>
         <th>菜式名称</th>

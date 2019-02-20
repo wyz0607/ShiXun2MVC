@@ -18,6 +18,9 @@
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/app.js"></script>
     <script src="~/js/amazeui.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
 </head>
 <body>
     <!--[if lte IE 9]><p class="browsehappy">升级你的浏览器吧！ <a href="http://se.360.cn/" target="_blank">升级浏览器</a>以获得更好的体验！</p><![endif]-->
@@ -86,31 +89,33 @@
         <div class="nav-navicon admin-main admin-sidebar">
 
 
-            <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;"> 欢迎系统管理员:@Session["UserName"]
-                <input id="Hidden1" type="hidden" value="@Session["UserID"]"/>
+            <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;">
+                欢迎系统管理员:@Session["UserName"]
+                <input id="Hidden1" type="hidden" value="@Response.Cookies["UserID"].Value" />
+                <input id="Hidden1" type="hidden" value="@Session["UserID"]" />
             </div>
             <div class="sideMenu">
-                <h3 class="am-icon-cart-plus"><em></em> <a href="#">前台管理</a></h3>
+                <h3 class="am-icon-cart-plus"><em></em> 前台管理</h3>
                 <ul>
-                    <li><a href="">订餐管理</a></li>
-                    <li><a href="">点餐管理</a></li>
-                    <li><a href="">废单管理</a></li>
+                    <li><a href="/Reception/ShowOrder">订餐管理</a></li>
+                    <li><a href="/Reception/ShowFoodSelection">点餐管理</a></li>
+                    <li><a href="/Reception/ShowWaste">废单管理</a></li>
                 </ul>
-                <h3  class="am-icon-flag"><em></em> <a href="#"> 办公管理</a></h3>
+                <h3  class="am-icon-flag"><em></em> 办公管理</h3>
                 <ul>
-                    <li><a href="">用户评论</a></li>
-                    <li><a href="">用户管理</a></li>
+                    <li><a href="/Work/ShowComment">用户评论</a></li>
+                    <li><a href="/Work/Uptuser">用户管理</a></li>
                 </ul>
-                <h3 class="am-icon-users"><em></em> <a href="#">财务管理</a></h3>
+                <h3 class="am-icon-users"><em></em>财务管理</h3>
                 <ul>
-                    <li><a href="">成本查询</a></li>
-                    <li><a href="">账目查询</a></li>
+                    <li><a href="/Finance/ShowCost">成本查询</a></li>
+                    <li><a href="/Finance/ShowBill">账目查询</a></li>
                     <li><a href="">收入消费查询</a></li>
                     <li><a href="">财务报表打印</a></li>
                 </ul>
-                <h3 class="am-icon-volume-up"><em></em> <a href="#">厨房管理</a></h3>
+                <h3 class="am-icon-volume-up"><em></em> 厨房管理</h3>
                 <ul>
-                    <li><a href="">菜品设置</a></li>
+                    <li><a href="/Kitchen/ShowMenu">菜品设置</a></li>
                 </ul>
                 <h3 class="am-icon-gears"><em></em> <a href="#">系统设置</a></h3>
                 <ul>
