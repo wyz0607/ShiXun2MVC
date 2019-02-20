@@ -59,13 +59,13 @@ namespace Restaurant_Information_MVC.Controllers
         [HttpPost]
         public ActionResult ShowBill(string begin,string end,string name)
         {
-            if (begin != null && end != null)
+            if (begin != "" && end != "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList();
-            }else if(begin ==null && end != null)
+            }else if(begin =="" && end != "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList();
-            }else if(begin !=null && end == null)
+            }else if(begin !="" && end == "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin)).ToList();
             }

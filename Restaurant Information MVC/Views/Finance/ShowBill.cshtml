@@ -2,17 +2,35 @@
 @{
     ViewBag.Title = "ShowBill";
 }
-
+<script src="~/layui/layui.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
 <h2>账目管理</h2>
 @using (Html.BeginForm())
 {
-    <span>开始时间：</span> <input type="date"  name="begin">
-    <span>结束时间：</span> <input type="date" name="end"/>
-    <span>客户姓名：</span><input name="name" type="text"/>
-    <input id="Button1" type="submit" value="查询" />
+<div style="margin-left:300px;">
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input class="layui-input" name="begin" id="test1" type="text" placeholder="开始时间">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input class="layui-input" name="end" id="test2" type="text" placeholder="结束时间">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input name="name" class="layui-input" placeholder="请输入客户名称" type="text">
+        </div>
+    </div>
+    <input id="Button1" type="submit" class="layui-btn layui-btn-normal" value="查询" />
+
+</div>
 }
 
-<table>
+<table class="layui-table">
     <tr>
         <th>账单号</th>
         <th>支付时间</th>
@@ -24,7 +42,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.BillID.ToString().PadLeft(4,'0')</td>
+            <td>@item.BillID.ToString().PadLeft(4, '0')</td>
             <td>@item.PaymentTime</td>
             <td>@item.UserName</td>
             <td>@item.PaymentWay</td>
@@ -33,3 +51,16 @@
         </tr>
     }
 </table>
+
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#test1'
+        });
+        laydate.render({
+            elem: '#test2'
+        });
+    })
+
+</script>
