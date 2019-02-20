@@ -4,7 +4,6 @@
 }
 
 <h2>收入消费查询</h2>
-
 <script src="~/Scripts/Chart.bundle.js"></script>
 <script src="~/Scripts/utils.js"></script>
 
@@ -19,19 +18,17 @@
 <div id="container" style="width:60%;margin-left:300px">
     <canvas id="canvas"></canvas>
 </div>
-
 <script>
     var arr = [];
     var Chartdata = [];
     $.ajax({
         url: "/Finance/GetDate",
-        dataType: "json",
-        contentType: "application/json",
+        dataType: "text",
         async: false,
         success: function (data) {
-            for (var i in data) {
-                arr.push(i+"日");
-                //Chartdata.push(data[i].PresentMoney);
+            for (var i = 0; i < data.length; i++) {
+                arr.push(data[i] + '日');
+
             }
         }
     })
@@ -39,7 +36,7 @@
     var barChartData = {
         labels: arr,
         datasets: [{
-            label: '本月度收入支出情况',
+            label: '@DateTime.Now.ToString("yyyy年MM月")月度收入支出情况',
             backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
@@ -64,7 +61,5 @@
                 }
             }
         });
-
-
     };
 </script>
