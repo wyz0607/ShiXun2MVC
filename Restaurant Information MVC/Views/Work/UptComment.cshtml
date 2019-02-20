@@ -3,9 +3,9 @@
 @{
     ViewBag.Title = "UptComment";
 }
-@*<script src="~/Scripts/jquery-3.3.1.js"></script>
+@*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
 <link href="~/layui/css/layui.css" rel="stylesheet" />
-<script src="~/layui/layui.js"></script>*@
+<script src="~/layui/layui.js"></script>
 <h2>审核页面</h2>
 
 <div>
@@ -45,7 +45,7 @@
                     <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
 
                 }
-                
+
             </td>
         </tr>
     </table>
@@ -59,7 +59,7 @@
             MenuID: $("#menu").val(),
             OrderID: $("#orderid").text(),
             Comments: $("#comments").text(),
-            ReviewState:1
+            ReviewState: 1
         };
         layui.use('layer', function () {
             layer.confirm('确认审核通过？', {
@@ -75,33 +75,33 @@
                     }
                 })
             })
-            
+
         })
-        
+
     }
-     function Bo(id) {
+    function Bo(id) {
         var o = {
             CommentId: id,
             MenuID: $("#menu").val(),
             OrderID: $("#orderid").text(),
             Comments: $("#comments").text(),
-            ReviewState:2
-         };
-         layui.use('layer', function () {
-             layer.confirm('确认审核驳回？', {
-                 btn: ['确定', '取消']
-             }, function (index, layero) {
-                 $.ajax({
-                     url: "/Work/UptComment",
-                     data: { comment: o },
-                     type: "post",
-                     success: function (data) {
-                         layer.alert(data);
-                         location.href = '/Work/ShowComment';
-                     }
-                 })
-             })
+            ReviewState: 2
+        };
+        layui.use('layer', function () {
+            layer.confirm('确认审核驳回？', {
+                btn: ['确定', '取消']
+            }, function (index, layero) {
+                $.ajax({
+                    url: "/Work/UptComment",
+                    data: { comment: o },
+                    type: "post",
+                    success: function (data) {
+                        layer.alert(data);
+                        location.href = '/Work/ShowComment';
+                    }
+                })
+            })
 
-         })
+        })
     }
 </script>
