@@ -4,29 +4,43 @@
 }
 <script src="~/layui/layui.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
+
 <h2>成本查询</h2>
 
-@using (Html.BeginForm())
-{
-    <input id="Text1" type="text" placeholder="请输入菜式名称" style="width:240px;height:37px;float:left;margin-left:500px"  name="name"/>
-    <input id="Submit1" type="submit" class="layui-btn layui-btn-normal" value="查询" />
-}
-<table class="layui-table">
-    <tr>
-        <th>商品编号</th>
-        <th>菜式名称</th>
-        <th>菜式售价</th>
-        <th>菜式成本价</th>
-        <th>纯利润</th>
-    </tr>
-    @foreach (var item in Model)
+
+<div class="layui-col-md9" style="margin-left:200px;margin-top:60px">
+    @using (Html.BeginForm())
     {
-        <tr>
-            <td>@item.GoodsId.ToString().PadLeft(4,'0')</td>
-            <td>@item.GoodsName</td>
-            <td>@item.SellingPrice</td>
-            <td>@item.CostPrice</td>
-            <td>@item.GoodsProfit</td>
-        </tr>
+        <span>菜式名称：</span>
+        <input type="text" name="name" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input" style="width:300px">
+        <input id="Submit1" type="submit" value="查询" class="layui-btn layui-btn-primary" />
     }
-</table>
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>商品编号</th>
+                <th>菜式名称</th>
+                <th>菜式售价</th>
+                <th>菜式成本价</th>
+                <th>纯利润</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.GoodsId.ToString().PadLeft(4, '0')</td>
+                    <td>@item.GoodsName</td>
+                    <td>@item.SellingPrice</td>
+                    <td>@item.CostPrice</td>
+                    <td>@item.GoodsProfit</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
