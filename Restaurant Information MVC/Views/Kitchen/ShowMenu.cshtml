@@ -6,21 +6,27 @@
 
 
 <h2>显示菜式信息</h2>
-<script src="~/Scripts/jquery-3.3.1.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui-v2.4.5/layui/layui.all.js"></script>
 <script src="~/layui-v2.4.5/layui/layui.js"></script>
 
 <p>
+    
     <button class="layui-btn" onclick="location.href='/Kitchen/AddMenu'">
         <i class="layui-icon">&#xe608</i>新增菜式
     </button>
+    
     <span>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</span>
 </p>
 <br />
 <p>
-    <button class="layui-btn layui-btn-radius" >批量删除</button>
+    <button id="BtnDel" onclick="Dels()" style="float:right;margin-right:150px" type="button"  class="layui-btn layui-btn-radius layui-btn-danger">批量删除</button>
+   
+    <input type="text" name="txtSel" style="width:200px;float:left;margin-left:70px" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input">
+    &nbsp;&nbsp;
+    <button class="layui-btn layui-btn-small layui-btn-normal" onclick="Sel()">查询</button>
 </p>
+
 <div class="container" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2">
 
     @foreach (var item in Model)
@@ -28,11 +34,11 @@
         <table class="col-lg-4" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">
             <tr>
                 <td colspan="5">
-                    <img src="@item.MenuPhoto"  style="width:100px;height:100px;"/>
+                    <img src="@item.MenuPhoto" style="width:100px;height:100px;" />
                     <div style="margin-left:20px;"> @item.MenuName</div>
                 </td>
                 <td>
-                    <div style="float:right"><input value="@item.MenuID" name="ckItem" type="checkbox" /></div>
+                    <div style="float:right"><input value="@item.MenuID" name="Deles" type="checkbox" /></div>
                     <div> 菜式简介:@item.MenuIntroduce</div>
                     <div>
                         主要食材: @item.MenuIngredients
@@ -54,7 +60,7 @@
                         <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="location.href='/Kitchen/UptMenu?id=@item.MenuID'">菜式修改</button>
                         <button class="layui-btn layui-btn-radius layui-btn-danger" onclick="Del(@item.MenuID,this)">删除菜式</button>
                     </div>
-                   
+
                 </td>
             </tr>
         </table>
@@ -80,6 +86,17 @@
     </button>
 </p>
 <script>
+    function Sel() {
+        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
+    }
+    function Dels() {
+        var MenuIDs = [];
+        $("[name='Deles']:checked").each(function () {
+            MenuIDs.push($(this).val());
+        });
+        location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
+    }
+
     $(function () {
         $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
     })
@@ -103,9 +120,11 @@
             })
         }
     }
+
 </script>
 
 <script>
+
     fun();
     function fun() {
         $("[name=Menu]").empty();
@@ -142,6 +161,7 @@
                 })
         })
     }
+
 </script>
 
 
