@@ -24,7 +24,7 @@
    
     <input type="text" name="title" style="width:200px;float:left;margin-left:70px" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input">
     &nbsp;&nbsp;
-    <button class="layui-btn layui-btn-small layui-btn-normal">查询</button>
+    <button class="layui-btn layui-btn-small layui-btn-normal" onclick="Sel()">查询</button>
 </p>
 
 <div class="container" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2">
@@ -86,6 +86,11 @@
     </button>
 </p>
 <script>
+    function Sel(string name) {
+
+
+    }
+
     function Dels() {
         var MenuIDs = [];
         $("[name='Deles']:checked").each(function () {
@@ -120,9 +125,6 @@
 </script>
 
 <script>
-
-
-
     fun();
     function fun() {
         $("[name=Menu]").empty();
