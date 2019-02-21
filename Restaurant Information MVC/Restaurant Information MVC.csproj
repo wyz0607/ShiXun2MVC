@@ -578,6 +578,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -612,6 +613,7 @@
     <Content Include="Views\Kitchen\ShowMenu.cshtml" />
     <Content Include="Views\Finance\ShowBill.cshtml" />
     <Content Include="Views\Finance\ShowCost.cshtml" />
+    <Content Include="Views\Finance\ShowEarning.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

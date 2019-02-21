@@ -6,8 +6,7 @@
 
 
 <h2>显示菜式信息</h2>
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui-v2.4.5/layui/layui.all.js"></script>
 <script src="~/layui-v2.4.5/layui/layui.js"></script>
 
@@ -17,6 +16,10 @@
     </button>
     <span>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</span>
 </p>
+<br />
+<p>
+    <button class="layui-btn layui-btn-radius" >批量删除</button>
+</p>
 <div class="container" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2">
 
     @foreach (var item in Model)
@@ -24,9 +27,8 @@
         <table class="col-lg-4" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">
             <tr>
                 <td colspan="5">
-                    <img src="~/Images/Img.PNG"  style="width:100px;height:100px;"/>
+                    <img src="@item.MenuPhoto"  style="width:100px;height:100px;"/>
                     <div style="margin-left:20px;"> @item.MenuName</div>
-
                 </td>
                 <td>
                     <div style="float:right"><input value="@item.MenuID" name="ckItem" type="checkbox" /></div>
@@ -46,12 +48,12 @@
                     <div>
                         销售量: @item.SalesVolume
                     </div>
-
+                    <br />
                     <div>
-                        <button class="layui-btn layui-btn-radius" onclick="location.href='/Kitchen/GetOneMenu?id=@item.MenuID'">菜式修改</button>
+                        <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="location.href='/Kitchen/UptMenu?id=@item.MenuID'">菜式修改</button>
                         <button class="layui-btn layui-btn-radius layui-btn-danger" onclick="Del(@item.MenuID,this)">删除菜式</button>
                     </div>
-                    @*<input id="Checkbox1" type="checkbox" style="float:right" />*@
+                   
                 </td>
             </tr>
         </table>
@@ -118,12 +120,9 @@
                 }
                 $("[name=Menu]").append(li);
             }
-
         })
-
-
     }
-    function Del(Id, obj) {
+    function Del(id, obj) {
 
         layui.use('layer', function () {
             layer.confirm('是否删除此菜式?',
@@ -131,10 +130,10 @@
                     btn: ['确定', '取消']
                     , yes: function (index, layero) {
                         $.ajax({
-                            url: "/Manager/DeleteEmp?Id=" + Id,
+                            url: "/Kitchen/DelMenu?id=" + id,
                             success: function (data) {
                                 layer.alert(data);
-                                $(obj).parent().parent().remove();
+                                location.reload();
                             }
                         })
                     }, btn2: function (index) {

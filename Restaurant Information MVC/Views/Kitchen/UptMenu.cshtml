@@ -1,0 +1,142 @@
+﻿@model Restaurant_Information_MVC.Models.KitchenViewModel
+
+@{
+    ViewBag.Title = "UptMenu";
+}
+
+<h2>AddMenu</h2>
+<script src="~/layui/layui.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.form.js"></script>
+
+@using (Html.BeginForm("UptMenu", "Kitchen", FormMethod.Post, new { enctype = "multipart/form-data", @class = "layui-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单号:</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(model=>model.MenuID,new { @class = "layui-input" ,readOnly=true })
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜式名:</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(model => model.MenuName, new { @class = "layui-input" })
+        
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜式图片:</label>
+            <div class="layui-input-block">
+                <img src="@Model.MenuPhoto"  alt="Alternate Text" style="width:80px;height:80px;" />
+                <!--不选择新图片时 旧图片的路径再返还给Controller-->
+                @Html.HiddenFor(model => model.MenuPhoto)
+                <input id="File1" type="file" name="img" />
+
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜式简介:</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(model => model.MenuIntroduce, new { @class = "layui-input" })
+                
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">主要食材:</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(model => model.MenuIngredients, new { @class = "layui-input" })
+               
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属菜系:</label>
+            <div class="layui-input-inline" style="margin-left:30px;">
+          
+                <select name="MenuCuisine" lay-verify="required" >
+                    <option @(Model.MenuCuisine.Contains("鲁菜")?"selected":"")>鲁菜</option>
+                    <option @(Model.MenuCuisine.Contains("川菜")?"selected":"")>川菜</option>
+                    <option @(Model.MenuCuisine.Contains("苏菜")?"selected":"")>苏菜</option>
+                    <option @(Model.MenuCuisine.Contains("粤菜")?"selected":"")>粤菜</option>
+                    <option @(Model.MenuCuisine.Contains("浙菜")?"selected":"")>浙菜</option>
+                    <option @(Model.MenuCuisine.Contains("闽菜")?"selected":"")>闽菜</option>
+                    <option @(Model.MenuCuisine.Contains("徽菜")?"selected":"")>徽菜</option>
+                    <option @(Model.MenuCuisine.Contains("湘菜")?"selected":"")>湘菜</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜式种类:</label>
+            <div class="layui-input-inline" style="margin-left:30px;">
+                <select id="Select1" name="MenuKind">
+                    <option @(Model.MenuKind.Contains("牛肉类")?"selected":"")>牛肉类</option>
+                    <option @(Model.MenuKind.Contains("猪肉类")?"selected":"")>猪肉类</option>
+                    <option @(Model.MenuKind.Contains("海鲜类")?"selected":"")>海鲜类</option>
+                    <option @(Model.MenuKind.Contains("家禽")?"selected":"")>家禽</option>
+                    <option @(Model.MenuKind.Contains("菌类")?"selected":"")>菌类</option>
+                    <option @(Model.MenuKind.Contains("蔬菜类")?"selected":"")>蔬菜类</option>
+                    <option @(Model.MenuKind.Contains("豆制品")?"selected":"")>豆制品</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜品单价:</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(model => model.UnitPrice, new { @class = "layui-input" })
+              
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">销售量:</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(model => model.SalesVolume, new { @class = "layui-input" })
+         
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-inline" style="margin-left:600px;">
+                <input type="submit" class="layui-btn layui-btn-fluid" value="保存" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("返回列表", "ShowMenu", null, new { @class = "layui-btn layui-btn-xs layui-btn-normal" })
+</div>
+
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+
+    //layui.use('layer', function () {
+    //    var layer = layui.layer;
+
+    //    layer.msg('添加菜品时,销量默认为0');
+    //});
+
+</script>
+
+
+
+
+

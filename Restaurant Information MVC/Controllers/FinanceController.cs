@@ -76,6 +76,46 @@ namespace Restaurant_Information_MVC.Controllers
             return View(bList);
         }
         /// <summary>
+        /// 收入消费查询视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowEarning()
+        {
+            return View();
+        }
+        //实例化list集合
+        public static List<int> iList = new List<int>();
+        /// <summary>
+        /// 获取到今天的日期
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetDate()
+        {
+            
+            string dt = DateTime.Now.ToString("dd");
+            for (int i = Convert.ToInt32(dt); i >0 ; i--)
+            {
+                iList.Add(i);
+            }
+            return Content(JsonConvert.SerializeObject(iList));
+        }
+        /// <summary>
+        /// 获取到每日的收入情况
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetDayIncome()
+        {
+            List<double> dList = new List<double>();
+            List<BillViewModel> bvList = new List<BillViewModel>();
+            blist = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
+            foreach (var item in iList)
+            {
+                bvList = blist.Where(m => m.PaymentTime.Substring(7,2) == item.ToString()).ToList();
+                dList.Add(bvList.Sum(m => m.BillMoney));
+            }
+            return Content(JsonConvert.SerializeObject(dList));
+        }
+        /// <summary>
         /// 审核账单
         /// </summary>
         /// <returns></returns>

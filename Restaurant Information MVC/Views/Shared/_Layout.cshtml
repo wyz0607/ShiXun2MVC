@@ -58,24 +58,6 @@
                     <a href="#">系统设置</a>
                 </li>
 
-                <li class="soso">
-
-                    <p>
-
-                        <select data-am-selected="{btnWidth: 70, btnSize: 'sm', btnStyle: 'default'}">
-                            <option value="b">全部</option>
-                            <option value="o">产品</option>
-                            <option value="o">会员</option>
-
-                        </select>
-
-                    </p>
-
-                    <p class="ycfg"><input type="text" class="am-form-field am-input-sm" placeholder="圆角表单域" /></p>
-                    <p><button class="am-btn am-btn-xs am-btn-default am-xiao"><i class="am-icon-search"></i></button></p>
-                </li>
-
-
 
 
                 <li class="am-hide-sm-only" style="float: right;"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
@@ -88,19 +70,22 @@
         <div class="nav-navicon admin-main admin-sidebar">
 
 
-            <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;">
+            <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;font-size:15px;">
+
+
                 欢迎系统管理员:@Session["UserName"]
+
                 <input id="Hidden1" type="hidden" value="@Response.Cookies["UserID"].Value" />
                 <input id="Hidden1" type="hidden" value="@Session["UserID"]" />
             </div>
-            <div class="sideMenu">
+            <div class="sideMenu" style="font-size:15px;">
                 <h3 class="am-icon-cart-plus"><em></em> 前台管理</h3>
                 <ul>
                     <li><a href="/Reception/ShowOrder">订餐管理</a></li>
                     <li><a href="/Reception/ShowFoodSelection">点餐管理</a></li>
                     <li><a href="/Reception/ShowWaste">废单管理</a></li>
                 </ul>
-                <h3  class="am-icon-flag"><em></em> 办公管理</h3>
+                <h3 class="am-icon-flag"><em></em> 办公管理</h3>
                 <ul>
                     <li><a href="/Work/ShowComment">用户评论</a></li>
                     <li><a href="/Work/Uptuser">用户管理</a></li>
@@ -109,23 +94,12 @@
                 <ul>
                     <li><a href="/Finance/ShowCost">成本查询</a></li>
                     <li><a href="/Finance/ShowBill">账目查询</a></li>
-                    <li><a href="">收入消费查询</a></li>
+                    <li><a href="/Finance/ShowEarning">收入消费查询</a></li>
                     <li><a href="">财务报表打印</a></li>
                 </ul>
                 <h3 class="am-icon-volume-up"><em></em> 厨房管理</h3>
                 <ul>
                     <li><a href="/Kitchen/ShowMenu">菜品设置</a></li>
-                </ul>
-                <h3 class="am-icon-gears"><em></em> <a href="#">系统设置</a></h3>
-                <ul>
-                    <li>数据备份</li>
-                    <li>邮件/短信管理</li>
-                    <li>上传/下载</li>
-                    <li>权限</li>
-                    <li>网站设置</li>
-                    <li>第三方支付</li>
-                    <li>平台设置</li>
-                    <li>声音文件</li>
                 </ul>
             </div>
             <!-- sideMenu End -->
@@ -147,15 +121,9 @@
 
             <div class="daohang">
                 <ul>
-                    <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs"> 首页</button></li>
-                    <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">帮助中心<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-                    <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">奖金管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-                    <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">产品管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
+                    <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs" style="font-size:15px;"> 首页</button></li>
                 </ul>
             </div>
-
-
-
 
             <div class="admin">
                 @RenderBody()

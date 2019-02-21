@@ -19,14 +19,12 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult ShowMenu(int pageindex = 1)
         {
             //显示菜品信息
-            string result = HttpClientHelper.Seng("get", "api/Kitchens/ShowMenu", null);
+            string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = kit.Count;
             ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
             return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
-
-         
         }
 
         [HttpGet]
@@ -45,10 +43,10 @@ namespace Restaurant_Information_MVC.Controllers
                 string path = Server.MapPath("/Images/");
                 string fileName = DateTime.Now.ToString("yyyyMMddhhmmss")+img.FileName;
                 img.SaveAs(path+fileName);
-                kit.MenuPhoto = "http://localhost:53169/Images/" + fileName;
+                kit.MenuPhoto = "http://localhost:58557/Images/" + fileName;
             }
             string strJson = JsonConvert.SerializeObject(kit);
-            string result = HttpClientHelper.Seng("post", "api/Kitchens/AddMenu",strJson);
+            string result = HttpClientHelper.Seng("post", "api/KitchensApi/AddMenu",strJson);
             if (result.Contains("成功"))
             {
                 return Redirect("/Kitchen/ShowMenu");
@@ -60,29 +58,63 @@ namespace Restaurant_Information_MVC.Controllers
         }
 
         //删除
-        public ActionResult DelMenu()
+        public ActionResult DelMenu(int id)
         {
-            return View();
+            string str = HttpClientHelper.Seng("delete", "api/KitchensApi/DelMenu?MenuID="+id,"null");
+            if (str.Contains("成功"))
+            {
+                return Content("删除成功");
+            }
+            else
+            {
+                return Content("删除失败");
+            }
         }
 
         //修改
         [HttpGet]
-        public ActionResult GetOneMenu(int id)
+        public ActionResult UptMenu(int id)
         {
-            return View();
+            string str2 = HttpClientHelper.Seng("get","api/KitchensApi/ShowMenu",null);
+            List<KitchenViewModel> list = JsonConvert.DeserializeObject<List<KitchenViewModel>>(str2);
+            KitchenViewModel list1 = list.Where(c => c.MenuID == id).FirstOrDefault();
+            return View(list1);
         }
         [HttpPost]
-        public ActionResult UptMenu(KitchenViewModel kit)
+        public ActionResult UptMenu(KitchenViewModel kit, HttpPostedFileBase img)
         {
-            return View();
+            if (img != null)//需要更换图片时
+            {
+                string path = Server.MapPath("/Images/");
+                string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + img.FileName;
+                img.SaveAs(path + filename);
+                kit.MenuPhoto = "http://localhost:58557/Images/" + filename;
+            }
+      
+            string jsonstr = JsonConvert.SerializeObject(kit);
+            string str = HttpClientHelper.Seng("put", "api/KitchensApi/UptMenu",jsonstr);
+            if (str.Contains("成功"))
+            {
+                return Content("修改成功");
+            }
+            else
+            {
+                return Content("修改失败");
+            }
+           
         }
+        /// <summary>
+        /// 获取一个菜式
+        /// </summary>
+        /// <returns>类名</returns>
+        public ActionResult GetOneMenu(int id)
+        {
 
+            string str = HttpClientHelper.Seng("get", "api/Kitchen/GetOneMenu?MenuID=" + id, "null");
+            KitchenViewModel kit = JsonConvert.DeserializeObject<KitchenViewModel>(str);
+            return View(kit);
 
-
-
-
-
-
+        }
 
     }
 }
