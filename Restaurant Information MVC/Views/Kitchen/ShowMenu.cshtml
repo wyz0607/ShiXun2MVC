@@ -22,7 +22,7 @@
 <p>
     <button id="BtnDel" onclick="Dels()" style="float:right;margin-right:150px" type="button"  class="layui-btn layui-btn-radius layui-btn-danger">批量删除</button>
    
-    <input type="text" name="title" style="width:200px;float:left;margin-left:70px" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input">
+    <input type="text" name="txtSel" style="width:200px;float:left;margin-left:70px" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input">
     &nbsp;&nbsp;
     <button class="layui-btn layui-btn-small layui-btn-normal" onclick="Sel()">查询</button>
 </p>
@@ -86,11 +86,9 @@
     </button>
 </p>
 <script>
-    function Sel(string name) {
-
-
+    function Sel() {
+        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
     }
-
     function Dels() {
         var MenuIDs = [];
         $("[name='Deles']:checked").each(function () {
@@ -122,9 +120,11 @@
             })
         }
     }
+
 </script>
 
 <script>
+
     fun();
     function fun() {
         $("[name=Menu]").empty();
@@ -161,8 +161,6 @@
                 })
         })
     }
-
-
 
 </script>
 

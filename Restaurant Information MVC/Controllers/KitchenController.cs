@@ -16,11 +16,19 @@ namespace Restaurant_Information_MVC.Controllers
         
         [HttpGet]
         //显示
-        public ActionResult ShowMenu(int pageindex = 1)
+        public ActionResult ShowMenu(int pageindex = 1,string name="")
         {
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            if (name!="")
+            {
+                List<KitchenViewModel> k =kit.Where(m => m.MenuName == name).ToList();
+                ViewBag.currentindex = pageindex;
+                ViewBag.totaldata = kit.Count;
+                ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
+                return View(k);
+            }
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = kit.Count;
             ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
