@@ -599,7 +599,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Kitchen\GetOneMenu.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Show.cshtml" />
     <Content Include="Views\Work\ShowComment.cshtml" />
@@ -613,6 +612,7 @@
     <Content Include="Views\Finance\ShowBill.cshtml" />
     <Content Include="Views\Finance\ShowCost.cshtml" />
     <Content Include="Views\Finance\ShowEarning.cshtml" />
+    <Content Include="Views\Kitchen\UptMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

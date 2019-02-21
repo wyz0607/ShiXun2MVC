@@ -58,12 +58,19 @@ namespace Restaurant_Information_MVC.Controllers
         }
 
         //删除
-        public ActionResult DelMenu(int id)
+        public ActionResult DelMenu(string id)
         {
-            string str = HttpClientHelper.Seng("delete", "api/KitchensApi/DelMenu?MenuID="+id,"null");
+            string str = "";
+            String[] ids = id.Split(',');
+            foreach (var item in ids)
+            {
+                str = HttpClientHelper.Seng("delete", "api/KitchensApi/DelMenu?MenuID=" + item, "null");
+            }
+            
             if (str.Contains("成功"))
             {
-                return Content("删除成功");
+                return Redirect("/Kitchen/ShowMenu");
+
             }
             else
             {
@@ -95,7 +102,8 @@ namespace Restaurant_Information_MVC.Controllers
             string str = HttpClientHelper.Seng("put", "api/KitchensApi/UptMenu",jsonstr);
             if (str.Contains("成功"))
             {
-                return Content("修改成功");
+                return Redirect("/Kitchen/ShowMenu");
+                
             }
             else
             {
