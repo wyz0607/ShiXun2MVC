@@ -171,18 +171,30 @@ namespace Restaurant_Information_MVC.Controllers
         {
             return View();
         }
-        public string SendSms(string apiurl)
+        public ActionResult SendSms()
         {
+            string apiurl = "http://api.feige.ee";
+            string data = "0123456789";
+            var chararr = data.ToCharArray();
+            Random rd = new Random();
+            string result = "";
+            for (int i = 0; i < 4; i++)
+            {
+                int charindex = rd.Next(chararr.Length);
+                result += chararr[charindex];
+            }
+            int radom = Convert.ToInt32(result);
             CommonSmsRequest request = new CommonSmsRequest
             {
+               
                 Account = "17321446954",
                 Pwd = "e5a47ed56946ff3b78f32712d",//登录web平台 http://sms.feige.ee  在管理中心--基本资料--接口密码 或者首页 接口秘钥 如登录密码修改，接口密码会发生改变，请及时修改程序
-                Content = "测试一下",
+                Content = $"亲，你的验证码是{radom}",
                 Mobile = "17321446954",
                 SignId = 95171, //登录web平台 http://sms.feige.ee  在签名管理中--新增签名--获取id
                 SendTime = Convert.ToInt64(common.ToUnixStamp(DateTime.Now))//定时短信 把时间转换成时间戳的格式
             };
-
+            Session["Yan"] = radom;
 
             StringBuilder arge = new StringBuilder();
             arge.AppendFormat("Account={0}", request.Account);
@@ -200,18 +212,18 @@ namespace Restaurant_Information_MVC.Controllers
                 if (response.Code == 0)
                 {
                     //成功
-                    return "发送成功";
+                    return Content("发送成功");
                 }
                 else
                 {
                     //失败
-                    return "发送失败";
+                    return Content("发送失败");
                 }
             }
             catch (Exception ex)
             {
                 //记录日志
-                return ex.Message;
+                return Content(ex.Message);
             }
 
 
