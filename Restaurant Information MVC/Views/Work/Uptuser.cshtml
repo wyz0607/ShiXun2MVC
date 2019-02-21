@@ -1,4 +1,5 @@
 ﻿@model Restaurant_Information_MVC.Models.UserInfo
+    @using Restaurant_Information_MVC.Controllers
 @{
     ViewBag.Title = "Uptuser";
 }
@@ -15,11 +16,15 @@
     <input id="Userrole" type="hidden" value="@Model.Role" />
     <input id="Privilege" type="hidden" value="@Model.Privilege" />
     <input id="Userpwd" type="hidden" value="@Model.UserPwd" />
-    <input id="yan" type="hidden" value="@Session["Yan"]"/>
+   
+
+    
+ 
+    <input id="yan" type="hidden"  />
     <table class="table-hover" style=" width:600px;height:350px;margin-left:200px;">
         <tr>
             <td>原密码</td>
-            <td><input id="Text1" type="password" onchange="Txt()"/></td>
+            <td><input id="Text1" type="password" onchange="Txt()" /></td>
             <td> <label id="lab1" style="color:red"></label></td>
             <td></td>
         </tr>
@@ -36,9 +41,9 @@
             <td></td>
         </tr>
         <tr>
-            <td>手机号</td>
-            <td><input class="phone" id="Phone" type="text" onchange="Iphone()" /></td>
-            <td><input id="btnyan" type="button" class="layui-btn layui-btn-normal" name="yzm" value="获取验证码" onclick="Yan()"/></td>
+            <td>邮箱</td>
+            <td><input id="Phone" type="text" @*onchange="Iphone()"*@ /></td>
+            <td><input id="btnyan" class="layui-btn layui-btn-normal" type="button" name="yzm" value="获取验证码" /></td>
             <td>
                 <label id="phoneremark" style="color:red"></label>
             </td>
@@ -57,6 +62,9 @@
                 <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="取消" onclick="Fan()" />
             </td>
         </tr>
+        <tr>
+            <td><label id="tishi" style="color:red"></label></td>
+        </tr>
     </table>
 </div>
 <script>
@@ -69,7 +77,7 @@
             $("#lab1").hide();
         }
     }
-  
+
     function que() {
         if ($("#Gaipwd").val() != $("#Quepwd").val()) {
             $("#lab").text("两次密码不一样");
@@ -82,17 +90,24 @@
 
 
 
-    function Iphone() {
-        if ($("#Phone").val() != $("#Userphone").val()) {
-            $("#phoneremark").text("输入的手机号与预存的手机号不一致")
+    //function Iphone() {
+    //    if ($("#Phone").val() != $("#Userphone").val()) {
+    //        $("#phoneremark").text("输入的手机号与预存的手机号不一致")
+    //        return;
+    //    }
+    //    else {
+    //        $("#phoneremark").hide();
+    //    }
+    //}
+
+    function Upt(id) {
+        if ($("#Text1").val() == null || $("#Phone").val() == null || $("#Yan1").val() == null || $("#Phone").val() == null) {
+            $("#tishi").text("上述信息不完整");
             return;
         }
         else {
-            $("#phoneremark").hide();
+            $("#tishi").hide();
         }
-    }
-
-    function Upt(id) {
         if ($("#Text1").val() != $("#Userpwd").val()) {
             $("#lab1").text("输入的密码错误");
             return;
@@ -107,14 +122,15 @@
         else {
             $("#lab").hide();
         }
-        if ($("#Phone").val() != $("#Userphone").val()) {
-            $("#phoneremark").text("输入的手机号与预存的手机号不一致")
-            return;
-        }
-        else {
-            $("#phoneremark").hide();
-        }
-        if ($("#Yan1").val() != $("#yan").val()) {
+        //if ($("#Phone").val() != $("#Userphone").val()) {
+        //    $("#phoneremark").text("输入的手机号与预存的手机号不一致")
+        //    return;
+        //}
+        //else {
+        //    $("#phoneremark").hide();
+        //}
+       
+        if ($("#Yan1").val().toString() != $("#yan").val().toString()) {
             $("#yanzheng").text("验证码错误");
             return;
         }
@@ -157,64 +173,91 @@
         //$("#Yan").val().empty();
         location.reload();
     }
-        var ordertime = 60   //设置再次发送验证码等待时间
-        var timeleft = ordertime
-        var btn = $(".yzm")
-        var phone = $(".phone")
-        var reg = /^1[0-9]{10}$/;  //电话号码的正则匹配式
+    var ordertime = 60   //设置再次发送验证码等待时间
+    var timeleft = ordertime
+    var btn = $(".yzm")
+    var phone = $(".phone")
+    var reg = /^1[0-9]{10}$/;  //电话号码的正则匹配式
 
-        phone.keyup(function () {
-            if (reg.test(phone.val())) {
-                $("#btnyan").removeAttr("disabled")  //当号码符合规则后发送验证码按钮可点击
-            }
-            else {
-                $("#btnyan").attr("disabled", true)
-            }
-        })
+    //phone.keyup(function () {
+    //    if (reg.test(phone.val())) {
+    //        $("#btnyan").removeAttr("disabled")  //当号码符合规则后发送验证码按钮可点击
+    //    }
+    //    else {
+    //        $("#btnyan").attr("disabled", true)
+    //    }
+    //})
 
-        //计时函数
-        function timeCount() {
-            timeleft -= 1
-            if (timeleft > 0) {
-                $("#btnyan").val(timeleft + " 秒后重发");
-                setTimeout(timeCount, 1000)
-                $("#btnyan").attr("disabled", true);
-            }
-            else {
-                $("#btnyan").val("重新发送");
-                timeleft = ordertime   //重置等待时间
-                $("#btnyan").removeAttr("disabled", true);
-            }
+    //计时函数
+    function timeCount() {
+        timeleft -= 1
+        if (timeleft > 0) {
+            $("#btnyan").val(timeleft + " 秒后重发");
+            setTimeout(timeCount, 1000)
+            $("#btnyan").attr("disabled", true);
         }
-        //事件处理函数
-        function Yan() {
-            layui.use('layer', function () {
-                $.ajax({
-                    url: "/Work/SendSms",
-                    success: function (data) {
-                        layer.alert(data);
-                        if (data == "发送成功") {
-                            $(this).attr("disabled", true); //防止多次点击
-                            //此处可添加 ajax请求 向后台发送 获取验证码请求
-                            timeCount(this);
-                        }
-                        else {
+        else {
+            $("#btnyan").val("重新发送");
+            timeleft = ordertime   //重置等待时间
+            $("#btnyan").removeAttr("disabled", true);
+        }
+    }
+    //事件处理函数
+    $("#btnyan").click(function () {
+        var dianhua = $("#Phone").val();
 
-                        }
+        layui.use('layer', function () {
+            $.ajax({
+                url: "/Work/SendEmail/?email=" + dianhua,
+                type: "get",
+                success: function (data) {
+                    
+                    if (data != null) {
+                        $(this).attr("disabled", true); //防止多次点击
+                        $("#yan").val(data);
+                        //此处可添加 ajax请求 向后台发送 获取验证码请求
+                        timeCount(this);
                     }
+                    else {
 
-                })
+                    }
+                  
+                }
+
             })
-           
-        }
+        })
+    })
+        //$("#btnyan").click(function () {
+        //    var dianhua = $("#Phone").val();
+
+        //    alert(dianhua);
+        //    $.ajax({
+        //    url: "/Work/SendEmail?email=" + dianhua,
+        //    type: "get",
+        //    success: function (data) {
+        //        alert(data);
+        //        if (data == "success") {
+
+        //        }
+        //        else {
+
+        //        }
+        //        $(this).attr("disabled", true); //防止多次点击
+        //        此处可添加 ajax请求 向后台发送 获取验证码请求
+        //        timeCount(this);
+        //    }
+
+        //})
+        //})
 
 
 
-    
-  
-      
 
-   
+
+
+
+
+
 </script>
 
 
