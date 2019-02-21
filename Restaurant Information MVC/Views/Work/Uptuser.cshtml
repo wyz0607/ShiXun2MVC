@@ -38,7 +38,7 @@
         <tr>
             <td>手机号</td>
             <td><input class="phone" id="Phone" type="text" onchange="Iphone()" /></td>
-            <td><input id="Button1" type="button" class="layui-btn layui-btn-normal" name="yzm" value="获取验证码" onclick="Yan()"/></td>
+            <td><input id="btnyan" type="button" class="layui-btn layui-btn-normal" name="yzm" value="获取验证码" onclick="Yan()"/></td>
             <td>
                 <label id="phoneremark" style="color:red"></label>
             </td>
@@ -165,10 +165,10 @@
 
         phone.keyup(function () {
             if (reg.test(phone.val())) {
-                btn.removeAttr("disabled")  //当号码符合规则后发送验证码按钮可点击
+                $("#btnyan").removeAttr("disabled")  //当号码符合规则后发送验证码按钮可点击
             }
             else {
-                btn.attr("disabled", true)
+                $("#btnyan").attr("disabled", true)
             }
         })
 
@@ -176,13 +176,14 @@
         function timeCount() {
             timeleft -= 1
             if (timeleft > 0) {
-                btn.val(timeleft + " 秒后重发");
+                $("#btnyan").val(timeleft + " 秒后重发");
                 setTimeout(timeCount, 1000)
+                $("#btnyan").attr("disabled", true);
             }
             else {
-                btn.val("重新发送");
+                $("#btnyan").val("重新发送");
                 timeleft = ordertime   //重置等待时间
-                btn.removeAttr("disabled");
+                $("#btnyan").removeAttr("disabled", true);
             }
         }
         //事件处理函数
@@ -192,13 +193,19 @@
                     url: "/Work/SendSms",
                     success: function (data) {
                         layer.alert(data);
+                        if (data == "发送成功") {
+                            $(this).attr("disabled", true); //防止多次点击
+                            //此处可添加 ajax请求 向后台发送 获取验证码请求
+                            timeCount(this);
+                        }
+                        else {
+
+                        }
                     }
 
                 })
             })
-            $(this).attr("disabled", true); //防止多次点击
-            //此处可添加 ajax请求 向后台发送 获取验证码请求
-            timeCount(this);
+           
         }
 
 
