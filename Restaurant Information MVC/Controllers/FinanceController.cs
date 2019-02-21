@@ -13,6 +13,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using NPOI.XSSF.UserModel;
+using DAL;
 
 namespace Restaurant_Information_MVC.Controllers
 {
@@ -64,15 +65,17 @@ namespace Restaurant_Information_MVC.Controllers
         /// <param name="name">姓名</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ShowBill(string begin,string end,string name)
+        public ActionResult ShowBill(string begin, string end, string name)
         {
             if (begin != "" && end != "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList();
-            }else if(begin =="" && end != "")
+            }
+            else if (begin == "" && end != "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList();
-            }else if(begin !="" && end == "")
+            }
+            else if (begin != "" && end == "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin)).ToList();
             }
@@ -98,9 +101,9 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         public ActionResult GetDate()
         {
-            
+
             string dt = DateTime.Now.ToString("dd");
-            for (int i = Convert.ToInt32(dt); i >0 ; i--)
+            for (int i = Convert.ToInt32(dt); i > 0; i--)
             {
                 iList.Add(i);
             }
@@ -117,7 +120,7 @@ namespace Restaurant_Information_MVC.Controllers
             blist = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             foreach (var item in iList)
             {
-                bvList = blist.Where(m => m.PaymentTime.Substring(7,2) == item.ToString()).ToList();
+                bvList = blist.Where(m => m.PaymentTime.Substring(7, 2) == item.ToString()).ToList();
                 dList.Add(bvList.Sum(m => m.BillMoney));
             }
             return Content(JsonConvert.SerializeObject(dList));
@@ -183,110 +186,47 @@ namespace Restaurant_Information_MVC.Controllers
         }
         public void ExcelToLead(HttpPostedFileBase file)
         {
-            string filePath = @"C:\Users\hp\Desktop\";
-            DataTable dt = ImportExcelHelper.GetExcelDataTable(filePath + file.FileName);
-            //List<GoodsViewModel> list = JsonConvert.DeserializeObject<List<GoodsViewModel>>(JsonConvert.SerializeObject(dt));
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < Request.Files.Count; i++)
             {
-                HttpClientHelper.Seng("post", "api/FinanceApi/ExcelToLead", dt.Rows[i].ToString());
-            }
-        }
-    }
-    #region 导入帮助类
-    static public class ImportExcelHelper
-    {
-        public static DataTable GetExcelDataTable(string filePath)
-        {
-            IWorkbook Workbook;
-            DataTable table = new DataTable();
-            try
-            {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                var item = Request.Files[i];
+                var FileName = item.FileName;
+                var SubName = FileName.Substring(FileName.LastIndexOf("."));
+
+                IWorkbook wb = null;
+                if (SubName.Equals(".xlsx"))
                 {
-                    //XSSFWorkbook 适用XLSX格式，HSSFWorkbook 适用XLS格式
-                    string fileExt = Path.GetExtension(filePath).ToLower();
-                    if (fileExt == ".xls")
-                    {
-                        Workbook = new HSSFWorkbook(fileStream);
-                    }
-                    else if (fileExt == ".xlsx")
-                    {
-                        Workbook = new XSSFWorkbook(fileStream);
-                    }
-                    else
-                    {
-                        Workbook = null;
-                    }
+                    wb = new XSSFWorkbook(item.InputStream);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            //定位在第一个sheet
-            ISheet sheet = Workbook.GetSheetAt(0);
-            //第一行为标题行
-            IRow headerRow = sheet.GetRow(0);
-            int cellCount = headerRow.LastCellNum;
-            int rowCount = sheet.LastRowNum;
-            //循环添加标题列
-            for (int i = headerRow.FirstCellNum; i < cellCount; i++)
-            {
-                DataColumn column = new DataColumn(headerRow.GetCell(i).StringCellValue);
-                table.Columns.Add(column);
-            }
-            //数据
-            for (int i = (sheet.FirstRowNum + 1); i <= rowCount; i++)
-            {
-                IRow row = sheet.GetRow(i);
-                DataRow dataRow = table.NewRow();
-                if (row != null)
+                else if (SubName.Equals(".xls"))
                 {
-                    for (int j = row.FirstCellNum; j < cellCount; j++)
+                    wb = new HSSFWorkbook(item.InputStream);
+                }
+                ISheet sh = wb.GetSheetAt(0);  //获取表
+                IRow rows = sh.GetRow(1);   //获取行
+                for (int k = 1; k <= sh.LastRowNum; k++)   //循环行
+                {
+                    rows = sh.GetRow(k);
+
+                    string sql = string.Format("insert into " + file.FileName.Substring(0,5) + " values ( ");
+                    //string sql1 = string.Format("insert into Preson values ('{0}','{1}','{2}')");
+                    for (int j = 0; j < rows.LastCellNum; j++)  //循环列
                     {
-                        if (row.GetCell(j) != null)
+                        try
                         {
-                            dataRow[j] = GetCellValue(row.GetCell(j));
+                            string value = rows.GetCell(j).ToString();
+
+                            sql += string.Format("'" + value.ToString() + "',");
+                        }
+                        catch
+                        {
+
                         }
                     }
+                    sql = sql.Substring(0, sql.Length - 1) + ")";
+                    DBHelper.ExecuteNonQuery(sql);
                 }
-                table.Rows.Add(dataRow);
             }
-            return table;
+            Response.Write("<script>alert('导入成功!');location.href='/Finance/FinancialStatement'</script>");
         }
-        private static string GetCellValue(ICell cell)
-        {
-            if (cell == null)
-            {
-                return string.Empty;
-            }
-            switch (cell.CellType)
-            {
-                case CellType.Blank:
-                    return string.Empty;
-                case CellType.Boolean:
-                    return cell.BooleanCellValue.ToString();
-                case CellType.Error:
-                    return cell.ErrorCellValue.ToString();
-                case CellType.Numeric:
-                case CellType.Unknown:
-                default:
-                    return cell.ToString();
-                case CellType.String:
-                    return cell.StringCellValue;
-                case CellType.Formula:
-                    try
-                    {
-                        HSSFFormulaEvaluator e = new HSSFFormulaEvaluator(cell.Sheet.Workbook);
-                        e.EvaluateInCell(cell);
-                        return cell.ToString();
-                    }
-                    catch
-                    {
-                        return cell.NumericCellValue.ToString();
-                    }
-            }
         }
     }
-    #endregion
-}
