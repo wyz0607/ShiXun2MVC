@@ -16,11 +16,19 @@ namespace Restaurant_Information_MVC.Controllers
         
         [HttpGet]
         //显示
-        public ActionResult ShowMenu(int pageindex = 1)
+        public ActionResult ShowMenu(int pageindex = 1,string name="")
         {
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            if (name!="")
+            {
+                List<KitchenViewModel> k =kit.Where(m => m.MenuName == name).ToList();
+                ViewBag.currentindex = pageindex;
+                ViewBag.totaldata = kit.Count;
+                ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
+                return View(k);
+            }
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = kit.Count;
             ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
@@ -58,12 +66,19 @@ namespace Restaurant_Information_MVC.Controllers
         }
 
         //删除
-        public ActionResult DelMenu(int id)
+        public ActionResult DelMenu(string id)
         {
-            string str = HttpClientHelper.Seng("delete", "api/KitchensApi/DelMenu?MenuID="+id,"null");
+            string str = "";
+            String[] ids = id.Split(',');
+            foreach (var item in ids)
+            {
+                str = HttpClientHelper.Seng("delete", "api/KitchensApi/DelMenu?MenuID=" + item, "null");
+            }
+            
             if (str.Contains("成功"))
             {
-                return Content("删除成功");
+                return Redirect("/Kitchen/ShowMenu");
+
             }
             else
             {
@@ -95,7 +110,8 @@ namespace Restaurant_Information_MVC.Controllers
             string str = HttpClientHelper.Seng("put", "api/KitchensApi/UptMenu",jsonstr);
             if (str.Contains("成功"))
             {
-                return Content("修改成功");
+                return Redirect("/Kitchen/ShowMenu");
+                
             }
             else
             {
