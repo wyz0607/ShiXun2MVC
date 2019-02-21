@@ -46,6 +46,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NPOI">
+      <HintPath>..\..\..\..\Desktop\控件\导入 导出\ExcelDemo\NPOI_dll\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\..\..\Desktop\控件\导入 导出\ExcelDemo\NPOI_dll\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\..\..\Desktop\控件\导入 导出\ExcelDemo\NPOI_dll\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\..\..\..\Desktop\控件\导入 导出\ExcelDemo\NPOI_dll\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -613,6 +625,7 @@
     <Content Include="Views\Finance\ShowBill.cshtml" />
     <Content Include="Views\Finance\ShowCost.cshtml" />
     <Content Include="Views\Finance\ShowEarning.cshtml" />
+    <Content Include="Views\Finance\FinancialStatement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
