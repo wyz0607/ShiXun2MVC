@@ -35,6 +35,7 @@ namespace Restaurant_Information_MVC.Controllers
             return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
         }
 
+
         [HttpGet]
         //添加
         public ActionResult AddMenu()

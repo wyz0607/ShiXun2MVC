@@ -1,7 +1,37 @@
 ﻿
-@{
-    ViewBag.Title = "Show";
-}
+<!DOCTYPE html>
 
-<h2>Show</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show</title>
+    <link href="~/icofont/icofont.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="admin-index">
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 100}">
+            <dt class="qs"><i class="icofont-shopping-cart"></i></dt>
+            <dd>@ViewBag.OrderNum</dd>
+            <dd class="f12">今日订单数</dd>
+        </dl>
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 300}">
+            <dt class="cs"><i class="icofont-money"></i></dt>
+            <dd>@ViewBag.oneMoney</dd>
+            <dd class="f12">今日收入</dd>
+        </dl>
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 600}">
+            <dt class="hs"><i class="icofont-chicken"></i></dt>
+            <dd>@ViewBag.menu</dd>
+            <dd class="f12">菜式数量</dd>
+        </dl>
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 900}">
+            <dt class="ls"><i class="icofont-chart-bar-graph"></i></dt>
+            <dd>@ViewBag.money</dd>
+            <dd class="f12">历史收入</dd>
+        </dl>
+    </div>
+    <div>
 
+    </div>
+</body>
+</html>

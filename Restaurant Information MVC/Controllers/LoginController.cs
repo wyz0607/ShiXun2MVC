@@ -22,7 +22,7 @@ namespace Restaurant_Information_MVC.Controllers
             var result= HttpClientHelper.Seng("get","api/Login/Login?UserName="+Name+"&Pwd="+Password+"",null);
             UserInfo user = JsonConvert.DeserializeObject<UserInfo>(result);
 
-            if (user.UserName!="")
+            if (result!=null)
             {
                 Session["UserName"] = Name;
                 Session["UserID"] = user.UserID;
@@ -40,6 +40,16 @@ namespace Restaurant_Information_MVC.Controllers
 
         public ActionResult Show()
         {
+            var time = DateTime.Now.ToString("yyyy年MM月dd日");
+
+            var num= HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + time,null);
+            ViewBag.OrderNum = num;
+            var oneMoney = HttpClientHelper.Seng("get", "api/Login/GetOneMoney?time=" + time, null);
+            ViewBag.oneMoney = oneMoney;
+            var menu = HttpClientHelper.Seng("get", "api/Login/GetMenuNum", null);
+            ViewBag.menu = menu;
+            var money = HttpClientHelper.Seng("get", "api/Login/GetAllMoney", null);
+            ViewBag.money = money;
             return View();
         }
     }
