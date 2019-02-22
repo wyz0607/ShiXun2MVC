@@ -226,7 +226,7 @@ namespace Restaurant_Information_MVC.Controllers
                         }
                     }
                     sql = sql.Substring(0, sql.Length - 1) + ")";
-                    HttpClientHelper.Seng("get", "api/FinanceApi/ExcelToLead", sql);
+                    HttpClientHelper.Seng("post", "api/FinanceApi/ExcelToLead/?sql=" + sql, sql);
                 }
             }
             Response.Write("<script>alert('导入成功!');location.href='/Finance/FinancialStatement'</script>");
