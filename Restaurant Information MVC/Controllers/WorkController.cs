@@ -23,7 +23,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// 显示所有的评论
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShowComment(int pageindex = 1, int pagesize = 2)
+        public ActionResult ShowComment(int pageindex = 1, int pagesize = 5)
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
             List<CommentViewModel> list = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
@@ -42,9 +42,9 @@ namespace Restaurant_Information_MVC.Controllers
             //     new CommentViewModel{ CommentId=3,Comments="bu好样的",MenuID=3,OrderID=3,ReviewState=0} };
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = list.Count;
-            ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 2)) + 1;
+            ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 5)) + 1;
 
-            return View(list.Skip((pageindex - 1) * 2).Take(2).ToList());
+            return View(list.Skip((pageindex - 1) * 5).Take(5).ToList());
 
 
         }
@@ -88,8 +88,8 @@ namespace Restaurant_Information_MVC.Controllers
         [HttpGet]
         public ActionResult Uptuser()
         {
-            int id = Convert.ToInt32(Response.Cookies["UserID"].Value);
-            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetOneUser/?userid=1", null);
+            int id =Convert.ToInt32(Session["UserID"]);
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetOneUser/?userid="+id, null);
             UserInfo user = JsonConvert.DeserializeObject<UserInfo>(str);
 
             return View(user);
@@ -176,63 +176,63 @@ namespace Restaurant_Information_MVC.Controllers
         {
             return View();
         }
-        public ActionResult SendSms()
-        {
-            string apiurl = "http://api.feige.ee";
-            string data = "0123456789";
-            var chararr = data.ToCharArray();
-            Random rd = new Random();
-            string result = "";
-            for (int i = 0; i < 4; i++)
-            {
-                int charindex = rd.Next(chararr.Length);
-                result += chararr[charindex];
-            }
-            int radom = Convert.ToInt32(result);
-            CommonSmsRequest request = new CommonSmsRequest
-            {
+        //public ActionResult SendSms()
+        //{
+        //    string apiurl = "http://api.feige.ee";
+        //    string data = "0123456789";
+        //    var chararr = data.ToCharArray();
+        //    Random rd = new Random();
+        //    string result = "";
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        int charindex = rd.Next(chararr.Length);
+        //        result += chararr[charindex];
+        //    }
+        //    int radom = Convert.ToInt32(result);
+        //    CommonSmsRequest request = new CommonSmsRequest
+        //    {
 
-                Account = "17301622446",
-                Pwd = "58ed898d1d9ae5406147ee764",//登录web平台 http://sms.feige.ee  在管理中心--基本资料--接口密码 或者首页 接口秘钥 如登录密码修改，接口密码会发生改变，请及时修改程序
-                Content = $"亲，你的验证码是{radom}",
-                Mobile = "17301622446",
-                SignId = 95654, //登录web平台 http://sms.feige.ee  在签名管理中--新增签名--获取id
-                SendTime = Convert.ToInt64(common.ToUnixStamp(DateTime.Now))//定时短信 把时间转换成时间戳的格式
-            };
-            Session["Yan"] = radom;
+        //        Account = "17301622446",
+        //        Pwd = "58ed898d1d9ae5406147ee764",//登录web平台 http://sms.feige.ee  在管理中心--基本资料--接口密码 或者首页 接口秘钥 如登录密码修改，接口密码会发生改变，请及时修改程序
+        //        Content = $"亲，你的验证码是{radom}",
+        //        Mobile = "17301622446",
+        //        SignId = 95654, //登录web平台 http://sms.feige.ee  在签名管理中--新增签名--获取id
+        //        SendTime = Convert.ToInt64(common.ToUnixStamp(DateTime.Now))//定时短信 把时间转换成时间戳的格式
+        //    };
+        //    Session["Yan"] = radom;
 
-            StringBuilder arge = new StringBuilder();
-            arge.AppendFormat("Account={0}", request.Account);
-            arge.AppendFormat("&Pwd={0}", request.Pwd);
-            arge.AppendFormat("&Content={0}", request.Content);
-            arge.AppendFormat("&Mobile={0}", request.Mobile);
-            arge.AppendFormat("&SignId={0}", request.SignId);
-            arge.AppendFormat("&SendTime={0}", request.SendTime);
-            string weburl = apiurl + "/SmsService/Send";
-            string resp = common.PushToWeb(weburl, arge.ToString(), Encoding.UTF8);
+        //    StringBuilder arge = new StringBuilder();
+        //    arge.AppendFormat("Account={0}", request.Account);
+        //    arge.AppendFormat("&Pwd={0}", request.Pwd);
+        //    arge.AppendFormat("&Content={0}", request.Content);
+        //    arge.AppendFormat("&Mobile={0}", request.Mobile);
+        //    arge.AppendFormat("&SignId={0}", request.SignId);
+        //    arge.AppendFormat("&SendTime={0}", request.SendTime);
+        //    string weburl = apiurl + "/SmsService/Send";
+        //    string resp = common.PushToWeb(weburl, arge.ToString(), Encoding.UTF8);
 
-            try
-            {
-                SendSmsResponse response = JsonConvert.DeserializeObject<SendSmsResponse>(resp);
-                if (response.Code == 0)
-                {
-                    //成功
-                    return Content("发送成功");
-                }
-                else
-                {
-                    //失败
-                    return Content("发送失败");
-                }
-            }
-            catch (Exception ex)
-            {
-                //记录日志
-                return Content(ex.Message);
-            }
+        //    try
+        //    {
+        //        SendSmsResponse response = JsonConvert.DeserializeObject<SendSmsResponse>(resp);
+        //        if (response.Code == 0)
+        //        {
+        //            //成功
+        //            return Content("发送成功");
+        //        }
+        //        else
+        //        {
+        //            //失败
+        //            return Content("发送失败");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //记录日志
+        //        return Content(ex.Message);
+        //    }
 
 
-        }
+        //}
 
 
 
