@@ -32,8 +32,6 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 5)) + 1;
 
             return View(list.Skip((pageindex - 1) * 5).Take(5).ToList());
-
-
         }
         /// <summary>
         /// 登录信息
