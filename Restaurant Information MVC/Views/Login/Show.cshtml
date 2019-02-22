@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width" />
     <title>Show</title>
     <link href="~/icofont/icofont.css" rel="stylesheet" />
+    <script src="~/Scripts/Chart.bundle.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+    <script src="~/layui/layui.js"></script>
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
 </head>
 <body>
     <div class="admin-index">
@@ -30,8 +41,84 @@
             <dd class="f12">历史收入</dd>
         </dl>
     </div>
-    <div>
-
+    <div id="container" style="width:600px;height:400px;margin-top:150px;margin-left:50px;">
+        <div style="margin-left:50px;">
+        <i class="icofont-chart-line" style="font-size:25px">成交订单</i>
+        </div>
+        <hr class="layui-bg-green">
+        <canvas id="canvas"></canvas>
     </div>
 </body>
 </html>
+<script>
+    $(".qs").click(function () {
+        location.href = '/Reception/ShowOrder';
+    })
+    $(".cs").click(function () {
+        location.href = '/Finance/ShowBill';
+    })
+    $(".hs").click(function () {
+        location.href = '/Kitchen/ShowMenu';
+    })
+    $(".ls").click(function () {
+        location.href ='/Finance/ShowEarning';
+    })
+    var arr = [];
+    var Chartdata = [];
+
+    $.ajax({
+        url: "/Login/GetResult",
+        contentType: "application/json",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                Chartdata.push(data[i]);
+            }
+        }
+    });
+    $.ajax({
+        url: "/Login/GetArr",
+        contentType: "application/json",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                arr.push(data[i]);
+            }
+        }
+    });
+
+
+
+    var color = Chart.helpers.color;
+    var barChartData = {
+        labels: arr,
+        datasets: [{
+            borderColor: window.chartColors.green,
+            borderWidth: 1,
+            data: Chartdata
+        }]
+
+
+    };
+    window.onload = function () {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'line',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: '',
+                },
+                title: {
+                    display: false,
+                    text: ''
+                }
+            }
+        });
+
+
+    };
+</script>
