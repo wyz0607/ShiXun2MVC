@@ -13,7 +13,6 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using NPOI.XSSF.UserModel;
-using DAL;
 
 namespace Restaurant_Information_MVC.Controllers
 {
@@ -184,6 +183,10 @@ namespace Restaurant_Information_MVC.Controllers
             ms.Seek(0, SeekOrigin.Begin);
             return File(ms, "application/vnd.ms-excel", "菜品出售数量，以及成本价格.xls");
         }
+        /// <summary>
+        /// Excel导入
+        /// </summary>
+        /// <param name="file"></param>
         public void ExcelToLead(HttpPostedFileBase file)
         {
             for (int i = 0; i < Request.Files.Count; i++)
@@ -223,7 +226,7 @@ namespace Restaurant_Information_MVC.Controllers
                         }
                     }
                     sql = sql.Substring(0, sql.Length - 1) + ")";
-                    DBHelper.ExecuteNonQuery(sql);
+                    HttpClientHelper.Seng("get", "api/FinanceApi/ExcelToLead", sql);
                 }
             }
             Response.Write("<script>alert('导入成功!');location.href='/Finance/FinancialStatement'</script>");
