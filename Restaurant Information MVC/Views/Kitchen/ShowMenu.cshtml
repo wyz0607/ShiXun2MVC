@@ -11,11 +11,13 @@
 <script src="~/layui-v2.4.5/layui/layui.js"></script>
 
 <p>
-    
+
     <button class="layui-btn" onclick="location.href='/Kitchen/AddMenu'">
         <i class="layui-icon">&#xe608</i>新增菜式
     </button>
-    
+    <input type="hidden" id="pCount" value="@ViewBag.totaldata" />
+    <input type="hidden" id="pSize" value="6" />
+    <input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
     <span>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</span>
 </p>
 <br />
@@ -27,11 +29,11 @@
     <button class="layui-btn layui-btn-small layui-btn-normal" onclick="Sel()">查询</button>
 </p>
 
-<div class="container" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2">
+<div class="container" id="tb" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2">
 
     @foreach (var item in Model)
     {
-        <table class="col-lg-4" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">
+        <table class="col-lg-4" name="tr1" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">
             <tr>
                 <td colspan="5">
                     <img src="@item.MenuPhoto" style="width:100px;height:100px;" />
@@ -68,8 +70,9 @@
     }
 </div>
 
+<div id="test1" style="margin-left:500px"></div>
 
-<p>
+@*<p>
     <span>
         <span>当前第</span>
         <span id="currentindex">@ViewBag.currentindex</span>
@@ -84,7 +87,7 @@
     <button class="layui-btn" onclick="BtnDown()">
         <i class="layui-icon">下一页</i>
     </button>
-</p>
+</p>*@
 <script>
     function Sel() {
         location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
@@ -142,6 +145,9 @@
             }
         })
     }
+    function Upt(Id) {
+        location.href = '/Kitchen/UptMenu?id=' + Id;
+    }
     function Del(id, obj) {
 
         layui.use('layer', function () {
@@ -161,7 +167,71 @@
                 })
         })
     }
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
 
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            , count: Number($("#pCount").val()) //数据总数，从服务端得到
+            , limit: Number($("#pSize").val()) //每页显示条数
+            , prev: "上一页"
+            , next: "下一页"
+            , hash: "?pageIndex"
+            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            , jump: function (obj, first) {
+                if (!first) {
+                    //alert('第 ' + obj.curr + ' 页');
+                    //location.href = "/Reception/ShowOrder?pageIndex=" + obj.curr
+
+                    $.ajax({
+                        url: "/Kitchen/Menu?pageIndex=" + obj.curr,
+                        dataType: "json",
+                        success: function (data) {
+                            var tbody = '';
+                            for (var i in data) {
+                                tbody += '<table class="col-lg-4" name="tr1" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">'
+                                    + '<tr>'
+                                    + ' <td colspan="5">'
+                                    + '    <img src="'+data[i].MenuPhoto+'" style="width:100px;height:100px;" />'
+                                    + '  <div style="margin-left:20px;">' + data[i].MenuName +'</div>'
+                                    + '</td>'
+                                    + '<td>'
+                                    + '  <div style="float:right"><input value="'+data[i].MenuID+'" name="Deles" type="checkbox" /></div>'
+                                    + '<div> 菜式简介:' + data[i].MenuIntroduce +'</div>'
+                                    + '<div>'
+                                    + '  主要食材: ' + data[i].MenuIngredients
+                                    + '</div>'
+                                    + '<div>'
+                                    + '  所属菜系:' + data[i].MenuCuisine
+                                    + '</div>'
+                                    + '<div>'
+                                    + '  种类:' + data[i].MenuKind
+                                    + '</div>'
+                                    + '<div>'
+                                    + '  单价:' + data[i].UnitPrice
+                                    + '</div>'
+                                    + '<div>'
+                                    + '  销售量: ' + data[i].SalesVolume
+                                    + '</div>'
+                                    + '<br />'
+                                    + '<div>'
+                                    + '  <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="Upt(' + data[i].MenuID+')">菜式修改</button>'
+                                    + '<button class="layui-btn layui-btn-radius layui-btn-danger" onclick="Del('+data[i].MenuID+',this)">删除菜式</button>'
+                                    + '</div>'
+                                    + '</td>'
+                                    + '</tr>'
+                                    + '</table>';
+                            }
+                            $("[name=tr1]").remove();
+                            $("#tb").append(tbody);
+                        }
+                    })
+                }
+
+            }
+        });
+    });
 </script>
 
 
