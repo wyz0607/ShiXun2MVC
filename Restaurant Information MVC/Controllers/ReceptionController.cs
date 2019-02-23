@@ -12,19 +12,19 @@ namespace Restaurant_Information_MVC.Controllers
     public class ReceptionController : Controller
     {
         // GET: Reception
+        /// <summary>
+        /// 订单显示
+        /// </summary>
+        /// <param name="OrderId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public ActionResult ShowOrder(int OrderId=0, int pageIndex=1,int pageSize=3)
         {
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
-            //List<OrderViewModel> order = new List<OrderViewModel>() {
-            //    new OrderViewModel{ OrderID=1,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=2,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=3,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=4,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=5,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //};
             ViewBag.pCount = order.Count();
             if (OrderId==0)
             {
@@ -43,13 +43,6 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
-            //List<OrderViewModel> order = new List<OrderViewModel>() {
-            //    new OrderViewModel{ OrderID=1,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=2,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=3,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=4,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //    new OrderViewModel{ OrderID=5,UserID=1,TableID=1, OrderState=1, RepastTime="12:00", ScheduledTime="12:00", TotalPrice=2170.00, UserName="张三", UserPhone="17301622446"},
-            //};
             return Content(JsonConvert.SerializeObject(order.Skip((pageIndex-1)*pageSize).Take(pageSize)));
         }
 
@@ -85,13 +78,6 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWastes", null);
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
-            //List<WasteViewModel> wastes = new List<WasteViewModel>() {
-            //    new WasteViewModel(){  WasteID=1,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=2,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=3,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=4,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=5,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"}
-            //};
             ViewBag.pCount = wastes.Count();
             if (WasteId == 0)
             {
@@ -109,13 +95,6 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWastes", null);
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
-            //List<WasteViewModel> wastes = new List<WasteViewModel>() {
-            //    new WasteViewModel(){  WasteID=1,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=2,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=3,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=4,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"},
-            //    new WasteViewModel(){  WasteID=5,UserName="张三", WasteCause="太晚了，不去了", WasteMoney=1560.00, WasteTime="2019-2-18 16:34:00"}
-            //};
             return Content(JsonConvert.SerializeObject(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize)));
         }
 

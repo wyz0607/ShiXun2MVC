@@ -1,7 +1,124 @@
 ﻿
-@{
-    ViewBag.Title = "Show";
-}
+<!DOCTYPE html>
 
-<h2>Show</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show</title>
+    <link href="~/icofont/icofont.css" rel="stylesheet" />
+    <script src="~/Scripts/Chart.bundle.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+    <script src="~/layui/layui.js"></script>
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-index">
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 100}">
+            <dt class="qs"><i class="icofont-shopping-cart"></i></dt>
+            <dd>@ViewBag.OrderNum</dd>
+            <dd class="f12">今日订单数</dd>
+        </dl>
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 300}">
+            <dt class="cs"><i class="icofont-money"></i></dt>
+            <dd>@ViewBag.oneMoney</dd>
+            <dd class="f12">今日收入</dd>
+        </dl>
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 600}">
+            <dt class="hs"><i class="icofont-chicken"></i></dt>
+            <dd>@ViewBag.menu</dd>
+            <dd class="f12">菜式数量</dd>
+        </dl>
+        <dl data-am-scrollspy="{animation: 'slide-right', delay: 900}">
+            <dt class="ls"><i class="icofont-chart-bar-graph"></i></dt>
+            <dd>@ViewBag.money</dd>
+            <dd class="f12">历史收入</dd>
+        </dl>
+    </div>
+    <div id="container" style="width:600px;height:400px;margin-top:150px;margin-left:50px;">
+        <div style="margin-left:50px;">
+        <i class="icofont-chart-line" style="font-size:25px">成交订单</i>
+        </div>
+        <hr class="layui-bg-green">
+        <canvas id="canvas"></canvas>
+    </div>
+</body>
+</html>
+<script>
+    $(".qs").click(function () {
+        location.href = '/Reception/ShowOrder';
+    })
+    $(".cs").click(function () {
+        location.href = '/Finance/ShowBill';
+    })
+    $(".hs").click(function () {
+        location.href = '/Kitchen/ShowMenu';
+    })
+    $(".ls").click(function () {
+        location.href ='/Finance/ShowEarning';
+    })
+    var arr = [];
+    var Chartdata = [];
 
+    $.ajax({
+        url: "/Login/GetResult",
+        contentType: "application/json",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                Chartdata.push(data[i]);
+            }
+        }
+    });
+    $.ajax({
+        url: "/Login/GetArr",
+        contentType: "application/json",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                arr.push(data[i]);
+            }
+        }
+    });
+
+
+
+    var color = Chart.helpers.color;
+    var barChartData = {
+        labels: arr,
+        datasets: [{
+            borderColor: window.chartColors.green,
+            borderWidth: 1,
+            data: Chartdata
+        }]
+
+
+    };
+    window.onload = function () {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'line',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: '',
+                },
+                title: {
+                    display: false,
+                    text: ''
+                }
+            }
+        });
+
+
+    };
+</script>
