@@ -33,8 +33,8 @@ namespace Restaurant_Information_MVC.Controllers
             }
             else
             {
-                ViewBag.pCount = 1;
-                return View(order.Where(c=>c.OrderID==OrderId).ToList());
+               // ViewBag.pCount = 1;
+                return View(order.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c=>c.OrderID==OrderId).ToList());
             }
             
         }
@@ -60,8 +60,8 @@ namespace Restaurant_Information_MVC.Controllers
             }
             else
             {
-                ViewBag.pCount = 1;
-                return View(list.Where(c => c.OrderID == OrderId).ToList());
+               // ViewBag.pCount = 1;
+                return View(list.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.OrderID == OrderId).ToList());
             }
         }
 
@@ -86,8 +86,8 @@ namespace Restaurant_Information_MVC.Controllers
             }
             else
             {
-                ViewBag.pCount = 1;
-                return View(wastes.Where(c => c.WasteID == WasteId).ToList());
+                //ViewBag.pCount = 1;
+                return View(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.WasteID == WasteId).ToList());
             }
         }
 
