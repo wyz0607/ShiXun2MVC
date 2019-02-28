@@ -178,6 +178,7 @@
     <Compile Include="Models\BillViewModel.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\CtableViewModel.cs" />
+    <Compile Include="Models\Foods.cs" />
     <Compile Include="Models\FoodSelectionViewModel.cs" />
     <Compile Include="Models\GoodsViewModel.cs" />
     <Compile Include="Models\KitchenViewModel.cs" />
@@ -319,7 +320,12 @@
     <Content Include="Images\20190221094517大煮干丝.PNG" />
     <Content Include="Images\20190221094541麻婆豆腐.PNG" />
     <Content Include="Images\20190221115241醋溜白菜.PNG" />
+    <Content Include="Images\Hander.png" />
     <Content Include="Images\Img.jpg" />
+    <Content Include="Images\wxZF.png" />
+    <Content Include="Images\zfbZF.png" />
+    <Content Include="Images\微信.png" />
+    <Content Include="Images\支付宝.png" />
     <Content Include="i\app-icon72x72%402x.png" />
     <Content Include="i\examples\admin-chrome.png" />
     <Content Include="i\examples\admin-firefox.png" />
@@ -660,6 +666,7 @@
     <Content Include="Views\Finance\ShowCost.cshtml" />
     <Content Include="Views\Finance\ShowEarning.cshtml" />
     <Content Include="Views\Finance\FinancialStatement.cshtml" />
+    <Content Include="Views\Login\GetMoney.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
