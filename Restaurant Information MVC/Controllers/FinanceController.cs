@@ -121,7 +121,7 @@ namespace Restaurant_Information_MVC.Controllers
             blist = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             foreach (var item in iList)
             {
-                bvList = blist.Where(m => m.PaymentTime.Substring(0, 14) == DateTime.Now.ToString("yyyy年MM月") + item.ToString().PadLeft(2, '0') + "日").ToList();
+                bvList = blist.Where(m => m.PaymentTime.Substring(0, 11) == DateTime.Now.ToString("yyyy年MM月") + item.ToString().PadLeft(2, '0') + "日").ToList();
                 dList.Add(bvList.Sum(m => m.BillMoney));
             }
             return Content(JsonConvert.SerializeObject(dList));
