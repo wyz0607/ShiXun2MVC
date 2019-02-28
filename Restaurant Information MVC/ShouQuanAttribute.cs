@@ -14,7 +14,7 @@ namespace Restaurant_Information_MVC
             //如果未登陆 就跳转到登录页
             if (filterContext.HttpContext.Session["Name"]==null)
             {
-                filterContext.HttpContext.Response.Redirect("/Login/GetoneLogin");
+                filterContext.HttpContext.Response.Redirect("/Login/Index");
             }
         }
     }
