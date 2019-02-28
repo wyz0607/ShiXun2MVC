@@ -14,6 +14,7 @@ using System.Net.Mail;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
     public class WorkController : Controller
     {
 

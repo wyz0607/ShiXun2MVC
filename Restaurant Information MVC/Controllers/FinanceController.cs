@@ -16,6 +16,7 @@ using NPOI.XSSF.UserModel;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
     public class FinanceController : Controller
     {
         //静态化两个进货商品的成本价表
@@ -25,6 +26,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// 查询到所有商品的成本价
         /// </summary>
         /// <returns></returns>
+     
         public ActionResult ShowCost()
         {
             gList = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
@@ -36,6 +38,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <param name="name">名称</param>
         /// <returns></returns>
+      
         [HttpPost]
         public ActionResult ShowCost(string name)
         {
@@ -50,6 +53,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// 获取所有的账单信息
         /// </summary>
         /// <returns></returns>
+       
         public ActionResult ShowBill()
         {
             bList = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));

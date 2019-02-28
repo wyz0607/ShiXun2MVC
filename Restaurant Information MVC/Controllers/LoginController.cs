@@ -27,8 +27,6 @@ namespace Restaurant_Information_MVC.Controllers
                 Session["UserName"] = Name;
                 Session["UserID"] = user.UserID;
                 Response.Cookies["UserID"].Value = $"{user.UserID}";
-
-              
                 return Content("<script>location.href='/Login/Show'</script>");
             }
             else
@@ -37,12 +35,11 @@ namespace Restaurant_Information_MVC.Controllers
             }
             
         }
-
+        [ShouQuanAttribute]
         public ActionResult Show()
         {
             var time = DateTime.Now.ToString("yyyy年MM月dd日");
-           
-            
+        
             var num= HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + time,null);
             ViewBag.OrderNum = num;
             var oneMoney = HttpClientHelper.Seng("get", "api/Login/GetOneMoney?time=" + time, null);
