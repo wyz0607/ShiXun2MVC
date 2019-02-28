@@ -29,7 +29,7 @@ namespace Restaurant_Information_MVC.Controllers
                 Response.Cookies["UserID"].Value = $"{user.UserID}";
 
               
-                return View("Show");
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             else
             {
