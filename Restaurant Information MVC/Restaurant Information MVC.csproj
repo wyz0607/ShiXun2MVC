@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>C:\Users\hp\Desktop\NPOI_dll\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
@@ -164,13 +164,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="common.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KitchenController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ReceptionController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
-    <Compile Include="DBHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -189,6 +189,7 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShouQuanAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
@@ -288,14 +289,38 @@
     <Content Include="css\fontawesome-all.css" />
     <Content Include="css\fullcalendar.min.css" />
     <Content Include="css\fullcalendar.print.css" />
+    <Content Include="css\icofont.css" />
     <Content Include="css\shop.css" />
     <Content Include="css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\20190219090801微信图片_20181214181800.jpg" />
-    <Content Include="Images\Img.PNG" />
+    <Content Include="icofont\demo.html" />
+    <Content Include="icofont\fonts\icofont.svg" />
+    <Content Include="icofont\icofont.css" />
+    <Content Include="icofont\icofont.min.css" />
+    <Content Include="Images\20190220042642Img.PNG" />
+    <Content Include="Images\20190220044957糖醋鲤鱼.PNG" />
+    <Content Include="Images\20190220045543麻辣子鸡.PNG" />
+    <Content Include="Images\20190220045853醋溜白菜.PNG" />
+    <Content Include="Images\20190220050135盐水虾.PNG" />
+    <Content Include="Images\20190220050606菠萝咕噜肉.PNG" />
+    <Content Include="Images\20190220051007清蒸大闸蟹.PNG" />
+    <Content Include="Images\20190220075451盐水虾.PNG" />
+    <Content Include="Images\20190220075528糖醋鲤鱼.PNG" />
+    <Content Include="Images\20190221090025麻婆豆腐.PNG" />
+    <Content Include="Images\20190221090721拔丝芋头.PNG" />
+    <Content Include="Images\20190221091246回锅肉.PNG" />
+    <Content Include="Images\20190221091530土匪鸭.PNG" />
+    <Content Include="Images\20190221091843大煮干丝.PNG" />
+    <Content Include="Images\20190221092717沙茶牛肉.PNG" />
+    <Content Include="Images\20190221094306清炒鳝丝.PNG" />
+    <Content Include="Images\20190221094451菠萝咕噜肉.PNG" />
+    <Content Include="Images\20190221094517大煮干丝.PNG" />
+    <Content Include="Images\20190221094541麻婆豆腐.PNG" />
+    <Content Include="Images\20190221115241醋溜白菜.PNG" />
+    <Content Include="Images\Img.jpg" />
     <Content Include="i\app-icon72x72%402x.png" />
     <Content Include="i\examples\admin-chrome.png" />
     <Content Include="i\examples\admin-firefox.png" />
@@ -586,7 +611,12 @@
     <Content Include="layui\font\iconfont.ttf" />
     <Content Include="layui\font\iconfont.woff" />
     <Content Include="css\app.less" />
+    <Content Include="icofont\fonts\icofont.eot" />
+    <Content Include="icofont\fonts\icofont.ttf" />
+    <Content Include="icofont\fonts\icofont.woff" />
+    <Content Include="icofont\fonts\icofont.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Chart.bundle.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -601,6 +631,7 @@
     <Content Include="Scripts\layui.all.js" />
     <Content Include="Scripts\layui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\utils.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -634,6 +665,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\ggg\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

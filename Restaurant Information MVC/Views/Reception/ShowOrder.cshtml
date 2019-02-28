@@ -66,8 +66,6 @@
             , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
             , jump: function (obj, first) {
                 if (!first) {
-                    //alert('第 ' + obj.curr + ' 页');
-                    //location.href = "/Reception/ShowOrder?pageIndex=" + obj.curr
 
                     $.ajax({
                         url: "/Reception/Order?pageIndex=" + obj.curr,

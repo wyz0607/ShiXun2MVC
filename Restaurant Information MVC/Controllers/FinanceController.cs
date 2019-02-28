@@ -13,10 +13,10 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using NPOI.XSSF.UserModel;
-using DAL;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
     public class FinanceController : Controller
     {
         //静态化两个进货商品的成本价表
@@ -26,6 +26,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// 查询到所有商品的成本价
         /// </summary>
         /// <returns></returns>
+     
         public ActionResult ShowCost()
         {
             gList = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
@@ -37,6 +38,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <param name="name">名称</param>
         /// <returns></returns>
+      
         [HttpPost]
         public ActionResult ShowCost(string name)
         {
@@ -51,6 +53,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// 获取所有的账单信息
         /// </summary>
         /// <returns></returns>
+       
         public ActionResult ShowBill()
         {
             bList = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
@@ -101,11 +104,13 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         public ActionResult GetDate()
         {
-
             string dt = DateTime.Now.ToString("dd");
-            for (int i = Convert.ToInt32(dt); i > 0; i--)
+            if (iList.Count==0)
             {
-                iList.Add(i);
+                for (int i = Convert.ToInt32(dt.TrimStart('0')); i > 0; i--)
+                {
+                    iList.Add(i);
+                }
             }
             return Content(JsonConvert.SerializeObject(iList));
         }
@@ -120,7 +125,7 @@ namespace Restaurant_Information_MVC.Controllers
             blist = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             foreach (var item in iList)
             {
-                bvList = blist.Where(m => m.PaymentTime.Substring(7, 2) == item.ToString()).ToList();
+                bvList = blist.Where(m => m.PaymentTime.Substring(0, 11) == DateTime.Now.ToString("yyyy年MM月") + item.ToString().PadLeft(2, '0') + "日").ToList();
                 dList.Add(bvList.Sum(m => m.BillMoney));
             }
             return Content(JsonConvert.SerializeObject(dList));
@@ -184,6 +189,10 @@ namespace Restaurant_Information_MVC.Controllers
             ms.Seek(0, SeekOrigin.Begin);
             return File(ms, "application/vnd.ms-excel", "菜品出售数量，以及成本价格.xls");
         }
+        /// <summary>
+        /// Excel导入
+        /// </summary>
+        /// <param name="file"></param>
         public void ExcelToLead(HttpPostedFileBase file)
         {
             for (int i = 0; i < Request.Files.Count; i++)
@@ -223,7 +232,7 @@ namespace Restaurant_Information_MVC.Controllers
                         }
                     }
                     sql = sql.Substring(0, sql.Length - 1) + ")";
-                    DBHelper.ExecuteNonQuery(sql);
+                    HttpClientHelper.Seng("post", "api/FinanceApi/ExcelToLead/?sql=" + sql, sql);
                 }
             }
             Response.Write("<script>alert('导入成功!');location.href='/Finance/FinancialStatement'</script>");
