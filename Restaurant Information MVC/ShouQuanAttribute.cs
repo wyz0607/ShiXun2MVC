@@ -12,7 +12,7 @@ namespace Restaurant_Information_MVC
         {
             // base.OnAuthorization(filterContext);
             //如果未登陆 就跳转到登录页
-            if (filterContext.HttpContext.Session["Name"]==null)
+            if (filterContext.HttpContext.Session["UserName"] ==null)
             {
                 filterContext.HttpContext.Response.Redirect("/Login/Index");
             }
