@@ -156,7 +156,9 @@
                         data: { userInfo: o },
                         type: "post",
                         success: function (data) {
-                            location.reload();
+                            layer.alert("修改成功");
+                            location.href = "/Login/Index";
+
                         }
                     })
                 }, btn2: function (index) { }
