@@ -77,7 +77,6 @@
             url: "/Login/QuXiao?value=1",
             dataType: "text",
             success: function (data) {
-
                     //改为自己项目的ip地址
                     location.href = "http://10.1.155.2:8080/#/goods";
                 
@@ -92,8 +91,9 @@
             url: "/Login/GetMa?name=" + name,
             dataType: "text",
             success: function (data) {
-                if (data=="1") {
-                    console.log(1);
+                if (data == "1") {
+                    
+                    location.href ='/Kitchen/Gettables'
                 }
                 else {
                     alert(data)
