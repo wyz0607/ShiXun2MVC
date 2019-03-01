@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <td>邮箱</td>
-            <td><input id="Phone" type="text" @*onchange="Iphone()"*@ /></td>
+            <td><input id="Phone" type="text" onchange="Iphone()" /></td>
             <td><input id="btnyan" class="layui-btn layui-btn-normal" type="button" name="yzm" value="获取验证码" /></td>
             <td>
                 <label id="phoneremark" style="color:red"></label>
@@ -90,15 +90,17 @@
 
 
 
-    //function Iphone() {
-    //    if ($("#Phone").val() != $("#Userphone").val()) {
-    //        $("#phoneremark").text("输入的手机号与预存的手机号不一致")
-    //        return;
-    //    }
-    //    else {
-    //        $("#phoneremark").hide();
-    //    }
-    //}
+    function Iphone() {
+        alert($("#Phone").val());
+        alert($("#Userphone").val());
+        if ($("#Phone").val() != $("#Userphone").val()) {
+            $("#phoneremark").text("输入的邮箱与预存的邮箱不一致")
+            return;
+        }
+        else {
+            $("#phoneremark").text("");
+        }
+    }
 
     function Upt(id) {
         if ($("#Text1").val() == null || $("#Phone").val() == null || $("#Yan1").val() == null || $("#Phone").val() == null) {
@@ -206,6 +208,11 @@
     }
     //事件处理函数
     $("#btnyan").click(function () {
+        if ($("#Phone").val() != $("#Userphone").val()) {
+            $("#phoneremark").text("输入的邮箱与预存的邮箱不一致")
+            return;
+        }
+        
         var dianhua = $("#Phone").val();
 
         layui.use('layer', function () {

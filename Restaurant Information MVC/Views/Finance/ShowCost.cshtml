@@ -13,11 +13,10 @@
         <input type="hidden" id="pCount" value="@ViewBag.pCount" />
         <input type="hidden" id="pSize" value="@ViewBag.pSize" />
         <input type="hidden" id="pIndex" value="@ViewBag.pIndex" />
-        <span>菜式名称：</span>
-        <input type="text" name="name" placeholder="请输入菜式名称" autocomplete="off" class="layui-input" style="width:300px">
-        <input id="Submit1" type="submit" value="查询" class="layui-btn layui-btn-normal" />
-        </form>
-        <table class="layui-table" id="tb">
+        <input type="text" name="name" placeholder="请输入菜式名称" autocomplete="off" class="layui-input" style="width:300px;float:left;margin-left:300px">
+        <input id="Submit1" type="submit" value="查询" style="float:left" class="layui-btn layui-btn-normal" />
+    </form>
+        <table style="margin-top:70px" class="layui-table" id="table">
             <colgroup>
                 <col width="150">
                 <col width="200">
@@ -50,8 +49,6 @@
 </div>
 <div id="test1" style="margin-left:500px"></div>
 <script>
-    console.log($("#pCount").val(), $("#pSize").val());
-    var name1 = $("[name=name]").val();
     layui.use('laypage', function () {
         var laypage = layui.laypage;
 
@@ -68,7 +65,7 @@
                 if (!first) {
 
                     $.ajax({
-                        url: "/Finance/Cost?pageIndex=" + obj.curr + "&name=" + name1,
+                        url: "/Finance/Cost?pageIndex=" + obj.curr,
                         dataType: "json",
                         success: function (data) {
                             var tbody = '';
@@ -80,12 +77,11 @@
                                     + '<td>' + data[i].SellingPrice + '</td>'
                                     + '<td>' + data[i].CostPrice + '</td>'
                                     + '<td>' + data[i].GoodsProfit + '</td>'
-                                    
                                     + '</tr>'
                                     + '</tbody>';
                             }
                             $("[name=tr1]").remove();
-                            $("#tb").append(tbody);
+                            $("#table").append(tbody);
                         }
                     })
                 }

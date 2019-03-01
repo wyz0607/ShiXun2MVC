@@ -24,7 +24,7 @@ namespace Restaurant_Information_MVC.Controllers
             var result= HttpClientHelper.Seng("get","api/Login/Login?UserName="+Name+"&Pwd="+Password+"",null);
             UserInfo user = JsonConvert.DeserializeObject<UserInfo>(result);
 
-            if (result!=null)
+            if (result!="null")
             {
                 FormsAuthentication.SetAuthCookie(Name, true);
                 Session["UserName"] = Name;
@@ -43,7 +43,7 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Show()
         {
             var time = DateTime.Now.ToString("yyyy年MM月dd日");
-        
+            //var time = "2019年02月28日";
             var num= HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + time,null);
             ViewBag.OrderNum = num.ToString();
             var oneMoney = HttpClientHelper.Seng("get", "api/Login/GetOneMoney?time=" + time, null);
