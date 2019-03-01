@@ -124,7 +124,7 @@ namespace Restaurant_Information_MVC.Controllers
             int n=Convert.ToInt32(HttpClientHelper.Seng("post", "api/ReceptionApi/AddValidationNum/?num="+str, str));
             if (n > 0)
             {
-                Response.Write("<script>alert('添加成功！')</script>");
+                Response.Write("");
             }
             return View("EatingYards");
         }
