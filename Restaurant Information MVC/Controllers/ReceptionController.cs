@@ -120,6 +120,23 @@ namespace Restaurant_Information_MVC.Controllers
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
             return Content(JsonConvert.SerializeObject(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize)));
         }
-
+        /// <summary>
+        /// 生成就餐码视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EatingYards()
+        {
+            return View();
+        }
+        //生成随机数函数中从strchar 数组中随机抽取
+        //字母区分大小写
+        //参数n为生成随机数的位数,一般取四位
+        public ActionResult RandomNum() //
+        {
+            Random rm = new Random();
+            string str = rm.Next(100000, 1000000).ToString();
+            Session["str"] = str;
+            return View("EatingYards");
+        }
     }
 }

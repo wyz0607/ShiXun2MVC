@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "EatingYards";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<h2>EatingYards</h2>
+
+<input id="Button1" type="button" value="生成验证码" onclick="yzm()" />
+<label id="lab">
+    @if (Session["str"] != "" || Session["str"] != null)
+    {
+        @Session["str"]
+    }
+    else {
+        
+    }</label>
+
+
+<script>
+    function yzm() {
+        location.href = '/Reception/RandomNum';
+    }
+</script>
