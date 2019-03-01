@@ -59,8 +59,16 @@ namespace Restaurant_Information_MVC.Controllers
             }
             else
             {
-                ViewBag.pCount = 1;
-                return View(list.Where(c => c.OrderID == OrderId).ToList());
+                var listOrder = list.Where(c => c.OrderID == OrderId).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                if (listOrder.Count()==0)
+                {
+                    ViewBag.pCount = 1;
+                    return View(listOrder);
+                }
+                else
+                {
+                    return View(listOrder);
+                }
             }
         }
 
