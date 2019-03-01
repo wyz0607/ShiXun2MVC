@@ -16,7 +16,7 @@ using NPOI.XSSF.UserModel;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-   // [ShouQuanAttribute]
+   [ShouQuanAttribute]
     [Authorize]
     public class FinanceController : Controller
     {
