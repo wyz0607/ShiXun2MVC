@@ -56,10 +56,58 @@
         <img src="~/Images/支付宝.png" alt="" style="height:50px;width:100px; margin-left:100px;margin-top:20px;" id="Zfb" />
         <img src="~/Images/wxZF.png" alt="Alternate Text" style="height:300px;width:300px;display:none" id="WZ" />
         <img src="~/Images/zfbZF.png" alt="Alternate Text" style="height:300px;width:300px;display:none" id="ZZ" />
+        <input id="Button1" type="button" value="支付完成" class="layui-btn layui-btn-fluid" style="margin-top:10px;" />
+        <input id="Button2" type="button" value="取消订单" class="layui-btn layui-btn-fluid" style="margin-top:10px;" />
+        
+    </div>
+    <div id="JiuCan" style="display:none;height:200px;width:300px;border:1px solid black;margin-top:-250px;margin-left:200px;">
+        <span id="Guan" style="float:right;cursor:pointer;margin-top:10px;margin-right:10px;">X</span>
+            <span style="font-size:10px">就餐码:</span>
+            <div>
+                <input id="Jiu" class="layui-input" type="text" placeholder="请输入就餐码" autocomplete="off" lay-verify="title">
+                <input id="Button3" type="button" value="立即就餐" class="layui-btn layui-btn-normal"  />
+            </div>
     </div>
 </body>
 </html>
 <script>
+
+    $("#Button2").click(function () {
+        $.ajax({
+            url: "/Login/QuXiao?value=1",
+            dataType: "text",
+            success: function (data) {
+
+                    //改为自己项目的ip地址
+                    location.href = "http://10.1.155.2:8080/#/goods";
+                
+            }
+        })
+    })
+
+    $("#Button3").click(function () {
+        var name = $("#Jiu").val();
+        alert(name);
+        $.ajax({
+            url: "/Login/GetMa?name=" + name,
+            dataType: "text",
+            success: function (data) {
+                if (data=="1") {
+                    console.log(1);
+                }
+                else {
+                    alert(data)
+                }
+            }
+        })
+    })
+
+    $("#Button1").click(function () {
+        $("#JiuCan").show();
+    })
+    $("#Guan").click(function () {
+        $("#JiuCan").hide();
+    })
     $("#Wx").click(function () {
         $("#WZ").show();
         $("#ZZ").hide();
