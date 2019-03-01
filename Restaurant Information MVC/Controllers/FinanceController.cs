@@ -17,6 +17,7 @@ using NPOI.XSSF.UserModel;
 namespace Restaurant_Information_MVC.Controllers
 {
     [ShouQuanAttribute]
+    [Authorize]
     public class FinanceController : Controller
     {
         //静态化两个进货商品的成本价表
@@ -27,11 +28,29 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <returns></returns>
      
-        public ActionResult ShowCost()
+        public ActionResult ShowCost(int pageindex=1,int pagesize=5,string name="")
         {
             gList = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
             glist = gList;
-            return View(gList);
+            if (name == null)
+            {
+                ViewBag.currentindex = pageindex;
+                ViewBag.totaldata = gList.Count;
+                ViewBag.totalpage = Math.Round((glist.Count() * 1.0) / 3);
+                ViewBag.pCount = glist.Count();
+                ViewBag.pSize = pagesize;
+                return View(glist.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList());
+            }
+            else
+            {
+                ViewBag.currentindex = pageindex;
+                ViewBag.totaldata = gList.Count;
+                ViewBag.totalpage = Math.Round((gList.Count() * 1.0) / 3);
+                var list = glist.Where(c => c.GoodsName.Contains(name));
+                ViewBag.pCount = list.Count();
+                ViewBag.pSize = pagesize;
+                return View(list.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList());
+            }
         }
         /// <summary>
         /// 按照名称查询结果
@@ -39,12 +58,26 @@ namespace Restaurant_Information_MVC.Controllers
         /// <param name="name">名称</param>
         /// <returns></returns>
       
-        [HttpPost]
-        public ActionResult ShowCost(string name)
+        //[HttpPost]
+        //public ActionResult ShowCost(int pageindex=1,int pagesize=3,string name="")
+        //{
+
+        //    gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
+            
+        //        ViewBag.currentindex = pageindex;
+        //        ViewBag.totaldata = gList.Count;
+        //        ViewBag.totalpage = Math.Round((gList.Count() * 1.0) / 3);
+        //    ViewBag.pCount = gList.Count();
+        //        return View(gList.Skip((pageindex-1)*pagesize).Take(pagesize).ToList());
+            
+           
+        //}
+        public ActionResult Cost(int pageIndex = 1, int pagesize = 3,string name="")
         {
             gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
-            return View(gList);
+            return Content(JsonConvert.SerializeObject(gList.Skip((pageIndex - 1) * pagesize).Take(pagesize).ToList()));
         }
+
         //静态化两个账单的list集合
         public static List<BillViewModel> bList;
         public static List<BillViewModel> blist;
@@ -60,6 +93,8 @@ namespace Restaurant_Information_MVC.Controllers
             blist = bList.OrderByDescending(m => m.BillID).ToList();
             return View(blist);
         }
+
+      
         /// <summary>
         /// 查询
         /// </summary>

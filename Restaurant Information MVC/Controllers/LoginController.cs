@@ -5,8 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using Restaurant_Information_MVC.Models;
 using Newtonsoft.Json;
+using System.Web.Security;
 namespace Restaurant_Information_MVC.Controllers
 {
+  
     public class LoginController : Controller
     {
         // GET: Login
@@ -24,6 +26,7 @@ namespace Restaurant_Information_MVC.Controllers
 
             if (result!=null)
             {
+                FormsAuthentication.SetAuthCookie(Name, true);
                 Session["UserName"] = Name;
                 Session["UserID"] = user.UserID;
                 Response.Cookies["UserID"].Value = $"{user.UserID}";
@@ -35,15 +38,16 @@ namespace Restaurant_Information_MVC.Controllers
             }
             
         }
+        [Authorize]
         [ShouQuanAttribute]
         public ActionResult Show()
         {
             var time = DateTime.Now.ToString("yyyy年MM月dd日");
         
             var num= HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + time,null);
-            ViewBag.OrderNum = num;
+            ViewBag.OrderNum = num.ToString();
             var oneMoney = HttpClientHelper.Seng("get", "api/Login/GetOneMoney?time=" + time, null);
-            ViewBag.oneMoney = oneMoney;
+            ViewBag.oneMoney = oneMoney.ToString();
             var menu = HttpClientHelper.Seng("get", "api/Login/GetMenuNum", null);
             ViewBag.menu = menu;
             var money = HttpClientHelper.Seng("get", "api/Login/GetAllMoney", null);

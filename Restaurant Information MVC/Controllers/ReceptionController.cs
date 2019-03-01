@@ -10,6 +10,7 @@ using Restaurant_Information_MVC.Models;
 namespace Restaurant_Information_MVC.Controllers
 {
     [ShouQuanAttribute]
+    [Authorize]
     public class ReceptionController : Controller
     {
         // GET: Reception
@@ -26,20 +27,27 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
-            ViewBag.pCount = order.Count();
+           
             if (OrderId==0)
             {
+                ViewBag.pIndex = pageIndex;
+                ViewBag.pSize = pageSize;
+                ViewBag.pCount = order.Count();
                 return View(order.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             }
             else
             {
-               // ViewBag.pCount = 1;
+                ViewBag.pIndex = pageIndex;
+                ViewBag.pSize = pageSize;
+               
+                 List<OrderViewModel> list = order.Where(c => c.OrderID == OrderId).ToList();
+                ViewBag.pCount = list.Count();
                 return View(order.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c=>c.OrderID==OrderId).ToList());
             }
             
         }
 
-        public ActionResult Order(int OrderId = 0, int pageIndex = 1, int pageSize = 3)
+        public ActionResult Order(int OrderId=0, int pageIndex = 1, int pageSize = 3)
         {
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
@@ -49,19 +57,26 @@ namespace Restaurant_Information_MVC.Controllers
 
         public ActionResult ShowFoodSelection(int OrderId=0,int pageIndex=1,int pageSize=3)
         {
-            ViewBag.pIndex = pageIndex;
-            ViewBag.pSize = pageSize;
+           
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowFoodSelection", null);
             List<FoodSelectionViewModel> list = JsonConvert.DeserializeObject<List<FoodSelectionViewModel>>(json);
             ViewBag.pCount = list.Count();
             if (OrderId == 0)
             {
+
+                ViewBag.pIndex = pageIndex;
+                ViewBag.pSize = pageSize;
+                ViewBag.pCount = list.Count();
                 return View(list.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             }
             else
             {
-               // ViewBag.pCount = 1;
-                return View(list.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.OrderID == OrderId).ToList());
+                List<FoodSelectionViewModel> list1 = list.Where(c => c.OrderID == OrderId).ToList();
+                ViewBag.pIndex = pageIndex;
+                ViewBag.pSize = pageSize;
+                // ViewBag.pCount = 1;
+                ViewBag.pCount = list1.Count();
+                return View(list1.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.OrderID == OrderId).ToList());
             }
         }
 
@@ -79,15 +94,22 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWastes", null);
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
-            ViewBag.pCount = wastes.Count();
+            
             if (WasteId == 0)
             {
+                ViewBag.pIndex = pageIndex;
+                ViewBag.pSize = pageSize;
+                ViewBag.pCount = wastes.Count();
                 return View(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             }
             else
             {
+                ViewBag.pIndex = pageIndex;
+                ViewBag.pSize = pageSize;
+                List<WasteViewModel> list1 = wastes.Where(c => c.WasteID == WasteId).ToList();
                 //ViewBag.pCount = 1;
-                return View(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.WasteID == WasteId).ToList());
+                ViewBag.pCount = list1.Count();
+                return View(list1.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.WasteID == WasteId).ToList());
             }
         }
 
