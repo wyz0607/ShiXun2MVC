@@ -72,10 +72,11 @@ namespace Restaurant_Information_MVC.Controllers
             
            
         //}
-        public ActionResult Cost(int pageIndex = 1, int pagesize = 3,string name="")
+        public ActionResult Cost(int pageIndex = 1, int pagesize = 5,string name="")
         {
-            gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
-            return Content(JsonConvert.SerializeObject(gList.Skip((pageIndex - 1) * pagesize).Take(pagesize).ToList()));
+            //gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
+            var list = gList.Skip((pageIndex - 1) * pagesize).Take(pagesize).ToList();
+            return Content(JsonConvert.SerializeObject(list));
         }
 
         //静态化两个账单的list集合
@@ -87,14 +88,25 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <returns></returns>
        
-        public ActionResult ShowBill()
+        public ActionResult ShowBill(int pageIndex = 1, int pagesize = 5)
         {
             bList = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             blist = bList.OrderByDescending(m => m.BillID).ToList();
-            return View(blist);
+            ViewBag.pIndex = pageIndex;
+            ViewBag.pSize = pagesize;
+            ViewBag.pCount = bList.Count();
+            return View(bList.Skip((pageIndex-1)*pagesize).Take(pagesize));
         }
 
-      
+        public ActionResult Bill(int pageIndex = 1, int pagesize = 5)
+        {
+            ViewBag.pIndex = pageIndex;
+            ViewBag.pSize = pagesize;
+            ViewBag.pCount = bList.Count();
+            return Content(JsonConvert.SerializeObject(bList.Skip((pageIndex - 1) * pagesize).Take(pagesize)));
+        }
+
+
         /// <summary>
         /// 查询
         /// </summary>
@@ -103,25 +115,29 @@ namespace Restaurant_Information_MVC.Controllers
         /// <param name="name">姓名</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ShowBill(string begin, string end, string name)
+        public ActionResult ShowBill(string begin, string end, string name, int pageIndex = 1, int pagesize = 5)
         {
             if (begin != "" && end != "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList();
+                ViewBag.pCount = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList().Count();
             }
             else if (begin == "" && end != "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList();
+                ViewBag.pCount = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) <= Convert.ToDateTime(end)).ToList().Count();
             }
             else if (begin != "" && end == "")
             {
                 bList = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin)).ToList();
+                ViewBag.pCount = blist.Where(m => m.UserName.Contains(name) && Convert.ToDateTime(m.PaymentTime) >= Convert.ToDateTime(begin)).ToList().Count();
             }
             else
             {
                 bList = blist.Where(m => m.UserName.Contains(name)).ToList();
+                ViewBag.pCount = blist.Where(m => m.UserName.Contains(name)).ToList().Count();
             }
-            return View(bList);
+            return View(bList.Skip((pageIndex - 1) * pagesize).Take(pagesize));
         }
         /// <summary>
         /// 收入消费查询视图
@@ -185,10 +201,19 @@ namespace Restaurant_Information_MVC.Controllers
         /// 财务报表视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult FinancialStatement()
+        public ActionResult FinancialStatement(int pageIndex=1,int pageSize=5)
         {
             glist = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
-            return View(glist);
+            ViewBag.pIndex = pageIndex;
+            ViewBag.pSize = pageSize;
+            ViewBag.pCount = glist.Count();
+            return View(glist.Skip((pageIndex - 1) * pageSize).Take(pageSize));
+        }
+        public ActionResult Statement(int pageIndex = 1, int pagesize = 5)
+        {
+            ViewBag.pIndex = pageIndex;
+            ViewBag.pSize = pagesize;
+            return Content(JsonConvert.SerializeObject(glist.Skip((pageIndex - 1) * pagesize).Take(pagesize)));
         }
         /// <summary>
         /// Excel导出
