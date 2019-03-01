@@ -9,8 +9,6 @@ using Restaurant_Information_MVC.Models;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-    [ShouQuanAttribute]
-    [Authorize]
     public class ReceptionController : Controller
     {
         // GET: Reception
@@ -27,27 +25,20 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
-           
+            ViewBag.pCount = order.Count();
             if (OrderId==0)
             {
-                ViewBag.pIndex = pageIndex;
-                ViewBag.pSize = pageSize;
-                ViewBag.pCount = order.Count();
                 return View(order.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             }
             else
             {
-                ViewBag.pIndex = pageIndex;
-                ViewBag.pSize = pageSize;
-               
-                 List<OrderViewModel> list = order.Where(c => c.OrderID == OrderId).ToList();
-                ViewBag.pCount = list.Count();
-                return View(order.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c=>c.OrderID==OrderId).ToList());
+                ViewBag.pCount = 1;
+                return View(order.Where(c=>c.OrderID==OrderId).ToList());
             }
             
         }
 
-        public ActionResult Order(int OrderId=0, int pageIndex = 1, int pageSize = 3)
+        public ActionResult Order(int OrderId = 0, int pageIndex = 1, int pageSize = 3)
         {
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
@@ -57,26 +48,27 @@ namespace Restaurant_Information_MVC.Controllers
 
         public ActionResult ShowFoodSelection(int OrderId=0,int pageIndex=1,int pageSize=3)
         {
-           
+            ViewBag.pIndex = pageIndex;
+            ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowFoodSelection", null);
             List<FoodSelectionViewModel> list = JsonConvert.DeserializeObject<List<FoodSelectionViewModel>>(json);
             ViewBag.pCount = list.Count();
             if (OrderId == 0)
             {
-
-                ViewBag.pIndex = pageIndex;
-                ViewBag.pSize = pageSize;
-                ViewBag.pCount = list.Count();
                 return View(list.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             }
             else
             {
-                List<FoodSelectionViewModel> list1 = list.Where(c => c.OrderID == OrderId).ToList();
-                ViewBag.pIndex = pageIndex;
-                ViewBag.pSize = pageSize;
-                // ViewBag.pCount = 1;
-                ViewBag.pCount = list1.Count();
-                return View(list1.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.OrderID == OrderId).ToList());
+                var listOrder = list.Where(c => c.OrderID == OrderId).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                if (listOrder.Count()==0)
+                {
+                    ViewBag.pCount = 1;
+                    return View(listOrder);
+                }
+                else
+                {
+                    return View(listOrder);
+                }
             }
         }
 
@@ -94,22 +86,15 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWastes", null);
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
-            
+            ViewBag.pCount = wastes.Count();
             if (WasteId == 0)
             {
-                ViewBag.pIndex = pageIndex;
-                ViewBag.pSize = pageSize;
-                ViewBag.pCount = wastes.Count();
                 return View(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             }
             else
             {
-                ViewBag.pIndex = pageIndex;
-                ViewBag.pSize = pageSize;
-                List<WasteViewModel> list1 = wastes.Where(c => c.WasteID == WasteId).ToList();
-                //ViewBag.pCount = 1;
-                ViewBag.pCount = list1.Count();
-                return View(list1.Skip((pageIndex - 1) * pageSize).Take(pageSize).Where(c => c.WasteID == WasteId).ToList());
+                ViewBag.pCount = 1;
+                return View(wastes.Where(c => c.WasteID == WasteId).ToList());
             }
         }
 
@@ -120,6 +105,28 @@ namespace Restaurant_Information_MVC.Controllers
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
             return Content(JsonConvert.SerializeObject(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize)));
         }
-
+        /// <summary>
+        /// 生成就餐码视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EatingYards()
+        {
+            return View();
+        }
+        //生成随机数函数中从strchar 数组中随机抽取
+        //字母区分大小写
+        //参数n为生成随机数的位数,一般取四位
+        public ActionResult RandomNum() //
+        {
+            Random rm = new Random();
+            string str = rm.Next(100000, 1000000).ToString();
+            Session["str"] = str;
+            int n=Convert.ToInt32(HttpClientHelper.Seng("post", "api/ReceptionApi/AddValidationNum/?num="+str, str));
+            if (n > 0)
+            {
+                Response.Write("");
+            }
+            return View("EatingYards");
+        }
     }
 }
