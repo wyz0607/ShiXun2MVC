@@ -122,6 +122,10 @@ namespace Restaurant_Information_MVC.Controllers
             string str = rm.Next(100000, 1000000).ToString();
             Session["str"] = str;
             int n=Convert.ToInt32(HttpClientHelper.Seng("post", "api/ReceptionApi/AddValidationNum/?num="+str, str));
+            if (n > 0)
+            {
+                Response.Write("");
+            }
             return View("EatingYards");
         }
     }

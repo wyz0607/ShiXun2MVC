@@ -669,7 +669,6 @@
     <Content Include="Views\Finance\ShowEarning.cshtml" />
     <Content Include="Views\Finance\FinancialStatement.cshtml" />
     <Content Include="Views\Login\GetMoney.cshtml" />
-    <Content Include="Views\Reception\EatingYards.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
