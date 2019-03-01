@@ -109,5 +109,22 @@ namespace Restaurant_Information_MVC.Controllers
             }
             return Content(JsonConvert.SerializeObject(getDay));
         }
+
+        public ActionResult GetMoney(int money,string foods)
+        {
+            List<Foods> myFoods = new List<Foods>();
+            Session["Money"] = money;
+            var cai = foods.Split(';');
+            for (int i = 0; i < cai.Length-1; i++)
+            {
+                var select= cai[i].Split(',');
+                Foods foo = new Foods();
+                foo.Name = select[0];
+                foo.Num = Convert.ToInt32(select[1]);
+                foo.Price = Convert.ToInt32(select[2]);
+                myFoods.Add(foo);
+            }
+            return View(myFoods);
+        }
     }
 }
