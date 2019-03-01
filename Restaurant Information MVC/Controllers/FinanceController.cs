@@ -16,7 +16,7 @@ using NPOI.XSSF.UserModel;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-    [ShouQuanAttribute]
+   // [ShouQuanAttribute]
     [Authorize]
     public class FinanceController : Controller
     {
@@ -34,18 +34,18 @@ namespace Restaurant_Information_MVC.Controllers
             glist = gList;
             if (name == null)
             {
-                ViewBag.currentindex = pageindex;
+                ViewBag.pIndex = pageindex;
                 ViewBag.totaldata = gList.Count;
-                ViewBag.totalpage = Math.Round((glist.Count() * 1.0) / 3);
+                ViewBag.totalpage = Math.Round((glist.Count() * 1.0) / 5);
                 ViewBag.pCount = glist.Count();
                 ViewBag.pSize = pagesize;
                 return View(glist.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList());
             }
             else
             {
-                ViewBag.currentindex = pageindex;
+                ViewBag.pIndex = pageindex;
                 ViewBag.totaldata = gList.Count;
-                ViewBag.totalpage = Math.Round((gList.Count() * 1.0) / 3);
+                ViewBag.totalpage = Math.Round((gList.Count() * 1.0) / 5);
                 var list = glist.Where(c => c.GoodsName.Contains(name));
                 ViewBag.pCount = list.Count();
                 ViewBag.pSize = pagesize;
@@ -72,10 +72,17 @@ namespace Restaurant_Information_MVC.Controllers
             
            
         //}
-        public ActionResult Cost(int pageIndex = 1, int pagesize = 3,string name="")
+        public ActionResult Cost(int pageIndex = 1, int pagesize = 5,string name="")
         {
-            gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
-            return Content(JsonConvert.SerializeObject(gList.Skip((pageIndex - 1) * pagesize).Take(pagesize).ToList()));
+            if (name == null)
+            {
+                return Content(JsonConvert.SerializeObject(gList.Skip((pageIndex - 1) * pagesize).Take(pagesize).ToList()));
+            }
+            else
+            {
+                gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
+                return Content(JsonConvert.SerializeObject(gList.Skip((pageIndex - 1) * pagesize).Take(pagesize).ToList()));
+            }
         }
 
         //静态化两个账单的list集合

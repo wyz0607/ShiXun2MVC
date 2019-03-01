@@ -9,8 +9,8 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-    [ShouQuanAttribute]
-    [Authorize]
+   // [ShouQuanAttribute]
+  //  [Authorize]
     public class KitchenController : Controller
     {
         // GET: Kitchen
@@ -145,6 +145,15 @@ namespace Restaurant_Information_MVC.Controllers
             return View(kit);
 
         }
+        public ActionResult Gettables()
+        {
+            string str = HttpClientHelper.Seng("get", "api/KitchensApi/GetCtables", null);
+            List<CtableViewModel> ctable = JsonConvert.DeserializeObject<List<CtableViewModel>>(str);
+            return View(ctable);
+            
+        }
+       
 
     }
+   
 }
