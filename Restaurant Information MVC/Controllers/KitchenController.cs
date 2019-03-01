@@ -9,6 +9,8 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
+    [Authorize]
     public class KitchenController : Controller
     {
         // GET: Kitchen
@@ -21,18 +23,21 @@ namespace Restaurant_Information_MVC.Controllers
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
-            if (name!="")
+            if (name != "")
             {
-                List<KitchenViewModel> k =kit.Where(m => m.MenuName == name).ToList();
+                List<KitchenViewModel> k = kit.Where(m => m.MenuName.Contains(name)).ToList();
+                ViewBag.currentindex = pageindex;
+                ViewBag.totaldata = k.Count;
+                ViewBag.totalpage = Math.Round((k.Count() * 1.0) / 6);
+                return View(k.Skip((pageindex - 1) * 6).Take(6).ToList());
+            }
+            else
+            {
                 ViewBag.currentindex = pageindex;
                 ViewBag.totaldata = kit.Count;
                 ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
-                return View(k);
+                return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
             }
-            ViewBag.currentindex = pageindex;
-            ViewBag.totaldata = kit.Count;
-            ViewBag.totalpage = Math.Round((kit.Count() * 1.0) / 6);
-            return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
         }
 
         public ActionResult Menu(int pageIndex, int pageSize=6)

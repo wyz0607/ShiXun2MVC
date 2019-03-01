@@ -16,6 +16,8 @@ using NPOI.XSSF.UserModel;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
+    [Authorize]
     public class FinanceController : Controller
     {
         //静态化两个进货商品的成本价表
@@ -25,23 +27,57 @@ namespace Restaurant_Information_MVC.Controllers
         /// 查询到所有商品的成本价
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShowCost()
+     
+        public ActionResult ShowCost(int pageindex=1,int pagesize=5,string name="")
         {
             gList = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
             glist = gList;
-            return View(gList);
+            if (name == null)
+            {
+                ViewBag.currentindex = pageindex;
+                ViewBag.totaldata = gList.Count;
+                ViewBag.totalpage = Math.Round((glist.Count() * 1.0) / 3);
+                ViewBag.pCount = glist.Count();
+                ViewBag.pSize = pagesize;
+                return View(glist.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList());
+            }
+            else
+            {
+                ViewBag.currentindex = pageindex;
+                ViewBag.totaldata = gList.Count;
+                ViewBag.totalpage = Math.Round((gList.Count() * 1.0) / 3);
+                var list = glist.Where(c => c.GoodsName.Contains(name));
+                ViewBag.pCount = list.Count();
+                ViewBag.pSize = pagesize;
+                return View(list.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList());
+            }
         }
         /// <summary>
         /// 按照名称查询结果
         /// </summary>
         /// <param name="name">名称</param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult ShowCost(string name)
+      
+        //[HttpPost]
+        //public ActionResult ShowCost(int pageindex=1,int pagesize=3,string name="")
+        //{
+
+        //    gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
+            
+        //        ViewBag.currentindex = pageindex;
+        //        ViewBag.totaldata = gList.Count;
+        //        ViewBag.totalpage = Math.Round((gList.Count() * 1.0) / 3);
+        //    ViewBag.pCount = gList.Count();
+        //        return View(gList.Skip((pageindex-1)*pagesize).Take(pagesize).ToList());
+            
+           
+        //}
+        public ActionResult Cost(int pageIndex = 1, int pagesize = 3,string name="")
         {
             gList = glist.Where(m => m.GoodsName.Contains(name)).ToList();
-            return View(gList);
+            return Content(JsonConvert.SerializeObject(gList.Skip((pageIndex - 1) * pagesize).Take(pagesize).ToList()));
         }
+
         //静态化两个账单的list集合
         public static List<BillViewModel> bList;
         public static List<BillViewModel> blist;
@@ -50,12 +86,15 @@ namespace Restaurant_Information_MVC.Controllers
         /// 获取所有的账单信息
         /// </summary>
         /// <returns></returns>
+       
         public ActionResult ShowBill()
         {
             bList = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             blist = bList.OrderByDescending(m => m.BillID).ToList();
             return View(blist);
         }
+
+      
         /// <summary>
         /// 查询
         /// </summary>
@@ -100,11 +139,13 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         public ActionResult GetDate()
         {
-
             string dt = DateTime.Now.ToString("dd");
-            for (int i = Convert.ToInt32(dt); i > 0; i--)
+            if (iList.Count==0)
             {
-                iList.Add(i);
+                for (int i = Convert.ToInt32(dt.TrimStart('0')); i > 0; i--)
+                {
+                    iList.Add(i);
+                }
             }
             return Content(JsonConvert.SerializeObject(iList));
         }
@@ -119,7 +160,7 @@ namespace Restaurant_Information_MVC.Controllers
             blist = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             foreach (var item in iList)
             {
-                bvList = blist.Where(m => m.PaymentTime.Substring(7, 2) == item.ToString()).ToList();
+                bvList = blist.Where(m => m.PaymentTime.Substring(0, 11) == DateTime.Now.ToString("yyyy年MM月") + item.ToString().PadLeft(2, '0') + "日").ToList();
                 dList.Add(bvList.Sum(m => m.BillMoney));
             }
             return Content(JsonConvert.SerializeObject(dList));

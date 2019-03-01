@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Restaurant_Information_MVC.Models.Foods>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetMoney</title>
+    <script src="~/layui/layui.js"></script>
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    
+    <div style="margin:50px auto;width:400px;">
+        <div id="timer" style="font-size:30px;text-align:center;color:crimson"></div>
+        <table class="layui-table" lay-skin="line" style="text-align:center;margin-top:10px;">
+            <tr>
+                <td>
+                    @Html.DisplayName("商品名称")
+                </td>
+                <td>
+                    @Html.DisplayName("商品数量")
+                </td>
+                <td>
+                    @Html.DisplayName("商品单价")
+                </td>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Num)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                </tr>
+            }
+        </table>
+        <div class="layui-form-item" style="margin-top:20px;">
+            <label class="layui-form-label" style="margin-left:-35px; font-size:20px;">总价钱:</label>
+            <div class="layui-input-block">
+                <input name="title" class="layui-input" type="text" autocomplete="off" lay-verify="title" value="@Session["Money"] 元" readonly style="font-size:20px">
+            </div>
+        </div>
+        <img src="~/Images/微信.png" alt="" style="height:50px;width:100px;margin-top:20px;" id="Wx" />
+        <img src="~/Images/支付宝.png" alt="" style="height:50px;width:100px; margin-left:100px;margin-top:20px;" id="Zfb" />
+        <img src="~/Images/wxZF.png" alt="Alternate Text" style="height:300px;width:300px;display:none" id="WZ" />
+        <img src="~/Images/zfbZF.png" alt="Alternate Text" style="height:300px;width:300px;display:none" id="ZZ" />
+    </div>
+</body>
+</html>
+<script>
+    $("#Wx").click(function () {
+        $("#WZ").show();
+        $("#ZZ").hide();
+    })
+    $("#Zfb").click(function () {
+        $("#WZ").hide();
+        $("#ZZ").show();
+    })
+    var maxtime = 10 * 60;
+    function CountDown() {
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = "请在" + minutes + "分" + seconds + "秒内完成订单";
+            document.all["timer"].innerHTML = msg;
+            --maxtime;
+        } else {
+            clearInterval(timer);
+            alert("时间到，结束!");
+        }
+    }
+    timer = setInterval("CountDown()", 1000);
+</script>

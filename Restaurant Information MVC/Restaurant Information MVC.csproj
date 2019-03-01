@@ -178,6 +178,7 @@
     <Compile Include="Models\BillViewModel.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\CtableViewModel.cs" />
+    <Compile Include="Models\Foods.cs" />
     <Compile Include="Models\FoodSelectionViewModel.cs" />
     <Compile Include="Models\GoodsViewModel.cs" />
     <Compile Include="Models\KitchenViewModel.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShouQuanAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
@@ -299,8 +301,32 @@
     <Content Include="icofont\fonts\icofont.svg" />
     <Content Include="icofont\icofont.css" />
     <Content Include="icofont\icofont.min.css" />
-    <Content Include="Images\20190219090801微信图片_20181214181800.jpg" />
-    <Content Include="Images\Img.PNG" />
+    <Content Include="Images\20190220042642Img.PNG" />
+    <Content Include="Images\20190220044957糖醋鲤鱼.PNG" />
+    <Content Include="Images\20190220045543麻辣子鸡.PNG" />
+    <Content Include="Images\20190220045853醋溜白菜.PNG" />
+    <Content Include="Images\20190220050135盐水虾.PNG" />
+    <Content Include="Images\20190220050606菠萝咕噜肉.PNG" />
+    <Content Include="Images\20190220051007清蒸大闸蟹.PNG" />
+    <Content Include="Images\20190220075451盐水虾.PNG" />
+    <Content Include="Images\20190220075528糖醋鲤鱼.PNG" />
+    <Content Include="Images\20190221090025麻婆豆腐.PNG" />
+    <Content Include="Images\20190221090721拔丝芋头.PNG" />
+    <Content Include="Images\20190221091246回锅肉.PNG" />
+    <Content Include="Images\20190221091530土匪鸭.PNG" />
+    <Content Include="Images\20190221091843大煮干丝.PNG" />
+    <Content Include="Images\20190221092717沙茶牛肉.PNG" />
+    <Content Include="Images\20190221094306清炒鳝丝.PNG" />
+    <Content Include="Images\20190221094451菠萝咕噜肉.PNG" />
+    <Content Include="Images\20190221094517大煮干丝.PNG" />
+    <Content Include="Images\20190221094541麻婆豆腐.PNG" />
+    <Content Include="Images\20190221115241醋溜白菜.PNG" />
+    <Content Include="Images\Hander.png" />
+    <Content Include="Images\Img.jpg" />
+    <Content Include="Images\wxZF.png" />
+    <Content Include="Images\zfbZF.png" />
+    <Content Include="Images\微信.png" />
+    <Content Include="Images\支付宝.png" />
     <Content Include="i\app-icon72x72%402x.png" />
     <Content Include="i\examples\admin-chrome.png" />
     <Content Include="i\examples\admin-firefox.png" />
@@ -596,6 +622,7 @@
     <Content Include="icofont\fonts\icofont.woff" />
     <Content Include="icofont\fonts\icofont.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Chart.bundle.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -610,6 +637,7 @@
     <Content Include="Scripts\layui.all.js" />
     <Content Include="Scripts\layui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\utils.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -639,10 +667,12 @@
     <Content Include="Views\Finance\ShowCost.cshtml" />
     <Content Include="Views\Finance\ShowEarning.cshtml" />
     <Content Include="Views\Finance\FinancialStatement.cshtml" />
+    <Content Include="Views\Login\GetMoney.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\ggg\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

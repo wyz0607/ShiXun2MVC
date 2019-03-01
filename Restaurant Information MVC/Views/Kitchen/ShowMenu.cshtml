@@ -105,7 +105,7 @@
     })
     function BtnUp() {
         if ($("#currentindex").text() != 1) {
-            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1);
+            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
         }
         else {
             layui.use('layer', function () {
@@ -115,7 +115,7 @@
     }
     function BtnDown() {
         if ($("#currentindex").text() != $("#totalpage").text()) {
-            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1);
+            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
         }
         else {
             layui.use('layer', function () {
