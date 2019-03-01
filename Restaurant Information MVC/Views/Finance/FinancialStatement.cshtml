@@ -1,4 +1,4 @@
-﻿@model IList<Restaurant_Information_MVC.Models.GoodsViewModel>
+﻿@model IEnumerable<Restaurant_Information_MVC.Models.GoodsViewModel>
 @{
     ViewBag.Title = "ShowCost";
 }
@@ -7,47 +7,91 @@
 
 <h2>成本查询</h2>
 
-
+<input type="hidden" id="pCount" value="@ViewBag.pCount" />
+<input type="hidden" id="pSize" value="@ViewBag.pSize" />
+<input type="hidden" id="pIndex" value="@ViewBag.pIndex" />
 <div class="layui-col-md9" style="margin-left:200px;margin-top:60px">
-    @using (@Html.BeginForm("ExcelTolead","Finance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (@Html.BeginForm("ExcelTolead", "Finance", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <text>选择上传Excel文件：</text>
-        <input   name="file" type="file" id="file" />
-        <input  class="layui-btn layui-btn-normal" type="submit" name="Upload" value="导入" />
+        <input name="file" type="file" id="file" />
+        <input class="layui-btn layui-btn-normal" type="submit" name="Upload" value="导入" />
     }
-        <input  class="layui-btn layui-btn-normal" id="Button1" type="button" value="导出" onclick="derive()" />
-        <table class="layui-table">
-            <colgroup>
-                <col width="150">
-                <col width="200">
-                <col>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>商品编号</th>
-                    <th>菜式名称</th>
-                    <th>菜式售价</th>
-                    <th>菜式成本价</th>
-                    <th>纯利润</th>
+    <input class="layui-btn layui-btn-normal" id="Button1" type="button" value="导出" onclick="derive()" />
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>商品编号</th>
+                <th>菜式名称</th>
+                <th>菜式售价</th>
+                <th>菜式成本价</th>
+                <th>纯利润</th>
+            </tr>
+        </thead>
+        <tbody id="body">
+            @foreach (var item in Model)
+            {
+                <tr name="tr1">
+                    <td>@item.GoodsId.ToString().PadLeft(4, '0')</td>
+                    <td>@item.GoodsName</td>
+                    <td>@item.SellingPrice</td>
+                    <td>@item.CostPrice</td>
+                    <td>@item.GoodsProfit</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.GoodsId.ToString().PadLeft(4, '0')</td>
-                        <td>@item.GoodsName</td>
-                        <td>@item.SellingPrice</td>
-                        <td>@item.CostPrice</td>
-                        <td>@item.GoodsProfit</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
+    <div id="test1" style="margin-left:300px"></div>
+</div>
 
 <script>
     function derive() {
         location.href = '/Finance/ExcelDerive';
     }
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            , count: Number($("#pCount").val()) //数据总数，从服务端得到
+            , limit: Number($("#pSize").val()) //每页显示条数
+            , prev: "上一页"
+            , next: "下一页"
+            , hash: "?pageIndex"
+            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            , refresh: [2, 4, 6, 8, 10]
+            , jump: function (obj, first) {
+                if (!first) {
+                    //alert('第 ' + obj.curr + ' 页');
+                    //location.href = "/Reception/ShowOrder?pageIndex=" + obj.curr
+
+                    $.ajax({
+                        url: "/Finance/Statement?pageIndex=" + obj.curr,
+                        dataType: "json",
+                        success: function (data) {
+                            var tbody = '';
+                            for (var i in data) {
+                                tbody += ' <tr name="tr1">'
+                                    + '<td>' + data[i].GoodsId + '</td> '
+                                    + '<td>' + data[i].GoodsName + '</td>'
+                                    + '<td>' + data[i].SellingPrice + '</td>'
+                                    + '<td>' + data[i].CostPrice + '</td>'
+                                    + '<td>' + data[i].GoodsProfit + '</td>'
+                                    + '</tr>'
+                            }
+                            $("[name=tr1]").remove();
+                            $("#body").append(tbody);
+                        }
+                    })
+                }
+
+            }
+        });
+    });
 </script>

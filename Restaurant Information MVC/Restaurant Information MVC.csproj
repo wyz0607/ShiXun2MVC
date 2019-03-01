@@ -671,6 +671,7 @@
     <Content Include="Views\Login\GetMoney.cshtml" />
     <Content Include="Views\Kitchen\Gettables.cshtml" />
     <Content Include="Views\Kitchen\UptMenu.cshtml" />
+    <Content Include="Views\Reception\EatingYards.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

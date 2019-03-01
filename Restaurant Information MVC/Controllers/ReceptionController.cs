@@ -9,6 +9,8 @@ using Restaurant_Information_MVC.Models;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
+    [Authorize]
     public class ReceptionController : Controller
     {
         // GET: Reception

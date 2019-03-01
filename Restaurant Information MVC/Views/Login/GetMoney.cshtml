@@ -64,7 +64,7 @@
         <span id="Guan" style="float:right;cursor:pointer;margin-top:10px;margin-right:10px;">X</span>
             <span style="font-size:10px">就餐码:</span>
             <div>
-                <input name="title" class="layui-input" type="text" placeholder="请输入就餐码" autocomplete="off" lay-verify="title">
+                <input id="Jiu" class="layui-input" type="text" placeholder="请输入就餐码" autocomplete="off" lay-verify="title">
                 <input id="Button3" type="button" value="立即就餐" class="layui-btn layui-btn-normal"  />
             </div>
     </div>
@@ -74,13 +74,30 @@
 
     $("#Button2").click(function () {
         $.ajax({
-            url: "/Login/YesOrNo?value=1",
+            url: "/Login/QuXiao?value=1",
             dataType: "text",
             success: function (data) {
-
                     //改为自己项目的ip地址
                     location.href = "http://10.1.155.2:8080/#/goods";
                 
+            }
+        })
+    })
+
+    $("#Button3").click(function () {
+        var name = $("#Jiu").val();
+        alert(name);
+        $.ajax({
+            url: "/Login/GetMa?name=" + name,
+            dataType: "text",
+            success: function (data) {
+                if (data == "1") {
+                    
+                    location.href ='/Kitchen/Gettables'
+                }
+                else {
+                    alert(data)
+                }
             }
         })
     })

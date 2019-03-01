@@ -24,7 +24,7 @@ namespace Restaurant_Information_MVC.Controllers
             var result= HttpClientHelper.Seng("get","api/Login/Login?UserName="+Name+"&Pwd="+Password+"",null);
             UserInfo user = JsonConvert.DeserializeObject<UserInfo>(result);
 
-            if (result!=null)
+            if (result!="null")
             {
                 FormsAuthentication.SetAuthCookie(Name, true);
                 Session["UserName"] = Name;
@@ -43,7 +43,7 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Show()
         {
             var time = DateTime.Now.ToString("yyyy年MM月dd日");
-        
+            //var time = "2019年02月28日";
             var num= HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + time,null);
             ViewBag.OrderNum = num.ToString();
             var oneMoney = HttpClientHelper.Seng("get", "api/Login/GetOneMoney?time=" + time, null);
@@ -127,7 +127,7 @@ namespace Restaurant_Information_MVC.Controllers
             return View(myFoods);
         }
 
-        public int YesOrNo(int value)
+        public int QuXiao(int value)
         {
             OrderViewModel order = new OrderViewModel() { UserID=1,UserName="游客",UserPhone="13988888888", ScheduledTime=DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), RepastTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), TableID=1, TotalPrice= Convert.ToDouble(Session["Money"]) };
             if (value==1)
@@ -140,8 +140,29 @@ namespace Restaurant_Information_MVC.Controllers
                     return 1;
                 }
             }
-                return 0;
-            
+                return 0;  
+        }
+
+        public string GetMa(string name)
+        {
+            var response = HttpClientHelper.Seng("get", "api/Login/GetMa?name="+name,null);
+            if (response.Contains("成功"))
+            {
+                OrderViewModel order = new OrderViewModel() { UserID = 1, UserName = "游客"+ DateTime.Now.ToString("yyyyMMdd hhmmss"), UserPhone = "13988888888", ScheduledTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), RepastTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), TableID = 1, TotalPrice = Convert.ToDouble(Session["Money"]), OrderState=1 };
+                var str = JsonConvert.SerializeObject(order);
+                var JieGuo = HttpClientHelper.Seng("post", "api/ReceptionApi/AddOrder",str);
+                if (JieGuo.Contains("成功"))
+                {
+                    var jie = HttpClientHelper.Seng("get", "api/Login/AddZhiYan?UserName="+order.UserName+ "&name="+name,null);
+                    Session["UserNameFirst"] = order.UserName;
+                    return "1";
+                }
+                return "1";
+            }
+            else
+            {
+                return response;
+            }
             
         }
     }

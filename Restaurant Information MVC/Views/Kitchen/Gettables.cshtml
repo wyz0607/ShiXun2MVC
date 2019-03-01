@@ -1,5 +1,4 @@
 ﻿@model List<Restaurant_Information_MVC.Models.CtableViewModel>
-  @using Restaurant_Information_MVC.Controllers
 @{
     Layout = null;
 }
@@ -13,7 +12,6 @@
     <link href="~/layui/css/layui.css" rel="stylesheet" />
     <script src="~/layui/layui.js"></script>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
-    
 </head>
 <body>
     <h1 style="text-align:center">欢迎光临东华餐饮</h1>
@@ -24,7 +22,7 @@
             if (item.TableState == 0)
             {
         <div style="width:100px;height:100px; background-color:#808080;border:solid 1px;margin-left:30%;text-align:center" value="@item.TableID" id="bbai" class="layui-btn layui-btn-normal">
-            <input type="checkbox" name="xuan" id="wei" style="padding-right:10px;" value="@item.TableID"/>
+            <input id="wei" type="radio" name="xuan" style="padding-right:10px;" value="@item.TableID" />
             <br />
             <label>
                 @item.TableID
@@ -38,7 +36,7 @@
             else
             {
         <div style="width:100px;height:100px; background-color:red;border:solid 1px;margin-left:30%;text-align:center" value="@item.TableID" id="bred" class="layui-btn layui-btn-danger">
-            <input type="checkbox" name="xuan" disabled="disabled" />
+            <input id="Radio1" type="radio" name="xuan" disabled />
             <br />
             <label>
                 @item.TableID
@@ -62,8 +60,7 @@
 </body>
 </html>
 <script>
-    var arr = [];
-    var str = ""
+    var arr = "";
     layui.use('layer', function () {
         var layer = layui.layer;
        
@@ -71,16 +68,22 @@
     })
     function Que() {
         $("[name=xuan]:checked").each(function () {
-            arr.push(this.value);
+             arr =this.value;
         })
         if (arr.length == 0) {
             layer.alert("请先选座");
             return;
         }
-        var str1 = "";
-        str += arr + ',';
-        str1 = str.split(str.length - 1);
-        layer.alert("您选了" + str + "桌");
-        location.reload();
+
+        $.ajax({
+            url: "/Kitchen/GetTableId?id=" + arr,
+            dataType: "text",
+            success: function (data) {
+                if (data == "1") {
+                    alert("选座成功!祝您用餐愉快");
+                    location.reload();
+                }
+            }
+        })
     }
 </script>
