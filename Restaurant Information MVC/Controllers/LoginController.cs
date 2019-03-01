@@ -126,5 +126,23 @@ namespace Restaurant_Information_MVC.Controllers
             }
             return View(myFoods);
         }
+
+        public int YesOrNo(int value)
+        {
+            OrderViewModel order = new OrderViewModel() { UserID=1,UserName="游客",UserPhone="13988888888", ScheduledTime=DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), RepastTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), TableID=1, TotalPrice= Convert.ToDouble(Session["Money"]) };
+            if (value==1)
+            {
+                order.OrderState = 0;
+                var str = JsonConvert.SerializeObject(order);
+                var response = HttpClientHelper.Seng("post", "api/ReceptionApi/AddOrder",str);
+                if (response.Contains("成功"))
+                {
+                    return 1;
+                }
+            }
+                return 0;
+            
+            
+        }
     }
 }
