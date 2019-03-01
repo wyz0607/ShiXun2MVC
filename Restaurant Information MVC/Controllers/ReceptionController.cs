@@ -121,6 +121,11 @@ namespace Restaurant_Information_MVC.Controllers
             Random rm = new Random();
             string str = rm.Next(100000, 1000000).ToString();
             Session["str"] = str;
+            int n=Convert.ToInt32(HttpClientHelper.Seng("post", "api/ReceptionApi/AddValidationNum/?num="+str, str));
+            if (n > 0)
+            {
+                Response.Write("<script>alert('添加成功！')</script>");
+            }
             return View("EatingYards");
         }
     }
