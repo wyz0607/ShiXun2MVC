@@ -9,7 +9,6 @@ using Restaurant_Information_MVC.Models;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-    [ShouQuanAttribute]
     public class ReceptionController : Controller
     {
         // GET: Reception
@@ -60,8 +59,16 @@ namespace Restaurant_Information_MVC.Controllers
             }
             else
             {
-                ViewBag.pCount = 1;
-                return View(list.Where(c => c.OrderID == OrderId).ToList());
+                var listOrder = list.Where(c => c.OrderID == OrderId).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                if (listOrder.Count()==0)
+                {
+                    ViewBag.pCount = 1;
+                    return View(listOrder);
+                }
+                else
+                {
+                    return View(listOrder);
+                }
             }
         }
 
@@ -98,6 +105,24 @@ namespace Restaurant_Information_MVC.Controllers
             List<WasteViewModel> wastes = JsonConvert.DeserializeObject<List<WasteViewModel>>(json);
             return Content(JsonConvert.SerializeObject(wastes.Skip((pageIndex - 1) * pageSize).Take(pageSize)));
         }
-
+        /// <summary>
+        /// 生成就餐码视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EatingYards()
+        {
+            return View();
+        }
+        //生成随机数函数中从strchar 数组中随机抽取
+        //字母区分大小写
+        //参数n为生成随机数的位数,一般取四位
+        public ActionResult RandomNum() //
+        {
+            Random rm = new Random();
+            string str = rm.Next(100000, 1000000).ToString();
+            Session["str"] = str;
+            int n=Convert.ToInt32(HttpClientHelper.Seng("post", "api/ReceptionApi/AddValidationNum/?num="+str, str));
+            return View("EatingYards");
+        }
     }
 }

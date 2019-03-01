@@ -10,7 +10,7 @@
 <input type="hidden" id="pageSize" value="@ViewBag.pSize" />
 <form action="/Reception/ShowOrder" method="get">
     <input type="hidden" id="pIndex" value="@ViewBag.pIndex" />
-    <input type="text" placeholder="请输入您要查询的订单号" name="OrderId" style="width:240px;height:37px;float:left;margin-left:500px" value="" />
+    <input id="orderid" type="text" placeholder="请输入您要查询的订单号" name="OrderId" style="width:240px;height:37px;float:left;margin-left:500px" value="" />
     <input type="submit" class="layui-btn" style="float:left" value="查询" />
 </form>
 
