@@ -21,13 +21,13 @@
         {
             if (item.TableState == 0)
             {
-        <div style="width:100px;height:100px; background-color:#808080;border:solid 1px;margin-left:30%;text-align:center" value="@item.TableID" id="bbai" class="layui-btn layui-btn-normal">
+        <div style="width:200px;height:200px; background-color:#808080;border:solid 1px;margin-left:25%;text-align:center" value="@item.TableID" id="bbai" class="layui-btn layui-btn-normal">
             <input id="wei" type="radio" name="xuan" style="padding-right:10px;" value="@item.TableID" />
             <br />
             <label>
                 @item.TableID
             </label>
-            
+            <br />
             <label>
                (@item.TableStyle)
             </label>
@@ -35,17 +35,18 @@
             }
             else
             {
-        <div style="width:100px;height:100px; background-color:red;border:solid 1px;margin-left:30%;text-align:center" value="@item.TableID" id="bred" class="layui-btn layui-btn-danger">
+        <div style="width:200px;height:200px; background-color:red;border:solid 1px;margin-left:25%;text-align:center" value="@item.TableID" id="bred" class="layui-btn layui-btn-danger">
             <input id="Radio1" type="radio" name="xuan" disabled />
             <br />
             <label>
                 @item.TableID
             </label>
-            
+            <br />
             <label>
                 (@item.TableStyle)
             </label>
-
+            <br />
+            <button class="layui-btn layui-btn-normal" onclick="end(@item.TableID)">就餐结束</button>
 
         </div>
             }
@@ -84,6 +85,17 @@
                     location.reload();
                 }
             }
+        })
+    }
+    function end(id) {
+
+        $.ajax({
+            url: "/Kitchen/Updatetable?id=" + id,
+            success: function (data) {
+                location.reload();
+               
+            }
+
         })
     }
 </script>
