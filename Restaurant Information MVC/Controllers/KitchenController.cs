@@ -9,8 +9,8 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-   // [ShouQuanAttribute]
-  //  [Authorize]
+    //[ShouQuanAttribute]
+    //[Authorize]
     public class KitchenController : Controller
     {
         // GET: Kitchen
@@ -168,7 +168,43 @@ namespace Restaurant_Information_MVC.Controllers
             }
             return "0";
         }
-            
+        [HttpGet]
+        public ActionResult Addtable()
+        {
+            return View();
+        }
+        [HttpPost]
+         public ActionResult Addtable(CtableViewModel ctable)
+        {
+            ctable.TableState = 0;
+            string table = JsonConvert.SerializeObject(ctable);
+            string str = HttpClientHelper.Seng("post", "api/KitchensApi/AddCtable", table);
+            if(str.Contains("成功"))
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+        }
+        
+        public string Updatetable(int id)
+        {
+            string str1 = HttpClientHelper.Seng("get", "api/KitchensApi/GetCtables", null);
+            CtableViewModel ctable = JsonConvert.DeserializeObject<List<CtableViewModel>>(str1).Where(c=>c.TableID==id).FirstOrDefault();
+            ctable.TableState = 0;
+            string table = JsonConvert.SerializeObject(ctable);
+            string str = HttpClientHelper.Seng("post", "api/KitchensApi/Update", table);
+            if (str.Contains("成功"))
+            {
+                return ("操作成功");
+            }
+            else
+            {
+                return ("操作失败");
+            }
+        }
 
     }
    
