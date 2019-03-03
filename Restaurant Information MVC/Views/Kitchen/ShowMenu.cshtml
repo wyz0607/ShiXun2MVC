@@ -5,30 +5,49 @@
 }
 
 
-<h2>显示菜式信息</h2>
+
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui-v2.4.5/layui/layui.all.js"></script>
 <script src="~/layui-v2.4.5/layui/layui.js"></script>
 
-<p>
+@*<p>
+        <input type="hidden" id="pCount" value="@ViewBag.totaldata" />
+        <input type="hidden" id="pSize" value="6" />
+        <input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
+        <span>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</span>
 
-    <button class="layui-btn" onclick="location.href='/Kitchen/AddMenu'">
+
+
+    </p>*@
+
+<input type="hidden" id="pCount" value="@ViewBag.totaldata" />
+<input type="hidden" id="pSize" value="6" />
+<input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
+<form>
+    <button class="layui-btn" style="margin-left:70px;float:left;margin-top:40px;" onclick="location.href='/Kitchen/AddMenu'">
         <i class="layui-icon">&#xe608</i>新增菜式
     </button>
-    <input type="hidden" id="pCount" value="@ViewBag.totaldata" />
-    <input type="hidden" id="pSize" value="6" />
-    <input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
-    <span>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</span>
-</p>
-<br />
-<p>
-    <button id="BtnDel" onclick="Dels()" style="float:right;margin-right:150px" type="button"  class="layui-btn layui-btn-radius layui-btn-danger">批量删除</button>
-   
-    <input type="text" name="txtSel" style="width:200px;float:left;margin-left:70px" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input">
-    &nbsp;&nbsp;
-    <button class="layui-btn layui-btn-small layui-btn-normal" onclick="Sel()">查询</button>
-</p>
+    <input type="text" name="txtSel" style="margin-left:200px;width:200px;" placeholder="请输入菜式名称" class="layui-input">
+    <button class="layui-btn layui-btn-normal" onclick="Sel()" style="margin-top:10px;margin-left:30%">查询</button>
 
+    <button id="BtnDel" onclick="Dels()" style="margin-top:10px;" type="button" class="layui-btn layui-btn-radius layui-btn-danger">批量删除</button>
+</form>
+@*<ul style="width:1200px;height:50px;">
+    <li style="float:left">
+        <button class="layui-btn" style="margin-left:70px;float:left;margin-top:40px;" onclick="location.href='/Kitchen/AddMenu'">
+            <i class="layui-icon">&#xe608</i>新增菜式
+        </button>
+    </li>
+    <li style="float:left">
+        <input type="text" name="txtSel" style="margin-left:200px;width:200px;" placeholder="请输入菜式名称" class="layui-input">
+    </li>
+    <li style="float:left">
+        <button class="layui-btn layui-btn-normal" onclick="Sel()" style="margin-top:10px;margin-left:30%">查询</button>
+    </li>
+    <li style="float:left">
+        <button id="BtnDel" onclick="Dels()" style="margin-top:10px;" type="button" class="layui-btn layui-btn-radius layui-btn-danger">批量删除</button>
+    </li>
+</ul>*@
 <div class="container" id="tb" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2">
 
     @foreach (var item in Model)
@@ -73,21 +92,21 @@
 <div id="test1" style="margin-left:500px"></div>
 
 @*<p>
-    <span>
-        <span>当前第</span>
-        <span id="currentindex">@ViewBag.currentindex</span>
-        <span>页，总共</span>
-        <span id="totalpage"></span>
-        <span>页</span>
+        <span>
+            <span>当前第</span>
+            <span id="currentindex">@ViewBag.currentindex</span>
+            <span>页，总共</span>
+            <span id="totalpage"></span>
+            <span>页</span>
 
-    </span>
-    <button class="layui-btn" onclick="BtnUp()">
-        <i class="layui-icon">上一页</i>
-    </button>
-    <button class="layui-btn" onclick="BtnDown()">
-        <i class="layui-icon">下一页</i>
-    </button>
-</p>*@
+        </span>
+        <button class="layui-btn" onclick="BtnUp()">
+            <i class="layui-icon">上一页</i>
+        </button>
+        <button class="layui-btn" onclick="BtnDown()">
+            <i class="layui-icon">下一页</i>
+        </button>
+    </p>*@
 <script>
     function Sel() {
         location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
@@ -193,12 +212,12 @@
                                 tbody += '<table class="col-lg-4" name="tr1" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">'
                                     + '<tr>'
                                     + ' <td colspan="5">'
-                                    + '    <img src="'+data[i].MenuPhoto+'" style="width:100px;height:100px;" />'
-                                    + '  <div style="margin-left:20px;">' + data[i].MenuName +'</div>'
+                                    + '    <img src="' + data[i].MenuPhoto + '" style="width:100px;height:100px;" />'
+                                    + '  <div style="margin-left:20px;">' + data[i].MenuName + '</div>'
                                     + '</td>'
                                     + '<td>'
-                                    + '  <div style="float:right"><input value="'+data[i].MenuID+'" name="Deles" type="checkbox" /></div>'
-                                    + '<div> 菜式简介:' + data[i].MenuIntroduce +'</div>'
+                                    + '  <div style="float:right"><input value="' + data[i].MenuID + '" name="Deles" type="checkbox" /></div>'
+                                    + '<div> 菜式简介:' + data[i].MenuIntroduce + '</div>'
                                     + '<div>'
                                     + '  主要食材: ' + data[i].MenuIngredients
                                     + '</div>'
@@ -216,8 +235,8 @@
                                     + '</div>'
                                     + '<br />'
                                     + '<div>'
-                                    + '  <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="Upt(' + data[i].MenuID+')">菜式修改</button>'
-                                    + '<button class="layui-btn layui-btn-radius layui-btn-danger" onclick="Del('+data[i].MenuID+',this)">删除菜式</button>'
+                                    + '  <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="Upt(' + data[i].MenuID + ')">菜式修改</button>'
+                                    + '<button class="layui-btn layui-btn-radius layui-btn-danger" onclick="Del(' + data[i].MenuID + ',this)">删除菜式</button>'
                                     + '</div>'
                                     + '</td>'
                                     + '</tr>'
