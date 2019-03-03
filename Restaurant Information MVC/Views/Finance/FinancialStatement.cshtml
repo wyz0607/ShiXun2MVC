@@ -2,8 +2,17 @@
 @{
     ViewBag.Title = "ShowCost";
 }
-
-
+<style>
+    #browse {
+        order: 1px solid #ccc;
+        padding: 4px;
+        border-radius: 4px;
+        background-color: #2c9a8a;
+        color: #fff;
+    }
+</style>
+<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 
@@ -15,8 +24,17 @@
 <div class="layui-col-md9" style="margin-left:200px;margin-top:60px">
     @using (@Html.BeginForm("ExcelTolead", "Finance", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <text>选择上传Excel文件：</text>
-        <input name="file" type="file" id="file" />
+        <!-- 真正的文件上传表单 -->
+        <input name="file" type="file" id="thisfile" style="display: none" />
+
+        <div class="input-append">
+            <!-- 用于展示上传文件名的表单 -->
+            <input id="showname" class="input-large" type="text" style="height:25px;">
+            <!-- 点击触发按钮 -->
+            <a class="btn" onclick="makeThisfile()" id="browse">浏览</a>
+        </div>
+        @*<text>选择上传Excel文件：</text>
+        <input name="file" type="file" id="file" />*@
         <input class="layui-btn layui-btn-normal" type="submit" name="Upload" value="导入" />
         <input class="layui-btn layui-btn-normal" id="Button1" type="button" value="导出" onclick="derive()" />
     }
@@ -50,6 +68,18 @@
     </table>
     <div id="test1" style="margin-left:300px"></div>
 </div>
+
+<script type="text/javascript">
+    //触发隐藏的file表单
+    function makeThisfile() {
+        $('#thisfile').click();
+    }
+
+    //file表单选中文件时,让file表单的val展示到showname这个展示框
+    $('#thisfile').change(function () {
+        $('#showname').val($(this).val())
+    })
+</script>
 
 <script>
     function derive() {
