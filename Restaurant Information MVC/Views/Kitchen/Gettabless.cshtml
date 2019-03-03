@@ -8,21 +8,21 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>请选座</title>
+    <title>请操作</title>
     <link href="~/layui/css/layui.css" rel="stylesheet" />
     <script src="~/layui/layui.js"></script>
     @*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
 </head>
 <body>
-    <h1 style="text-align:center">欢迎光临东华餐饮</h1>
-    <h2 style="text-align:center;color:red">请选座</h2>
+    @*<h1 style="text-align:center">欢迎光临东华餐饮</h1>
+    <h2 style="text-align:center;color:red">请选座</h2>*@
     <div style="margin:0 auto;width:100%;height:100%">
         @foreach (var item in Model)
         {
             if (item.TableState == 0)
             {
                 <div style="width:200px;height:200px; background-color:#808080;border:solid 1px;margin-left:25%;text-align:center" value="@item.TableID" id="bbai" class="layui-btn layui-btn-normal">
-                    <input id="wei" type="radio" name="xuan" style="padding-right:10px;" value="@item.TableID" />
+                    @*<input id="wei" type="radio" name="xuan" style="padding-right:10px;" value="@item.TableID" />*@
                     <br />
                     <label>
                         @item.TableID
@@ -36,7 +36,7 @@
             else
             {
                 <div style="width:200px;height:200px; background-color:red;border:solid 1px;margin-left:25%;text-align:center" value="@item.TableID" id="bred" class="layui-btn layui-btn-danger">
-                    <input id="Radio1" type="radio" name="xuan" disabled />
+                    @*<input id="Radio1" type="radio" name="xuan" disabled />*@
                     <br />
                     <label>
                         @item.TableID
