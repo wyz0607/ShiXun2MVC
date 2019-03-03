@@ -75,7 +75,7 @@
             layer.alert("请先选座");
             return;
         }
-
+        console.log(arr);
         $.ajax({
             url: "/Kitchen/GetTableId?id=" + arr,
             dataType: "text",

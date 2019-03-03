@@ -9,8 +9,7 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-    //[ShouQuanAttribute]
-    //[Authorize]
+
     public class KitchenController : Controller
     {
         // GET: Kitchen
@@ -139,11 +138,9 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns>类名</returns>
         public ActionResult GetOneMenu(int id)
         {
-
             string str = HttpClientHelper.Seng("get", "api/Kitchen/GetOneMenu?MenuID=" + id, "null");
             KitchenViewModel kit = JsonConvert.DeserializeObject<KitchenViewModel>(str);
             return View(kit);
-
         }
 
         /// <summary>
