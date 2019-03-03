@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "ShowCost";
 }
+
+
 <script src="~/layui/layui.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 
@@ -16,8 +18,8 @@
         <text>选择上传Excel文件：</text>
         <input name="file" type="file" id="file" />
         <input class="layui-btn layui-btn-normal" type="submit" name="Upload" value="导入" />
+        <input class="layui-btn layui-btn-normal" id="Button1" type="button" value="导出" onclick="derive()" />
     }
-    <input class="layui-btn layui-btn-normal" id="Button1" type="button" value="导出" onclick="derive()" />
     <table class="layui-table">
         <colgroup>
             <col width="150">
