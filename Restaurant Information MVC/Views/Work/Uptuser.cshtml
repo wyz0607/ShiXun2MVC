@@ -16,12 +16,8 @@
     <input id="Userrole" type="hidden" value="@Model.Role" />
     <input id="Privilege" type="hidden" value="@Model.Privilege" />
     <input id="Userpwd" type="hidden" value="@Model.UserPwd" />
-   
-
-    
- 
     <input id="yan" type="hidden"  />
-    <table class="table-hover" style=" width:600px;height:350px;margin-left:200px;">
+    @*<table class="table-hover" style=" width:600px;height:350px;margin-left:200px;">
         <tr>
             <td>原密码</td>
             <td><input id="Text1" type="password" onchange="Txt()" /></td>
@@ -65,9 +61,84 @@
         <tr>
             <td><label id="tishi" style="color:red"></label></td>
         </tr>
-    </table>
+    </table>*@
+    <form class="layui-form">
+        <div class="layui-form-item" style="float:left;">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-block">
+                <input id="Text1" type="password" onchange="Txt()" name="title" required lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input" style="width:300px;">
+                
+            </div>
+            <div>
+            <label id="lab1" style="color:red"></label>
+             </div>
+        </div>
+      
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码</label>
+                <div class="layui-input-block">
+                    <input id="Gaipwd" type="password" name="title" required lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input" style="width:300px;">
+
+                </div>
+
+
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-block">
+                    <input id="Quepwd" type="password" name="title" required lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input" style="width:300px;">
+
+                </div>
+                <label id="lab" style="color:red" ></label>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input id="Phone" onchange="Iphone()" type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;">
+
+                </div>
+
+
+
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input id="btnyan" class="layui-btn layui-btn-normal" type="button" name="yzm" value="获取验证码" />
+
+                </div>
+
+                <div>
+                    <label id="phoneremark" style="color:red" class="layui-form-label"></label>
+                </div>
+            </div>
+            <div class="layui-form-item" style="width:100%;height:50px;">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-block">
+                    <input id="Yan1" type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;">
+
+                </div>
+                <div> <label id="yanzheng" style="color:red"></label></div>
+                
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="修改" onclick="Upt(@Model.UserID)" />
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="取消" onclick="Fan()" />
+
+                </div>
+
+            </div>
+            <div>
+                <label id="tishi" style="color:red"></label>
+            </div>
+
+</form>
 </div>
 <script>
+    //layui.use('form', function () {
+    //    var form = layui.form;
+    //})
     function Txt() {
         if ($("#Text1").val() != $("#Userpwd").val()) {
             $("#lab1").text("输入的密码错误");
@@ -91,8 +162,8 @@
 
 
     function Iphone() {
-        alert($("#Phone").val());
-        alert($("#Userphone").val());
+        //alert($("#Phone").val());
+        //alert($("#Userphone").val());
         if ($("#Phone").val() != $("#Userphone").val()) {
             $("#phoneremark").text("输入的邮箱与预存的邮箱不一致")
             return;
@@ -103,7 +174,7 @@
     }
 
     function Upt(id) {
-        if ($("#Text1").val() == null || $("#Phone").val() == null || $("#Yan1").val() == null || $("#Phone").val() == null) {
+        if ($("#Text1").val() == null || $("#Phone").val() == null || $("#Yan1").val() == null) {
             $("#tishi").text("上述信息不完整");
             return;
         }
