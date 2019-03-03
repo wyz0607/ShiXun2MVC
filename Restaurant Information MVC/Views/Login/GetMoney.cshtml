@@ -52,22 +52,26 @@
                 <input name="title" class="layui-input" type="text" autocomplete="off" lay-verify="title" value="@Session["Money"] 元" readonly style="font-size:20px">
             </div>
         </div>
-        <img src="~/Images/微信.png" alt="" style="height:50px;width:100px;margin-top:20px;" id="Wx" />
-        <img src="~/Images/支付宝.png" alt="" style="height:50px;width:100px; margin-left:100px;margin-top:20px;" id="Zfb" />
-        <img src="~/Images/wxZF.png" alt="Alternate Text" style="height:300px;width:300px;display:none" id="WZ" />
-        <img src="~/Images/zfbZF.png" alt="Alternate Text" style="height:300px;width:300px;display:none" id="ZZ" />
-        <input id="Button1" type="button" value="支付完成" class="layui-btn layui-btn-fluid" style="margin-top:10px;" />
-        <input id="Button2" type="button" value="取消订单" class="layui-btn layui-btn-fluid" style="margin-top:10px;" />
-        
+        <img src="~/Images/微信.png" alt="" style="height:50px;width:140px;margin-top:20px;margin-left:20px" id="Wx" />
+        <img src="~/Images/支付宝.png" alt="" style="height:50px;width:140px; margin-left:90px;margin-top:20px;" id="Zfb" />
+        <img src="~/Images/wxZF.png" alt="Alternate Text" style="height:300px;width:300px;margin-left:50px;margin-top:40px;display:none" id="WZ" />
+        <img src="~/Images/zfbZF.png" alt="Alternate Text" style="height:300px;width:300px;margin-left:50px;margin-top:40px;display:none; " id="ZZ" />
+        <div style="height:60px;width:300px;margin:0 auto"></div>
+        <div id="layerDemo">
+            <input id="Button1" type="button" value="支付完成" data-method="notice" class="layui-btn layui-btn-fluid" style="margin:0 auto;" />
+        </div>
+        <div style="height:20px;width:300px;margin:0 auto"></div>
+        <input id="Button2" type="button" value="取消订单" class="layui-btn  layui-btn-primary layui-btn-fluid" style="margin:0 auto;" />
+
     </div>
-    <div id="JiuCan" style="display:none;height:200px;width:300px;border:1px solid black;margin-top:-250px;margin-left:200px;">
+    @*<div id="JiuCan" style="display:none;height:100px;width:300px;border:1px solid black;margin-top:-250px;margin-left:200px;">
         <span id="Guan" style="float:right;cursor:pointer;margin-top:10px;margin-right:10px;">X</span>
             <span style="font-size:10px">就餐码:</span>
             <div>
                 <input id="Jiu" class="layui-input" type="text" placeholder="请输入就餐码" autocomplete="off" lay-verify="title">
                 <input id="Button3" type="button" value="立即就餐" class="layui-btn layui-btn-normal"  />
             </div>
-    </div>
+    </div>*@
 </body>
 </html>
 <script>
@@ -130,4 +134,65 @@
         }
     }
     timer = setInterval("CountDown()", 1000);
+
+
+
+
+
+
+    layui.use('layer', function () { //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+        //触发事件
+        var active = {
+             notice: function () {
+                //示范一个公告层
+                layer.open({
+                    type: 1
+                    , title: false //不显示标题栏
+                    , closeBtn: false
+                    , area: '300px;'
+                    , shade: 0.8
+                    , id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    , btn: ['确定', '取消']
+                    , btnAlign: 'c'
+                    , moveType: 1 //拖拽模式，0或者1
+                    , content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;"><input id="Jiu" class="layui-input" type="text" placeholder="请输入就餐码" autocomplete="off" lay-verify="title"></div>'
+                    , success: function (layero) {
+                        var btn = layero.find('.layui-layer-btn');
+                        btn.find('.layui-layer-btn0').attr({
+                            href: '/Kitchen/'
+                            , target: '_blank'
+                        });
+                    }
+                });
+            }
+            , offset: function (othis) {
+                var type = othis.data('type')
+                    , text = othis.text();
+
+                layer.open({
+                    type: 1
+                    , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    , id: 'layerDemo' + type //防止重复弹出
+                    , content: '<div style="padding: 20px 100px;">' + text + '</div>'
+                    , btn: '关闭全部'
+                    , btnAlign: 'c' //按钮居中
+                    , shade: 0 //不显示遮罩
+                    , yes: function () {
+                        layer.closeAll();
+                    }
+                });
+            }
+        };
+
+        $('#layerDemo .layui-btn').on('click', function () {
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
+
+
+
 </script>

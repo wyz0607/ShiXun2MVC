@@ -40,7 +40,7 @@ namespace Restaurant_Information_MVC
             catch (Exception ex)
             {
                 //记录错误日志
-                return "";
+                return ex.Message;
             }
         }
         #region 获取时间戳
