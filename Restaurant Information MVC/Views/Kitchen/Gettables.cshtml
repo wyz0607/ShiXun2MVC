@@ -1,6 +1,6 @@
 ﻿@model List<Restaurant_Information_MVC.Models.CtableViewModel>
 @{
-    Layout = null;
+    ViewBag.Title = "ShowMenu";
 }
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
     <title>请选座</title>
     <link href="~/layui/css/layui.css" rel="stylesheet" />
     <script src="~/layui/layui.js"></script>
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
 </head>
 <body>
     <h1 style="text-align:center">欢迎光临东华餐饮</h1>
@@ -81,7 +81,7 @@
             dataType: "text",
             success: function (data) {
                 if (data == "1") {
-                    alert("选座成功!祝您用餐愉快");
+                   layer.alert("选座成功!祝您用餐愉快");
                     location.reload();
                 }
             }
