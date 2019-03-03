@@ -46,7 +46,7 @@
                 (@item.TableStyle)
             </label>
             <br />
-            <button class="layui-btn layui-btn-normal" onclick="end(@item.TableID)">就餐结束</button>
+            @*<button class="layui-btn layui-btn-normal" onclick="end(@item.TableID)">就餐结束</button>*@
 
         </div>
             }
@@ -81,7 +81,7 @@
             dataType: "text",
             success: function (data) {
                 if (data == "1") {
-                   layer.alert("选座成功!祝您用餐愉快");
+                  layer.alert("选座成功!祝您用餐愉快");
                     location.reload();
                 }
             }
