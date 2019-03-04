@@ -62,15 +62,12 @@
             <td><label id="tishi" style="color:red"></label></td>
         </tr>
     </table>*@
-    <form class="layui-form">
+    <form class="layui-form" style="width:700px;">
         <div class="layui-form-item" style="float:left;">
             <label class="layui-form-label">原密码</label>
             <div class="layui-input-block">
-                <input id="Text1" type="password" onchange="Txt()" name="title" required lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input" style="width:300px;">
-                
-            </div>
-            <div>
-            <label id="lab1" style="color:red"></label>
+                <input id="Text1" type="password" onchange="Txt()" name="title" required lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input" style="width:300px;float:left">
+            <label id="lab1" style="color:red;float:left"></label>
              </div>
         </div>
       
@@ -86,16 +83,16 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">确认密码</label>
                 <div class="layui-input-block">
-                    <input id="Quepwd" type="password" name="title" required lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input" style="width:300px;">
-
+                    <input id="Quepwd" type="password" name="title" required lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input" style="width:300px;float:left" onchange="que()">
+                    <label id="lab" style="color:red;float:left"></label>
                 </div>
-                <label id="lab" style="color:red" ></label>
+               
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input id="Phone" onchange="Iphone()" type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;">
-
+                    <input id="Phone" onchange="Iphone()" type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;float:left">
+                    <label id="phoneremark" style="color:red;float:left"></label>
                 </div>
 
 
@@ -104,21 +101,19 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-block">
-                    <input id="btnyan" class="layui-btn layui-btn-normal" type="button" name="yzm" value="获取验证码" />
-
+                    <input id="btnyan" class="layui-btn layui-btn-normal" type="button" name="yzm" value="获取验证码" style="float:left"/>
+                   
                 </div>
 
-                <div>
-                    <label id="phoneremark" style="color:red" class="layui-form-label"></label>
-                </div>
+               
             </div>
             <div class="layui-form-item" style="width:100%;height:50px;">
                 <label class="layui-form-label">验证码</label>
                 <div class="layui-input-block">
-                    <input id="Yan1" type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;">
-
+                    <input id="Yan1" type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;float:left">
+                    <label id="yanzheng" style="color:red;float:left"></label>
                 </div>
-                <div> <label id="yanzheng" style="color:red"></label></div>
+              
                 
             </div>
             <div class="layui-form-item">
@@ -165,7 +160,7 @@
         //alert($("#Phone").val());
         //alert($("#Userphone").val());
         if ($("#Phone").val() != $("#Userphone").val()) {
-            $("#phoneremark").text("输入的邮箱与预存的邮箱不一致")
+            $("#phoneremark").text("输入的邮箱错误")
             return;
         }
         else {
@@ -174,10 +169,15 @@
     }
 
     function Upt(id) {
-        if ($("#Text1").val() == null || $("#Phone").val() == null || $("#Yan1").val() == null) {
+        console.log($("#Phone").val());
+        console.log($("#Yan1").val());
+        if ($("#Text1").val() == "" || $("#Phone").val() == "" || $("#Yan1").val() == "") {
             $("#tishi").text("上述信息不完整");
+
             return;
+
         }
+
         else {
             $("#tishi").hide();
         }
@@ -280,7 +280,7 @@
     //事件处理函数
     $("#btnyan").click(function () {
         if ($("#Phone").val() != $("#Userphone").val()) {
-            $("#phoneremark").text("输入的邮箱与预存的邮箱不一致")
+            $("#phoneremark").text("输入的邮箱错误")
             return;
         }
         
