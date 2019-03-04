@@ -646,7 +646,7 @@
     <Content Include="Views\Finance\ShowEarning.cshtml" />
     <Content Include="Views\Finance\FinancialStatement.cshtml" />
     <Content Include="Views\Login\GetMoney.cshtml" />
-    <Content Include="Views\Kitchen\Gettables.cshtml" />
+    <Content Include="Views\Login\Gettables.cshtml" />
     <Content Include="Views\Kitchen\UptMenu.cshtml" />
     <Content Include="Views\Reception\EatingYards.cshtml" />
     <Content Include="Views\Kitchen\Gettabless.cshtml" />
