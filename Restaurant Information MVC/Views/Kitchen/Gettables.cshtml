@@ -1,0 +1,111 @@
+﻿@model List<Restaurant_Information_MVC.Models.CtableViewModel>
+@{
+    ViewBag.Title = "ShowMenu";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>请选座</title>
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
+</head>
+<body>
+    <h1 style="text-align:center">欢迎光临东华餐饮</h1>
+    <h2 style="text-align:center;color:red">请选座</h2>
+    <div style="margin:0 auto;width:100%;height:100%">
+        @foreach (var item in Model)
+        {
+            if (item.TableState == 0)
+            {
+        <div style="width:200px;height:200px; background-color:#808080;border:solid 1px;margin-left:25%;text-align:center" value="@item.TableID" id="bbai" class="layui-btn layui-btn-normal">
+            <input id="wei" type="radio" name="xuan" style="padding-right:10px;" value="@item.TableID" />
+            <br />
+            <label>
+                @item.TableID
+            </label>
+            <br />
+            <label>
+               (@item.TableStyle)
+            </label>
+        </div>
+            }
+            else
+            {
+        <div style="width:200px;height:200px; background-color:red;border:solid 1px;margin-left:25%;text-align:center" value="@item.TableID" id="bred" class="layui-btn layui-btn-danger">
+            <input id="Radio1" type="radio" name="xuan" disabled />
+            <br />
+            <label>
+                @item.TableID
+            </label>
+            <br />
+            <label>
+                (@item.TableStyle)
+            </label>
+            <br />
+            @*<button class="layui-btn layui-btn-normal" onclick="end(@item.TableID)">就餐结束</button>*@
+
+        </div>
+            }
+        }
+
+    </div>
+    
+    <div style="width:100%">
+        <button id="Btn" style="margin-left:50%" class="layui-btn layui-btn-normal" onclick="Que()">确定</button>
+    </div>
+
+</body>
+</html>
+<script>
+    var arr = "";
+    layui.use('layer', function () {
+        var layer = layui.layer;
+       
+        
+    })
+    function Que() {
+        $("[name=xuan]:checked").each(function () {
+             arr =this.value;
+        })
+        if (arr.length == 0) {
+            layer.alert("请先选座");
+            return;
+        }
+      
+        $.ajax({
+            url: "/Kitchen/GetTableId?id=" + arr,
+            dataType: "text",
+            success: function (data) {
+                if (data == "1") {
+                    layer.alert("选座成功!祝您用餐愉快");
+                    $("#Btn").attr({ "disabled": "disabled" });
+                    $("#Btn").addClass("btn_disable");
+                    //location.reload();
+                }
+            }
+        })
+    }
+    function end(id) {
+
+        $.ajax({
+            url: "/Kitchen/Updatetable?id=" + id,
+            success: function (data) {
+                location.reload();
+               
+            }
+
+        })
+    }
+    
+</script>
+<style>
+    .btn_disable {
+        background-color: #d4d4d4; /* 设置按钮背景颜色为灰色 */
+        border-color: #d4d4d4; /* 边框线颜色应与背景颜色一致 */
+        color: #fff; /* 设置字体颜色为白色 */
+    }
+</style>
