@@ -203,5 +203,27 @@ namespace Restaurant_Information_MVC.Controllers
             Session["UserName"] = null;
             return View("Index");
         }
+
+        /// <summary>
+        /// 获取餐桌信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Gettables()
+        {
+            string str = HttpClientHelper.Seng("get", "api/KitchensApi/GetCtables", null);
+            List<CtableViewModel> ctable = JsonConvert.DeserializeObject<List<CtableViewModel>>(str);
+            return View(ctable);
+
+        }
+
+        public string GetTableId(string id)
+        {
+            var result = HttpClientHelper.Seng("get", "api/Login/GetTableId?id=" + id + "&userName=" + Session["UserNameFirst"], null);
+            if (Convert.ToInt32(result) > 0)
+            {
+                return "1";
+            }
+            return "0";
+        }
     }
 }
