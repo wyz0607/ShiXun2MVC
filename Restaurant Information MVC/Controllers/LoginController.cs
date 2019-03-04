@@ -176,7 +176,7 @@ namespace Restaurant_Information_MVC.Controllers
             var response = HttpClientHelper.Seng("get", "api/Login/GetMa?name="+name,null);
             if (response.Contains("成功"))
             {
-                OrderViewModel order = new OrderViewModel() { UserID = 1, UserName = "游客"+ DateTime.Now.ToString("yyyyMMdd HHmmss"), UserPhone = "13988888888", ScheduledTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), RepastTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), TableID = 1, TotalPrice = Convert.ToDouble(Session["Money"]), OrderState=1 };
+                OrderViewModel order = new OrderViewModel() { UserID = 1, UserName = "游客"+ DateTime.Now.ToString("yyyyMMddHHmmss"), UserPhone = "13988888888", ScheduledTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), RepastTime = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"), TableID = 1, TotalPrice = Convert.ToDouble(Session["Money"]), OrderState=1 };
                 var str = JsonConvert.SerializeObject(order);
                 var JieGuo = HttpClientHelper.Seng("post", "api/ReceptionApi/AddOrder",str);
                 if (JieGuo.Contains("成功"))

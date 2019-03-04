@@ -46,7 +46,6 @@
                         (@item.TableStyle)
                     </label>
                     <br />
-                    @*<button class="layui-btn layui-btn-normal" onclick="end(@item.TableID)">就餐结束</button>*@
 
                 </div>
             }
@@ -55,7 +54,7 @@
     </div>
 
     <div style="width:100%">
-        <button style="margin-left:950px;" class="layui-btn layui-btn-normal" onclick="Que()">确定</button>
+        <button id="Save" style="margin-left:950px;" class="layui-btn layui-btn-normal" onclick="Que()">确定</button>
     </div>
 
 </body>
@@ -81,9 +80,11 @@
             dataType: "text",
             success: function (data) {
                 if (data == "1") {
-                    layer.alert("选座成功!祝您用餐愉快");
-                    location.href ='http://10.1.155.2:8080/#/goods';
+                    alert("选座成功!祝您用餐愉快");
+                    location.href = 'http://10.1.155.2:8080/#/goods';
+                    window.history.forward();
                 }
+                
             }
         })
     }
