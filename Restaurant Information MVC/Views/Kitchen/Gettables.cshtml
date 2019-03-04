@@ -55,7 +55,7 @@
     </div>
     
     <div style="width:100%">
-        <button style="margin-left:50%" class="layui-btn layui-btn-normal" onclick="Que()">确定</button>
+        <button id="Btn" style="margin-left:50%" class="layui-btn layui-btn-normal" onclick="Que()">确定</button>
     </div>
 
 </body>
@@ -75,14 +75,16 @@
             layer.alert("请先选座");
             return;
         }
-
+      
         $.ajax({
             url: "/Kitchen/GetTableId?id=" + arr,
             dataType: "text",
             success: function (data) {
                 if (data == "1") {
-                  layer.alert("选座成功!祝您用餐愉快");
-                    location.reload();
+                    layer.alert("选座成功!祝您用餐愉快");
+                    $("#Btn").attr({ "disabled": "disabled" });
+                    $("#Btn").addClass("btn_disable");
+                    //location.reload();
                 }
             }
         })
@@ -98,4 +100,12 @@
 
         })
     }
+    
 </script>
+<style>
+    .btn_disable {
+        background-color: #d4d4d4; /* 设置按钮背景颜色为灰色 */
+        border-color: #d4d4d4; /* 边框线颜色应与背景颜色一致 */
+        color: #fff; /* 设置字体颜色为白色 */
+    }
+</style>
