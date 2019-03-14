@@ -14,8 +14,6 @@ namespace Restaurant_Information_MVC.Controllers
     public class KitchenController : Controller
     {
         // GET: Kitchen
-      
-        
         [HttpGet]
         //显示
         public ActionResult ShowMenu(int pageindex = 1,string name="")
@@ -125,13 +123,11 @@ namespace Restaurant_Information_MVC.Controllers
             if (str.Contains("成功"))
             {
                 return Redirect("/Kitchen/ShowMenu");
-                
             }
             else
             {
                 return Content("修改失败");
             }
-           
         }
         /// <summary>
         /// 获取一个菜式
@@ -153,7 +149,6 @@ namespace Restaurant_Information_MVC.Controllers
             string str = HttpClientHelper.Seng("get", "api/KitchensApi/GetCtables", null);
             List<CtableViewModel> ctable = JsonConvert.DeserializeObject<List<CtableViewModel>>(str);
             return View(ctable);
-
         }
 
         
@@ -177,7 +172,7 @@ namespace Restaurant_Information_MVC.Controllers
                 return Content("添加失败");
             }
         }
-        
+
         public string Updatetable(int id)
         {
             string str1 = HttpClientHelper.Seng("get", "api/KitchensApi/GetCtables", null);

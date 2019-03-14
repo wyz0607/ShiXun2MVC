@@ -231,8 +231,8 @@ namespace Restaurant_Information_MVC.Controllers
             {
                 host = "smtp.qq.com",
                 mailBody = "验证码：" + validateCode,
-                mailFrom = "876468933@qq.com",
-                mailPwd = "pqywqeahvesvbfgf",
+                mailFrom = "2630106690@qq.com",
+                mailPwd = "ysuhjbrxsnrtebhc",
                 mailSubject = "[一份来自测试的邮件]",
                 mailToArray = new string[] { email }
             };
