@@ -142,8 +142,11 @@ namespace Restaurant_Information_MVC.Controllers
 
         }
 
-        
-
+      
+        /// <summary>
+        /// 管理员界面餐桌显示
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Gettabless()
         {
             string str = HttpClientHelper.Seng("get", "api/KitchensApi/GetCtables", null);
@@ -151,7 +154,15 @@ namespace Restaurant_Information_MVC.Controllers
             return View(ctable);
         }
 
-        
+        public string GetTableId(string id)
+        {
+            var result = HttpClientHelper.Seng("get", "api/Login/GetTableId?id="+id+"&userName="+Session["UserNameFirst"],null);
+            if (Convert.ToInt32(result)>0)
+            {
+                return "1";
+            }
+            return "0";
+        }
         [HttpGet]
         public ActionResult Addtable()
         {
