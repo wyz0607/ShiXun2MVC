@@ -241,27 +241,6 @@ namespace Restaurant_Information_MVC.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
     public enum Stateinfo
     {
