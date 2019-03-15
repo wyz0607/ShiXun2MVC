@@ -3,30 +3,23 @@
     ViewBag.Title = "ShowMenu";
 }
 <style>
-    li {
-        float:left;
-        list-style: none;
-    }
-    ul {
-        float:right;
-    }
 </style>
 
 <link href="~/layui/css/layui.css" rel="stylesheet" />
-<script src="~/layui-v2.4.5/layui/layui.all.js"></script>
 <script src="~/layui-v2.4.5/layui/layui.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
 
-<div style="border:solid 0px yellow;overflow:auto;padding:0px;position:relative;height:38px;">
-    <ul style="display:block;width:800px;position:absolute;left:50%;margin-left:-400px;overflow:auto;border:solid 0px red">
-        <li>
+<div id="Box" style="border:solid 0px yellow;overflow:auto;padding:0px;position:relative;height:38px;">
+    <ul style="display:block;width:800px;position:absolute;left:50%;margin-left:-400px;overflow:auto;border:solid 0px red;float:right;">
+        <li style="float:left;list-style: none;">
             <button class="layui-btn" onclick="location.href='/Kitchen/AddMenu'">
                 <i class="layui-icon">&#xe608</i>新增菜式
             </button>
         </li>
-        <li>
+        <li style="float:left;list-style: none;">
             <button id="BtnDel" onclick="Dels()" style="float:right;margin-right:150px" type="button" class="layui-btn layui-btn-radius layui-btn-danger">批量删除</button>
         </li>
-        <li>
+        <li style="float:left;list-style: none;">
             <input type="text" name="txtSel" style="width:200px;float:left;margin-left:70px" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input">
             <button class="layui-btn layui-btn-small layui-btn-normal" onclick="Sel()">查询</button>
         </li>
@@ -36,7 +29,7 @@
 
 
 
-<div class="container" id="tb" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2;clear:both;">
+<div class="container" id="tb" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2;clear:both;margin-left:50px;position:absolute;">
 
     @foreach (var item in Model)
     {
@@ -82,43 +75,43 @@
     <input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
 </p>
 
-<div id="test1" style="margin-left:500px"></div>
+<div id="t1" style="margin-top:200px;margin-left:300px"></div>
 
 <script>
-    function Sel() {
-        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
-    }
-    function Dels() {
-        var MenuIDs = [];
-        $("[name='Deles']:checked").each(function () {
-            MenuIDs.push($(this).val());
-        });
-        location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
-    }
+    //function Sel() {
+    //    location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
+    //}
+    //function Dels() {
+    //    var MenuIDs = [];
+    //    $("[name='Deles']:checked").each(function () {
+    //        MenuIDs.push($(this).val());
+    //    });
+    //    location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
+    //}
 
-    $(function () {
-        $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
-    })
-    function BtnUp() {
-        if ($("#currentindex").text() != 1) {
-            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
-        }
-        else {
-            layui.use('layer', function () {
-                layer.alert('已经是首页了');
-            })
-        }
-    }
-    function BtnDown() {
-        if ($("#currentindex").text() != $("#totalpage").text()) {
-            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
-        }
-        else {
-            layui.use('layer', function () {
-                layer.alert('已经是尾页了');
-            })
-        }
-    }
+    //$(function () {
+    //    $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
+    //})
+    //function BtnUp() {
+    //    if ($("#currentindex").text() != 1) {
+    //        location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
+    //    }
+    //    else {
+    //        layui.use('layer', function () {
+    //            layer.alert('已经是首页了');
+    //        })
+    //    }
+    //}
+    //function BtnDown() {
+    //    if ($("#currentindex").text() != $("#totalpage").text()) {
+    //        location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
+    //    }
+    //    else {
+    //        layui.use('layer', function () {
+    //            layer.alert('已经是尾页了');
+    //        })
+    //    }
+    //}
 
 </script>
 
@@ -168,12 +161,12 @@
 
         //执行一个laypage实例
         laypage.render({
-            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            elem: 't1' //注意，这里的 test1 是 ID，不用加 # 号
             , count: Number($("#pCount").val()) //数据总数，从服务端得到
             , limit: Number($("#pSize").val()) //每页显示条数
             , prev: "上一页"
             , next: "下一页"
-            , hash: "?pageIndex
+            , hash: "?pageIndex"
             , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
             , jump: function (obj, first) {
                 if (!first) {

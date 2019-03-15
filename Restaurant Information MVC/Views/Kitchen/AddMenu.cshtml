@@ -1,130 +1,132 @@
 ﻿@model Restaurant_Information_MVC.Models.KitchenViewModel
 
 @{
-    ViewBag.Title = "AddMenu";
+    ViewBag.Title = "";
 }
 
-<h2>AddMenu</h2>
+<h2>添加菜品</h2>
 <script src="~/layui/layui.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.form.js"></script>
 
-@using (Html.BeginForm("AddMenu", "Kitchen", FormMethod.Post, new { enctype = "multipart/form-data", @class="layui-form"}))
-{
-    @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单号:</label>
-        <div class="layui-input-block">
-            <input name="MenuID" class="layui-input" type="text" placeholder="请输入菜单号">
+    @using (Html.BeginForm("AddMenu", "Kitchen", FormMethod.Post, new { enctype = "multipart/form-data", @class = "layui-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="div1" class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单号:</label>
+                <div class="layui-input-block">
+                    <input name="MenuID" class="layui-input" type="text" placeholder="请输入菜单号">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜式名:</label>
+                <div class="layui-input-block">
+                    <input name="MenuName" class="layui-input" type="text" placeholder="请输入菜式名">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜式图片:</label>
+                <div class="layui-input-block">
+                    <input id="File1" type="file" name="img" />
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜式简介:</label>
+                <div class="layui-input-block">
+                    <input name="MenuIntroduce" class="layui-input" type="text" placeholder="请输入菜式简介">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">主要食材:</label>
+                <div class="layui-input-block">
+                    <input name="MenuIngredients" class="layui-input" type="text" placeholder="请输入主要食材">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属菜系:</label>
+                <div class="layui-input-inline" style="margin-left:30px;">
+                    <select name="MenuCuisine" lay-verify="required">
+                        <option>鲁菜</option>
+                        <option>川菜</option>
+                        <option>苏菜</option>
+                        <option>粤菜</option>
+                        <option>浙菜</option>
+                        <option>闽菜</option>
+                        <option>徽菜</option>
+                        <option>湘菜</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜式种类:</label>
+                <div class="layui-input-inline" style="margin-left:30px;">
+                    <select id="Select1" name="MenuKind">
+                        <option>牛肉类</option>
+                        <option>猪肉类</option>
+                        <option>海鲜类</option>
+                        <option>家禽</option>
+                        <option>菌类</option>
+                        <option>蔬菜类</option>
+                        <option>豆制品</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜品单价:</label>
+                <div class="layui-input-block">
+                    <input name="UnitPrice" class="layui-input" type="text" placeholder="请输入单价(元)">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">销售量:</label>
+                <div class="layui-input-block">
+                    <input name="SalesVolume" class="layui-input" type="text" placeholder="添加菜品时,销量默认为0" disabled value="0">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="margin-left:600px;">
+                    <input type="submit" class="layui-btn layui-btn-fluid" value="保存" />
+                </div>
+            </div>
         </div>
+    }
+
+    <div>
+        @Html.ActionLink("返回列表", "ShowMenu", null, new { @class = "layui-btn layui-btn-xs layui-btn-normal" })
     </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜式名:</label>
-        <div class="layui-input-block">
-            <input name="MenuName" class="layui-input" type="text" placeholder="请输入菜式名">
-        </div>
-    </div>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+        });
 
+        layui.use('layer', function () {
+            var layer = layui.layer;
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜式图片:</label>
-        <div class="layui-input-block">
-            <input id="File1" type="file" name="img" />
-        </div>
-    </div>
+            layer.msg('添加菜品时,销量默认为0');
+        });
 
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜式简介:</label>
-        <div class="layui-input-block">
-            <input name="MenuIntroduce" class="layui-input" type="text" placeholder="请输入菜式简介">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">主要食材:</label>
-        <div class="layui-input-block">
-            <input name="MenuIngredients" class="layui-input" type="text" placeholder="请输入主要食材">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">所属菜系:</label>
-        <div class="layui-input-inline" style="margin-left:30px;">
-            <select name="MenuCuisine" lay-verify="required">
-                <option>鲁菜</option>
-                <option>川菜</option>
-                <option>苏菜</option>
-                <option>粤菜</option>
-                <option>浙菜</option>
-                <option>闽菜</option>
-                <option>徽菜</option>
-                <option>湘菜</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜式种类:</label>
-        <div class="layui-input-inline" style="margin-left:30px;">
-            <select id="Select1" name="MenuKind">
-                <option>牛肉类</option>
-                <option>猪肉类</option>
-                <option>海鲜类</option>
-                <option>家禽</option>
-                <option>菌类</option>
-                <option>蔬菜类</option>
-                <option>豆制品</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜品单价:</label>
-        <div class="layui-input-block">
-            <input name="UnitPrice" class="layui-input" type="text" placeholder="请输入单价(元)">
-        </div>
-    </div>
-
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">销售量:</label>
-        <div class="layui-input-block">
-            <input name="SalesVolume" class="layui-input" type="text" placeholder="添加菜品时,销量默认为0" disabled value="0">
-        </div>
-    </div>
-
-
-    <div class="layui-form-item">
-        <div class="layui-input-inline" style="margin-left:600px;">
-            <input type="submit" class="layui-btn layui-btn-fluid" value="保存" />
-        </div>
-    </div>
-</div>
-}
-
-<div>
-    @Html.ActionLink("返回列表", "ShowMenu",null,new { @class="layui-btn layui-btn-xs layui-btn-normal"})
-</div>
-
-<script>
-    layui.use('form', function () {
-        var form = layui.form;
-    });
-
-    layui.use('layer', function () {
-        var layer = layui.layer;
-
-        layer.msg('添加菜品时,销量默认为0');
-    }); 
-
-</script>
+    </script>
 
 
 

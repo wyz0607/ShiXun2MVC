@@ -5,6 +5,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Show</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
     <link href="~/icofont/icofont.css" rel="stylesheet" />
     <script src="~/Scripts/Chart.bundle.js"></script>
     <script src="~/Scripts/utils.js"></script>
@@ -19,7 +20,7 @@
     </style>
 </head>
 <body>
-    <div class="admin-index">
+    @*<div class="admin-index">
         <dl data-am-scrollspy="{animation: 'slide-right', delay: 100}">
             <dt class="qs"><i class="icofont-shopping-cart"></i></dt>
             <dd>@ViewBag.OrderNum</dd>
@@ -40,10 +41,70 @@
             <dd>@ViewBag.money</dd>
             <dd class="f12">历史收入</dd>
         </dl>
+    </div>*@
+    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
+        <div class="dashboard-stat blue">
+            <div class="visual">
+                <i class="am-icon-comments-o"></i>
+            </div>
+            <div class="details">
+                <div class="number"> @ViewBag.OrderNum </div>
+                <div class="desc"> 今日订单数 </div>
+            </div>
+            <a class="more" href="#">
+                查看更多
+                <i class="m-icon-swapright m-icon-white"></i>
+            </a>
+        </div>
     </div>
-    <div id="container" style="width:600px;height:400px;margin-top:150px;margin-left:360px;">
+    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
+        <div class="dashboard-stat red">
+            <div class="visual">
+                <i class="am-icon-bar-chart-o"></i>
+            </div>
+            <div class="details">
+                <div class="number"> @ViewBag.oneMoney </div>
+                <div class="desc"> 今日收入 </div>
+            </div>
+            <a class="more" href="#">
+                查看更多
+                <i class="m-icon-swapright m-icon-white"></i>
+            </a>
+        </div>
+    </div>
+    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
+        <div class="dashboard-stat green">
+            <div class="visual">
+                <i class="am-icon-apple"></i>
+            </div>
+            <div class="details">
+                <div class="number"> @ViewBag.menu </div>
+                <div class="desc"> 菜式数量 </div>
+            </div>
+            <a class="more" href="#">
+                查看更多
+                <i class="m-icon-swapright m-icon-white"></i>
+            </a>
+        </div>
+    </div>
+    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
+        <div class="dashboard-stat purple">
+            <div class="visual">
+                <i class="am-icon-android"></i>
+            </div>
+            <div class="details">
+                <div class="number"> @ViewBag.money </div>
+                <div class="desc"> 历史收入 </div>
+            </div>
+            <a class="more" href="#">
+                查看更多
+                <i class="m-icon-swapright m-icon-white"></i>
+            </a>
+        </div>
+    </div>
+    <div id="container" style="width:600px;height:400px;margin-top:150px;margin-left:360px;position:absolute">
         <div style="margin-left:200px;">
-        <i class="icofont-chart-line" style="font-size:25px">近七日成交订单</i>
+            <i class="icofont-chart-line" style="font-size:25px">近七日成交订单</i>
         </div>
         <hr class="layui-bg-green">
         <canvas id="canvas"></canvas>
