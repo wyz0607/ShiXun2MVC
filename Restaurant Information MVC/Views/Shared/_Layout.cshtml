@@ -131,7 +131,7 @@
                                     <span class="percent">60%</span>
                                 </span>
                                 <span class="progress">
-                                    <div class="am-progress tpl-progress am-progress-striped"><div class="am-progress-bar am-progress-bar-warning" style="width:60%"></div></div>
+                                    <div class="am-progress tpl-progress am-progress-striped"> <div class="am-progress-bar am-progress-bar-warning" style="width:60%"></div></div>
                                 </span>
                             </a>
                         </li>
@@ -142,15 +142,15 @@
 
                 <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                     <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                        <span class="tpl-header-list-user-nick">禁言小张</span><span class="tpl-header-list-user-ico"> <img src="assets/img/user01.png"></span>
+                        <span class="tpl-header-list-user-nick">@Session["UserName"]</span><span class="tpl-header-list-user-ico"> <img src="assets/img/user01.png"></span>
                     </a>
                     <ul class="am-dropdown-content">
                         <li><a href="#"><span class="am-icon-bell-o"></span> 资料</a></li>
-                        <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
-                        <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+                        <li><a href="/Work/Uptuser"><span class="am-icon-cog"></span> 设置</a></li>
+                        <li><a href="/Login/Index"><span class="am-icon-power-off"></span> 退出</a></li>
                     </ul>
                 </li>
-                <li><a href="###" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
+                <li><a href="/Login/Index" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
             </ul>
         </div>
     </header>
@@ -192,22 +192,22 @@
                                 <a href="/Reception/ShowFoodSelection">
                                     <i class="am-icon-angle-right"></i>
                                     <span>点菜管理</span>
-                                    
+
                                 </a>
                                 <a href="/Reception/ShowWaste">
                                     <i class="am-icon-angle-right"></i>
                                     <span>废单管理</span>
-                                    
+
                                 </a>
                                 <a href="/Reception/EatingYards">
                                     <i class="am-icon-angle-right"></i>
                                     <span>生成就餐码</span>
-                                    
+
                                 </a>
                                 <a href="/Login/Gettables">
                                     <i class="am-icon-angle-right"></i>
                                     <span>餐桌信息</span>
-                                    
+
                                 </a>
                             </li>
                         </ul>
@@ -224,23 +224,23 @@
                                 <a href="table-font-list.html">
                                     <i class="am-icon-angle-right"></i>
                                     <span>添加职员</span>
-                                   
+
                                 </a>
 
                                 <a href="/Work/UptComment">
                                     <i class="am-icon-angle-right"></i>
                                     <span>审核评论</span>
-                                    
+
                                 </a>
                                 <a href="form-news.html">
                                     <i class="am-icon-angle-right"></i>
                                     <span>审核店长</span>
-                                   
+
                                 </a>
                                 <a href="/Work/Uptuser">
                                     <i class="am-icon-angle-right"></i>
                                     <span>修改密码</span>
-                                   
+
                                 </a>
                             </li>
                         </ul>
@@ -262,17 +262,17 @@
                                 <a href="/Finance/ShowBill">
                                     <i class="am-icon-angle-right"></i>
                                     <span>账目查询</span>
-                                    
+
                                 </a>
                                 <a href="//">
                                     <i class="/Finance/ShowEarning"></i>
                                     <span>收入消费查询</span>
-                                   
+
                                 </a>
                                 <a href="form-news.html">
                                     <i class="/Finance/FinancialStatement"></i>
                                     <span>财务报表打印</span>
-                                    
+
                                 </a>
                             </li>
                         </ul>
@@ -290,7 +290,7 @@
                                 <a href="/Kitchen/ShowMenu">
                                     <i class="am-icon-angle-right"></i>
                                     <span>菜式设置</span>
-                                    
+
                                 </a>
                             </li>
                         </ul>
@@ -301,15 +301,10 @@
                 </ul>
             </div>
         </div>
-
-
-
-
-
         <div class="tpl-content-wrapper">
             @RenderBody()
         </div>
-
+    </div>
         <script src="~/assets/js/jquery.min.js"></script>
         <script src="~/assets/js/amazeui.min.js"></script>
         <script src="~/assets/js/iscroll.js"></script>

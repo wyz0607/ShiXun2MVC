@@ -96,20 +96,14 @@ namespace Restaurant_Information_MVC.Controllers
             }
 
         }
-        /// <summary>
-        /// 用户注册
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AddUser()
-        {
-            return View();
-        }
+       
         /// <summary>
         /// 获取单个用户信息
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetOneUser()
+        public ActionResult GetOneUser(int id)
         {
+
             return View();
         }
         /// <summary>
@@ -163,7 +157,71 @@ namespace Restaurant_Information_MVC.Controllers
         {
             return View();
         }
-       
+        /// <summary>
+        /// 添加员工
+        /// </summary>
+        /// <returns></returns>
+       public ActionResult AddRole(RoleViewModel roleView)
+        {
+            var dd = JsonConvert.SerializeObject(roleView);
+            string str = HttpClientHelper.Seng("post", "api/WorkApi/AddEmp", dd);
+            if(str.Contains("成功"))
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+        }
+        /// <summary>
+        /// 显示所有的角色信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowRole()
+        {
+            var str = HttpClientHelper.Seng("get","api/WorkApi/GetRoles",null);
+         
+            List<RoleViewModel> list = JsonConvert.DeserializeObject<List<RoleViewModel>>(str);
+            return View(list);
+
+        }
+        /// <summary>
+        /// 根据id显示审核界面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult UptProposer(int id)
+        {
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposer/?id=" + id,null);
+            ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).FirstOrDefault();
+            return View(proposerView);
+
+        }
+        public ActionResult UptProposer(ProposerViewModel proposerView)
+        {
+            var str1 = JsonConvert.SerializeObject(proposerView);
+            var str = HttpClientHelper.Seng("put", "api/WorkApi/UptProposer", str1);
+            if(str.Contains("成功"))
+            {
+                return Content("操作成功");
+            }
+            else
+            {
+                return Content("操作失败");
+            }
+        }
+        /// <summary>
+        /// 显示所有的待审核信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ShowProposer()
+        {
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
+            ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).FirstOrDefault();
+            return View(proposerView);
+        }
 
         public  string Yanzheng;
         [HttpGet]
@@ -183,6 +241,7 @@ namespace Restaurant_Information_MVC.Controllers
             e.Send();
             return validateCode;
         }
+       
 
 
 
@@ -208,6 +267,7 @@ namespace Restaurant_Information_MVC.Controllers
 
 
     }
+    
     public enum Stateinfo
     {
         待审核 = 0,

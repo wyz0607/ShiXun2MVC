@@ -1,0 +1,82 @@
+﻿@model Restaurant_Information_MVC.Models.ProposerViewModel
+@{
+    ViewBag.Title = "UptProposer";
+}
+
+<h2>UptProposer</h2>
+<script src="~/layui/layui.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+
+
+<div>
+    <input hidden value="@Model.ProposerId"/>
+   
+
+    <form class="layui-form" style="width:700px;">
+        <div class="layui-form-item" style="float:left;">
+            <label class="layui-form-label">角色名称</label>
+            <div class="layui-input-block">
+                <input id="Text1" type="password" onchange="Txt()" name="title" required lay-verify="required" disabled value="@Model.Menu.RoleName" autocomplete="off" class="layui-input" style="width:300px;float:left">
+               
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始时间</label>
+            <div class="layui-input-block">
+                <input id="Gaipwd" type="password" name="title" required lay-verify="required" value="@Model.ProposerState" disabled autocomplete="off" class="layui-input" style="width:300px;">
+
+            </div>
+
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-block">
+                <input id="Quepwd" type="password" name="title" required lay-verify="required" value="@Model.EndTime" disabled autocomplete="off" class="layui-input" style="width:300px;float:left" onchange="que()">
+              
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原因</label>
+            <div class="layui-input-block">
+                <input id="Phone"  type="text" name="title" required lay-verify="required" value="@Model.ProposerCause" disabled autocomplete="off" class="layui-input" style="width:300px;height:200px; float:left">
+              
+            </div>
+
+
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <input id="btnyan" class="layui-btn layui-btn-normal" type="button" name="yzm" value="获取验证码" style="float:left" />
+
+            </div>
+
+
+        </div>
+        <div class="layui-form-item" style="width:100%;height:50px;">
+            <label class="layui-form-label">验证码</label>
+            <div class="layui-input-block">
+                <input id="Yan1" type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;float:left">
+                <label id="yanzheng" style="color:red;float:left"></label>
+            </div>
+
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Upt(@Model.ProposerId)" />
+                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Fan(@Model.ProposerId)" />
+
+            </div>
+
+        </div>
+        <div>
+            <label id="tishi" style="color:red"></label>
+        </div>
+
+    </form>
+</div>
