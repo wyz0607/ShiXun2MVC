@@ -9,8 +9,6 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
-    [ShouQuanAttribute]
-    [Authorize]
     public class KitchenController : Controller
     {
         // GET: Kitchen
