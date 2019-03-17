@@ -28,9 +28,24 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult ShowComment(int pageindex = 1, int pagesize = 5)
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
-            List<CommentViewModel> list = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
+            var str1 = HttpClientHelper.Seng("get","",null);
+            List<CommentViewModel> list1 = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
+            List<OrderViewModel> list2 = JsonConvert.DeserializeObject<List<OrderViewModel>>(str1);
+            var list = from s in list1.AsEnumerable()
+                       join b in list2 on s.OrderID equals b.OrderID
+                       select new CommentViewModel
+                       {
+                           CommentId = s.CommentId,
+                           MenuID = s.MenuID,
+                           OrderID = s.OrderID,
+                           CName = b.UserName,
+                           Comments=s.Comments,
+                           Ctime=s.Ctime,
+                           ReviewState=s.ReviewState,
+                           
+                       };
             ViewBag.currentindex = pageindex;
-            ViewBag.totaldata = list.Count;
+            ViewBag.totaldata = list.Count();
             ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 5)) + 1;
 
             return View(list.Skip((pageindex - 1) * 5).Take(5).ToList());
@@ -186,6 +201,27 @@ namespace Restaurant_Information_MVC.Controllers
             return View(list);
 
         }
+        /// <summary>
+        /// 显示所有员工的信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowEmp()
+        {
+            var str = HttpClientHelper.Seng("get","api/WorkApi/ShowUserinfo",null);
+            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str);
+            return View(list);
+        }
+        /// <summary>
+        /// 显示个人的资料
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetOneuserinfo(int id)
+        {
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowUserinfo", null);
+           UserInfo list = JsonConvert.DeserializeObject<List<UserInfo>>(str).Where(c=>c.UserID==id).FirstOrDefault();
+            return View(list);
+        }
+
         /// <summary>
         /// 根据id显示审核界面
         /// </summary>

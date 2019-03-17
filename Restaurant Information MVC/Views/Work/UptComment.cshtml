@@ -17,13 +17,21 @@
             <td>@Html.DisplayName("评论编号:")</td>
             <td><label id="commentid">@Model.CommentId</label></td>
         </tr>
-        <tr>
+        <tr hidden>
             <td>@Html.DisplayName("订单号:")</td>
             <td><label id="orderid">@Model.OrderID</label></td>
         </tr>
         <tr>
+            <td>@Html.DisplayName("用户名称:")</td>
+            <td><label id="cname">@Model.CName</label></td>
+        </tr>
+        <tr>
             <td>@Html.DisplayName("评论信息:")</td>
             <td><label id="comments">@Model.Comments</label></td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayName("申请时间:")</td>
+            <td><label id="ctime">@Model.Ctime</label></td>
         </tr>
         <tr>
             <td></td>
@@ -59,6 +67,8 @@
             MenuID: $("#menu").val(),
             OrderID: $("#orderid").text(),
             Comments: $("#comments").text(),
+            Ctime: $("#ctime").text(),
+            Cname: $("#cname").text(),
             ReviewState: 1
         };
         layui.use('layer', function () {
