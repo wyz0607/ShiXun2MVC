@@ -75,8 +75,8 @@
                 <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
                     <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="location.href='/Kitchen/UptMenu?id=@item.MenuID'"><span class="am-icon-edit"></span> 修改</button>
                     <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(@item.MenuID,this)"><span class="am-icon-trash-o"></span> 删除</button>
-                    <button type="button" class="am-btn am-btn-default am-btn-success" onclick="location.href='/Kitchen/UporDown?mState=1&mId=@item.MenuID'"><span class="am-icon-plus"></span> 上架</button>
-                    <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="location.href='/Kitchen/UporDown?mState=0&mId=@item.MenuID'"><span class="am-icon-archive"></span> 下架</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang(@item.MenuID)"><span class="am-icon-plus"></span> 上架</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia(@item.MenuID)"><span class="am-icon-archive"></span> 下架</button>
                 </div>
             </div>
         </div>
@@ -128,6 +128,31 @@
         }
     }
 
+</script>
+
+<script>
+    function shang(mid) {
+        $.ajax({
+            url: "/Kitchen/UporDown",
+            data: { "mState": 1, "mId": mid },
+            type: "get",
+            success: function (data) {
+                layer.msg(data);
+                location.href ='/Kitchen/ShowMenu?Permission='+@Session["p"];
+            }
+        })
+    }
+    function xia(mid) {
+        $.ajax({
+            url: "/Kitchen/UporDown",
+            data: { "mState": 0, "mId": mid },
+            type: "get",
+            success: function (data) {
+                layer.msg(data);
+                location.href ='/Kitchen/ShowMenu?Permission='+@Session["p"];
+            }
+        })
+    }
 </script>
 
 <script>
