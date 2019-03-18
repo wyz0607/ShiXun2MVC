@@ -13,7 +13,7 @@
     <input id="Username" type="hidden" value="@Model.UserName" />
     <input id="Userphone" type="hidden" value="@Model.UserPhone" />
     <input id="Usersex" type="hidden" value="@Model.UserSex" />
-    <input id="Userrole" type="hidden" value="@Model.Role" />
+    <input id="Userrole" type="hidden" value="@Model.RoleName" />
     <input id="Privilege" type="hidden" value="@Model.Privilege" />
     <input id="Userpwd" type="hidden" value="@Model.UserPwd" />
     <input id="yan" type="hidden"  />
@@ -173,7 +173,8 @@
             UserPhone: $("#Phone").val().trim(),
             UserSex: $("#Usersex").val(),
             UserPwd: $("#Gaipwd").val().trim(),
-            Role: $("#Userrole").val(),
+            RoleName: $("#Userrole").val(),
+            Rname: $("#Userrole").val(),
             Privilege: $("#Privilege").val()
         }
         layui.use('layer', function () {

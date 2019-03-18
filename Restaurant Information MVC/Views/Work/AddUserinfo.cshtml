@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "添加员工";
+}
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layui/layui.js"></script>
+
+<form class="layui-form" style="width:700px;position:absolute">
+    <div class="layui-form-item" style="float:left;">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+            <input id="Text1" type="text" name="title" required lay-verify="required" placeholder="请输入员工名称" autocomplete="off" class="layui-input" style="width:300px;float:left">
+
+        </div>
+    </div>
+    <div class="layui-form-item" style="float:left;">
+        <label class="layui-form-label">预存邮箱</label>
+        <div class="layui-input-block">
+            <input id="email" type="text" name="title" required lay-verify="required" placeholder="请输入员工的邮箱" autocomplete="off" class="layui-input" style="width:300px;float:left">
+
+        </div>
+    </div>
+    <div class="layui-form-item" style="float:left;">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input id="Radio1" type="radio" name="title" required lay-verify="required" value="男" autocomplete="off" class="layui-input" checked>男
+            <input id="Radio2" type="radio" name="title" required lay-verify="required" value="女" autocomplete="off" class="layui-input">女
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="float:left;">
+        <label class="layui-form-label">选择职位</label>
+        <div class="layui-input-block">
+            <select id="select1" name="zhiwei">
+                <option value=""></option>
+                <option value="店长">店长</option>
+                <option value="店员">店员</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="添加" onclick="Add()" />
+            <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="取消" onclick="Fan()" />
+
+        </div>
+
+    </div>
+</form>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+    })
+    var xian = 0;
+
+    var sex = true;
+    if ($("#Radio1").attr("checked", true)) {
+        sex = true;
+    }
+    else {
+        sex = false;
+    }
+
+    function Add() {
+        var o = {
+            UserName: $("#Text1").val(),
+            UserPhone: $("#email").val().trim(),
+            UserSex: sex,
+            UserPwd: 123,
+            RoleName: $("#select1").val(),
+            Rname: $("#select1").val(),
+            Privilege: $("#select1").val()=="店长"?7:3
+        }
+        layui.use('layer', function () {
+            layer.confirm("确认添加？", {
+                btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    $.ajax({
+                        url: "/Work/AddUserinfo",
+                        data: { userInfo: o },
+                        type: "post",
+                        success: function (data) {
+                            layer.alert("添加成功");   
+
+                        }
+                    })
+                }, btn2: function (index) { }
+            })
+
+        })
+    }
+    function Fan() {
+        location.reload();
+    }
+</script>
+
