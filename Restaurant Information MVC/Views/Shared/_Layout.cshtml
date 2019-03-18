@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="~/assets/css/admin.css">
     <link rel="stylesheet" href="~/assets/css/app.css">
     <script src="~/assets/js/echarts.min.js"></script>
+    <link href="~/icofont/icofont.css" rel="stylesheet" />
 </head>
 
 <body data-type="index">
@@ -30,8 +31,8 @@
                 @*<img src="~/assets/i/370f66afd8c84de16b588e5f9547abe1.png" />*@
             </a>
         </div>
-        <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
-
+        <div id="dao" class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
+            <label for="dao">切换导航栏状态</label>
         </div>
 
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
@@ -72,7 +73,8 @@
                         <li>
                             <a href="#" class="tpl-dropdown-content-message">
                                 <span class="tpl-dropdown-content-photo">
-                                    <img src="~/assets/img/user02.png" alt="">
+                                    <img src="~/assets/img/user02.png" />
+                                    <img src="~/assets/img/user01.png" />
                                 </span>
                                 <span class="tpl-dropdown-content-subject">
                                     <span class="tpl-dropdown-content-from"> 禁言小张 </span>
@@ -131,7 +133,7 @@
                                     <span class="percent">60%</span>
                                 </span>
                                 <span class="progress">
-                                    <div class="am-progress tpl-progress am-progress-striped"> <div class="am-progress-bar am-progress-bar-warning" style="width:60%"></div></div>
+                                    <div class="am-progress tpl-progress am-progress-striped"><div class="am-progress-bar am-progress-bar-warning" style="width:60%"></div></div>
                                 </span>
                             </a>
                         </li>
@@ -142,15 +144,15 @@
 
                 <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                     <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                        <span class="tpl-header-list-user-nick">@Session["UserName"]</span><span class="tpl-header-list-user-ico"> <img src="assets/img/user01.png"></span>
+                        <span class="tpl-header-list-user-nick">禁言小张</span><span class="tpl-header-list-user-ico"> <img src="assets/img/user01.png"></span>
                     </a>
                     <ul class="am-dropdown-content">
                         <li><a href="#"><span class="am-icon-bell-o"></span> 资料</a></li>
-                        <li><a href="/Work/Uptuser"><span class="am-icon-cog"></span> 设置</a></li>
-                        <li><a href="/Login/Index"><span class="am-icon-power-off"></span> 退出</a></li>
+                        <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+                        <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
                     </ul>
                 </li>
-                <li><a href="/Login/Index" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
+                <li><a href="###" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
             </ul>
         </div>
     </header>
@@ -166,7 +168,7 @@
 
         <div class="tpl-left-nav tpl-left-nav-hover">
             <div class="tpl-left-nav-title">
-                Amaze UI 列表
+                用户功能列表
             </div>
             <div class="tpl-left-nav-list">
                 <ul class="tpl-left-nav-menu">
@@ -184,30 +186,25 @@
                         </a>
                         <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
-                                <a href="/Reception/ShowOrder">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Reception/ShowOrder?Permission=1">
                                     <span>订单管理</span>
                                 </a>
 
-                                <a href="/Reception/ShowFoodSelection">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Reception/ShowFoodSelection?Permission=1">
                                     <span>点菜管理</span>
-
+                                    
                                 </a>
-                                <a href="/Reception/ShowWaste">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Reception/ShowWaste?Permission=1">
                                     <span>废单管理</span>
-
+                                    
                                 </a>
-                                <a href="/Reception/EatingYards">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Reception/EatingYards?Permission=1">
                                     <span>生成就餐码</span>
-
+                                    
                                 </a>
-                                <a href="/Login/Gettables">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Kitchen/Gettabless?Permission=1">
                                     <span>餐桌信息</span>
-
+                                    
                                 </a>
                             </li>
                         </ul>
@@ -219,33 +216,21 @@
                             <span>办公管理</span>
                             <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
                         </a>
-                        <ul class="tpl-left-nav-sub-menu">
+                        <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
-                                <a href="/Work/AddUserinfo">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="table-font-list.html">
                                     <span>添加职员</span>
-
-                                </a>
-                                <a href="/Work/ShowUserInfo">
-                                    <i class="am-icon-angle-right"></i>
-                                    <span>显示职员</span>
-
                                 </a>
 
-                                <a href="/Work/UptComment">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Work/ShowComment?Permission=4">
                                     <span>审核评论</span>
-
+                                    
                                 </a>
                                 <a href="form-news.html">
-                                    <i class="am-icon-angle-right"></i>
                                     <span>审核店长</span>
-
                                 </a>
-                                <a href="/Work/Uptuser">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Work/Uptuser?Permission=1">
                                     <span>修改密码</span>
-
                                 </a>
                             </li>
                         </ul>
@@ -257,27 +242,22 @@
                             <span>财务管理</span>
                             <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
                         </a>
-                        <ul class="tpl-left-nav-sub-menu">
+                        <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
-                                <a href="/Finance/ShowCost">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/ShowCost?Permission=4">
                                     <span>成本查询</span>
                                 </a>
 
-                                <a href="/Finance/ShowBill">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/ShowBill?Permission=4">
                                     <span>账目查询</span>
-
+                                    
                                 </a>
-                                <a href="/Finance/ShowEarning">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/ShowEarning?Permission=4">
                                     <span>收入消费查询</span>
-
+                                   
                                 </a>
-                                <a href="/Finance/FinancialStatement">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/FinancialStatement?Permission=4">
                                     <span>财务报表打印</span>
-
                                 </a>
                             </li>
                         </ul>
@@ -290,12 +270,10 @@
                             <span>厨房管理</span>
                             <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
                         </a>
-                        <ul class="tpl-left-nav-sub-menu">
+                        <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
-                                <a href="/Kitchen/ShowMenu">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Kitchen/ShowMenu?Permission=1">
                                     <span>菜式设置</span>
-
                                 </a>
                             </li>
                         </ul>
@@ -306,15 +284,16 @@
                 </ul>
             </div>
         </div>
+        </div>
 
-
+        </div>
 
 
 
         <div class="tpl-content-wrapper">
             @RenderBody()
         </div>
-    </div>
+
         <script src="~/assets/js/jquery.min.js"></script>
         <script src="~/assets/js/amazeui.min.js"></script>
         <script src="~/assets/js/iscroll.js"></script>
