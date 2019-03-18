@@ -308,6 +308,8 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        
+        [HttpGet]
         public ActionResult ShowProposer()
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
