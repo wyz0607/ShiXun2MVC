@@ -33,7 +33,7 @@
             <label class="layui-form-label">所要申请时间</label>
             <div class="layui-input-block">
                 <input id="Starttime" type="text" name="title" required lay-verify="required" value="@Model.StateTime" disabled autocomplete="off" class="layui-input" style="width:300px;">
-                至
+                |
                 <input id="Endtime" type="text" name="title" required lay-verify="required" value="@Model.EndTime" disabled autocomplete="off" class="layui-input" style="width:300px;">
             </div>
 
@@ -60,8 +60,24 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Upt(@Model.ProposerId)" />
-                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Fan(@Model.ProposerId)" />
+                @{Stateinfo s = (Stateinfo)Model.ProposerState;}
+                @if (s == Stateinfo.审核通过)
+                {
+                    <b style="color:#60c336;margin-bottom:10px;">@s</b>
+
+                }
+                else if (s == Stateinfo.驳回)
+                {
+                    <b style="color:red;margin-bottom:10px;">@s</b>
+
+                }
+                else
+                {
+
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Upt(@Model.ProposerId)" />
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Fan(@Model.ProposerId)" />
+                }
+
 
             </div>
 
