@@ -184,6 +184,7 @@
     <Compile Include="Models\KitchenViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
+    <Compile Include="Models\ProperOrderSherd.cs" />
     <Compile Include="Models\ProposerViewModel.cs" />
     <Compile Include="Models\RechargeViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
