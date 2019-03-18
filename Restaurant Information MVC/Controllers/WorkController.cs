@@ -169,10 +169,10 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         public ActionResult DelUser(int id)
         {
-            string jsonstr = HttpClientHelper.Seng("put", "api/WorkApi/DelUserinfo?id="+id,null );
+            string jsonstr = HttpClientHelper.Seng("delete", "api/WorkApi/DelUserinfo?id="+id,null );
             if(jsonstr.Contains("成功"))
             {
-                return Redirect("/Work/ShowUserinfo");
+                return Content("删除成功");
             }
             else
             {
@@ -248,16 +248,7 @@ namespace Restaurant_Information_MVC.Controllers
             return View(list);
 
         }
-        /// <summary>
-        /// 显示所有角色的信息
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult ShowEmp()
-        {
-            var str = HttpClientHelper.Seng("get","api/WorkApi/ShowUserinfo",null);
-            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str);
-            return View(list);
-        }
+      
         /// <summary>
         /// 显示所有员工的信息
         /// </summary>
@@ -265,6 +256,7 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult ShowUserInfo()
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowUserinfo", null);
+            
             List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str).ToList();
             var list1 = from s in list
                         select new UserInfo
