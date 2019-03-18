@@ -35,7 +35,7 @@
 <div class="container" id="tb" style="width:1400px;height:580px;margin:0 auto;background-color:#f2f2f2;clear:both;position:absolute">
     @foreach (var item in Model)
     {
-        <div class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">
+        <div name="tr1" class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">
             <a href="javascript:;" class="tpl-table-images-content-i">
                 <div class="tpl-table-images-content-i-info">
                     <span class="ico">
@@ -73,7 +73,7 @@
             </div>
             <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
-                    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="location.href='/Kitchen/UptMenu?id=@item.MenuID'"><span class="am-icon-edit"></span> 修改</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(@item.MenuID)"><span class="am-icon-edit"></span> 修改</button>
                     <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(@item.MenuID,this)"><span class="am-icon-trash-o"></span> 删除</button>
                     <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang(@item.MenuID)"><span class="am-icon-plus"></span> 上架</button>
                     <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia(@item.MenuID)"><span class="am-icon-archive"></span> 下架</button>
@@ -90,9 +90,78 @@
     <input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
 </p>
 
-<div id="test1" style="margin-top:530px;"></div>
+<div id="test1" style="margin-left:300px;margin-top:100px">123</div>
 
 <script>
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            , count: $("#pCount").val() //数据总数，从服务端得到
+            , limit: $("#pSize").val() //每页显示条数
+            , prev: "上一页"
+            , next: "下一页"
+            , hash: "?pageIndex"
+            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            , jump: function (obj, first) {
+                if (!first) {
+
+                    $.ajax({
+                        url: "/Kitchen/Menu?pageIndex=" + obj.curr,
+                        dataType: "json",
+                        success: function (data) {
+                            var tbody = '';
+                            for (var i in data) {
+                                tbody += '<div name="tr1" class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">'
+           +' <a href="javascript:;" class="tpl-table-images-content-i">'
+             +'   <div class="tpl-table-images-content-i-info">'
+               +'     <span class="ico">'
+                 +'       <img src="'+data[i].MenuPhoto+'" alt="">'
+                   +     data[i].MenuName
+                   +' </span>'
+                +'</div>'
+                +'<span class="tpl-table-images-content-i-shadow"></span>'
+                +'<img src="'+data[i].MenuPhoto+'" style="width:432px;height:203px;" alt="">'
+            +'</a>'
+            +'<div class="tpl-table-images-content-block">'
+             +'   <div class="tpl-i-font">'
+               +'     菜式简介:'+data[i].MenuIntroduce
+                 +'   <br />'
+                   +' 主要食材:'+data[i].MenuIngredients
+                   +' <br />'
+                   +' 所属菜系:'+data[i].MenuCuisine
+                   +' <br />'
+                   +' 种类:'+data[i].MenuKind
+                   +' <br />'
+                   +'单价:'+data[i].UnitPrice
+                   +' <br />'
+                   +' 销售量: '+data[i].SalesVolume
+                   +' <br />'
+                   +' 状态:'
+                   + (data[i].MenuState==1?'上架':'下架')
+                +'</div>'
+            +'</div>'
+            +'<div class="am-btn-toolbar">'
+              +'  <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">'
+                                    + '    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(' + data[i].MenuID +')"><span class="am-icon-edit"></span> 修改</button>'
+                +'    <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del('+data[i].MenuID+',this)"><span class="am-icon-trash-o"></span> 删除</button>'
+                +'    <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang('+data[i].MenuID+')"><span class="am-icon-plus"></span> 上架</button>'
+                +'    <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia('+data[i].MenuID+')"><span class="am-icon-archive"></span> 下架</button>'
+                +'</div>'
+            +'</div>'
+        +'</div>';
+                            }
+                            $("[name=tr1]").remove();
+                            $("#tb").append(tbody);
+                        }
+                    })
+                }
+
+            }
+        });
+    });
     function Sel() {
         location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
     }
@@ -126,6 +195,9 @@
                 layer.alert('已经是尾页了');
             })
         }
+    }
+    function Upt(Id) {
+        location.href = '/Kitchen/UptMenu?id='+ Id;
     }
 
 </script>
@@ -196,69 +268,5 @@
                 })
         })
     }
-    layui.use('laypage', function () {
-        var laypage = layui.laypage;
-
-        //执行一个laypage实例
-        laypage.render({
-            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
-            , count: Number($("#pCount").val()) //数据总数，从服务端得到
-            , limit: Number($("#pSize").val()) //每页显示条数
-            , prev: "上一页"
-            , next: "下一页"
-            , hash: "?pageIndex"
-            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
-            , jump: function (obj, first) {
-                if (!first) {
-                    //alert('第 ' + obj.curr + ' 页');
-                    //location.href = "/Reception/ShowOrder?pageIndex=" + obj.curr
-
-                    $.ajax({
-                        url: "/Kitchen/Menu?pageIndex=" + obj.curr,
-                        dataType: "json",
-                        success: function (data) {
-                            var tbody = '';
-                            for (var i in data) {
-                                tbody += '<table class="col-lg-4" name="tr1" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">'
-                                    + '<tr>'
-                                    + ' <td colspan="5">'
-                                    + '    <img src="' + data[i].MenuPhoto + '" style="width:100px;height:100px;" />'
-                                    + '  <div style="margin-left:20px;">' + data[i].MenuName + '</div>'
-                                    + '</td>'
-                                    + '<td>'
-                                    + '  <div style="float:right"><input value="' + data[i].MenuID + '" name="Deles" type="checkbox" /></div>'
-                                    + '<div> 菜式简介:' + data[i].MenuIntroduce + '</div>'
-                                    + '<div>'
-                                    + '  主要食材: ' + data[i].MenuIngredients
-                                    + '</div>'
-                                    + '<div>'
-                                    + '  所属菜系:' + data[i].MenuCuisine
-                                    + '</div>'
-                                    + '<div>'
-                                    + '  种类:' + data[i].MenuKind
-                                    + '</div>'
-                                    + '<div>'
-                                    + '  单价:' + data[i].UnitPrice
-                                    + '</div>'
-                                    + '<div>'
-                                    + '  销售量: ' + data[i].SalesVolume
-                                    + '</div>'
-                                    + '<br />'
-                                    + '<div>'
-                                    + '  <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="Upt(' + data[i].MenuID + ')">菜式修改</button>'
-                                    + '<button class="layui-btn layui-btn-radius layui-btn-danger" onclick="Del(' + data[i].MenuID + ',this)">删除菜式</button>'
-                                    + '</div>'
-                                    + '</td>'
-                                    + '</tr>'
-                                    + '</table>';
-                            }
-                            $("[name=tr1]").remove();
-                            $("#tb").append(tbody);
-                        }
-                    })
-                }
-
-            }
-        });
-    });
+ 
 </script>
