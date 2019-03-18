@@ -9,15 +9,10 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
+    [Authorize]
     public class KitchenController : Controller
     {
-        [ShouQuanAttribute]
-        [Authorize]
-
-        public ActionResult Index()
-        {
-            return View();
-        }
         public static List<KitchenViewModel> kList;
         // GET: Kitchen
         [HttpGet]

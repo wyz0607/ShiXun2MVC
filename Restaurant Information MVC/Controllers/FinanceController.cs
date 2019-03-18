@@ -20,6 +20,10 @@ namespace Restaurant_Information_MVC.Controllers
     [Authorize]
     public class FinanceController : Controller
     {
+        /// <summary>
+        /// 获取每一个权限的值
+        /// </summary>
+        public static int fp;
         //静态化两个进货商品的成本价表
         public static List<GoodsViewModel> gList;
         public static List<GoodsViewModel> glist;
@@ -219,6 +223,7 @@ namespace Restaurant_Information_MVC.Controllers
             {
                 return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
             }
+            fp = Permission;
             glist = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
@@ -311,7 +316,7 @@ namespace Restaurant_Information_MVC.Controllers
                     HttpClientHelper.Seng("post", "api/FinanceApi/ExcelToLead/?sql=" + sql, sql);
                 }
             }
-            Response.Write("<script>alert('导入成功!');location.href='/Finance/FinancialStatement'</script>");
+            Response.Write("<script>alert('导入成功!');location.href='/Finance/FinancialStatement/Permission=" + fp + "'</script>");
         }
         }
     }
