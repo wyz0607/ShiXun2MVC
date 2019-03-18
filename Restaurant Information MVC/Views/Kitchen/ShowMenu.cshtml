@@ -3,24 +3,25 @@
 
     ViewBag.Title = "ShowMenu";
 }
-<style>
-</style>
-
 <link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layui-v2.4.5/layui/layui.all.js"></script>
 <script src="~/layui-v2.4.5/layui/layui.js"></script>
-<script src="~/Scripts/jquery-3.3.1.js"></script>
 
-<div id="Box" style="border:solid 0px yellow;overflow:auto;padding:0px;position:relative;height:38px;">
-    <ul style="display:block;width:800px;position:absolute;left:50%;margin-left:-400px;overflow:auto;border:solid 0px red;float:right;">
-        <li style="float:left;list-style: none;">
+<link rel="stylesheet" href="~/Kit/assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="~/Kit/assets/css/admin.css">
+<link rel="stylesheet" href="~/Kit/assets/css/app.css">
+
+<div style="border:solid 0px yellow;overflow:auto;padding:0px;position:relative;height:38px;">
+    <ul style="display:block;width:800px;position:absolute;left:50%;margin-left:-400px;overflow:auto;border:solid 0px red;float:right">
+        <li style="float:left;list-style:none">
             <button class="layui-btn" onclick="location.href='/Kitchen/AddMenu'">
                 <i class="layui-icon">&#xe608</i>新增菜式
             </button>
         </li>
-        <li style="float:left;list-style: none;">
+        <li style="float:left;list-style:none">
             <button id="BtnDel" onclick="Dels()" style="float:right;margin-right:150px" type="button" class="layui-btn layui-btn-radius layui-btn-danger">批量删除</button>
         </li>
-        <li style="float:left;list-style: none;">
+        <li style="float:left;list-style:none">
             <input type="text" name="txtSel" style="width:200px;float:left;margin-left:70px" required lay-verify="required" placeholder="请输入菜式名称" autocomplete="off" class="layui-input">
             <button class="layui-btn layui-btn-small layui-btn-normal" onclick="Sel()">查询</button>
         </li>
@@ -30,89 +31,91 @@
 
 
 
-<div class="container" id="tb" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2;clear:both;margin-left:50px;position:absolute;">
-
+<div class="container" id="tb" style="width:1400px;height:580px;margin:0 auto;background-color:#f2f2f2;clear:both;position:absolute">
     @foreach (var item in Model)
     {
-        <table class="col-lg-4" name="tr1" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">
-            <tr>
-                <td colspan="5">
-                    <img src="@item.MenuPhoto" style="width:100px;height:100px;" />
-                    <div style="margin-left:20px;"> @item.MenuName</div>
-                </td>
-                <td>
-                    <div style="float:right"><input value="@item.MenuID" name="Deles" type="checkbox" /></div>
-                    <div> 菜式简介:@item.MenuIntroduce</div>
-                    <div>
-                        主要食材: @item.MenuIngredients
-                    </div>
-                    <div>
-                        所属菜系:@item.MenuCuisine
-                    </div>
-                    <div>
-                        种类:@item.MenuKind
-                    </div>
-                    <div>
-                        单价:@item.UnitPrice
-                    </div>
-                    <div>
-                        销售量: @item.SalesVolume
-                    </div>
+        <div class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">
+            <a href="javascript:;" class="tpl-table-images-content-i">
+                <div class="tpl-table-images-content-i-info">
+                    <span class="ico">
+                        <img src="@item.MenuPhoto" alt="">
+                        @item.MenuName
+                    </span>
+                </div>
+                <span class="tpl-table-images-content-i-shadow"></span>
+                <img src="@item.MenuPhoto" style="width:432px;height:203px;" alt="">
+            </a>
+            <div class="tpl-table-images-content-block">
+                <div class="tpl-i-font">
+                    菜式简介:@item.MenuIntroduce
                     <br />
-                    <div>
-                        <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="location.href='/Kitchen/UptMenu?id=@item.MenuID'">菜式修改</button>
-                        <button class="layui-btn layui-btn-radius layui-btn-danger" onclick="Del(@item.MenuID,this)">删除菜式</button>
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-
+                    主要食材: @item.MenuIngredients
+                    <br />
+                    所属菜系:@item.MenuCuisine
+                    <br />
+                    种类:@item.MenuKind
+                    <br />
+                    单价:@item.UnitPrice
+                    <br />
+                    销售量: @item.SalesVolume
+                </div>
+            </div>
+            <div class="am-btn-toolbar">
+                <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
+                    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="location.href='/Kitchen/UptMenu?id=@item.MenuID'"><span class="am-icon-edit"></span> 修改</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(@item.MenuID,this)"><span class="am-icon-trash-o"></span> 删除</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 上架</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 下架</button>
+                </div>
+            </div>
+        </div>
     }
 </div>
+
+
 <p style="clear:both">
     <input type="hidden" id="pCount" value="@ViewBag.totaldata" />
     <input type="hidden" id="pSize" value="6" />
     <input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
 </p>
 
-<div id="t1" style="margin-top:200px;margin-left:300px"></div>
+<div id="page" style="margin-left:200px;border:solid;margin-top:330px"></div>
 
 <script>
-    //function Sel() {
-    //    location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
-    //}
-    //function Dels() {
-    //    var MenuIDs = [];
-    //    $("[name='Deles']:checked").each(function () {
-    //        MenuIDs.push($(this).val());
-    //    });
-    //    location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
-    //}
+    function Sel() {
+        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
+    }
+    function Dels() {
+        var MenuIDs = [];
+        $("[name='Deles']:checked").each(function () {
+            MenuIDs.push($(this).val());
+        });
+        location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
+    }
 
-    //$(function () {
-    //    $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
-    //})
-    //function BtnUp() {
-    //    if ($("#currentindex").text() != 1) {
-    //        location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
-    //    }
-    //    else {
-    //        layui.use('layer', function () {
-    //            layer.alert('已经是首页了');
-    //        })
-    //    }
-    //}
-    //function BtnDown() {
-    //    if ($("#currentindex").text() != $("#totalpage").text()) {
-    //        location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
-    //    }
-    //    else {
-    //        layui.use('layer', function () {
-    //            layer.alert('已经是尾页了');
-    //        })
-    //    }
-    //}
+    $(function () {
+        $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
+    })
+    function BtnUp() {
+        if ($("#currentindex").text() != 1) {
+            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是首页了');
+            })
+        }
+    }
+    function BtnDown() {
+        if ($("#currentindex").text() != $("#totalpage").text()) {
+            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是尾页了');
+            })
+        }
+    }
 
 </script>
 
@@ -162,12 +165,12 @@
 
         //执行一个laypage实例
         laypage.render({
-            elem: 't1' //注意，这里的 test1 是 ID，不用加 # 号
+            elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
             , count: Number($("#pCount").val()) //数据总数，从服务端得到
             , limit: Number($("#pSize").val()) //每页显示条数
             , prev: "上一页"
             , next: "下一页"
-            , hash: "?pageIndex"
+            , hash: "?pageIndex
             , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
             , jump: function (obj, first) {
                 if (!first) {
@@ -223,6 +226,10 @@
         });
     });
 </script>
+
+<script src="~/Kit/assets/js/jquery.min.js"></script>
+<script src="~/Kit/assets/js/amazeui.min.js"></script>
+<script src="~/Kit/assets/js/app.js"></script>
 
 
 

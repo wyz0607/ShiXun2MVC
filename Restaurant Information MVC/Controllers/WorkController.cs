@@ -32,9 +32,24 @@ namespace Restaurant_Information_MVC.Controllers
                 return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
             }
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
-            List<CommentViewModel> list = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
+            var str1 = HttpClientHelper.Seng("get","",null);
+            List<CommentViewModel> list1 = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
+            List<OrderViewModel> list2 = JsonConvert.DeserializeObject<List<OrderViewModel>>(str1);
+            var list = from s in list1.AsEnumerable()
+                       join b in list2 on s.OrderID equals b.OrderID
+                       select new CommentViewModel
+                       {
+                           CommentId = s.CommentId,
+                           MenuID = s.MenuID,
+                           OrderID = s.OrderID,
+                           CName = b.UserName,
+                           Comments=s.Comments,
+                           Ctime=s.Ctime,
+                           ReviewState=s.ReviewState,
+                           
+                       };
             ViewBag.currentindex = pageindex;
-            ViewBag.totaldata = list.Count;
+            ViewBag.totaldata = list.Count();
             ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 5)) + 1;
 
             return View(list.Skip((pageindex - 1) * 5).Take(5).ToList());
@@ -104,20 +119,14 @@ namespace Restaurant_Information_MVC.Controllers
             }
 
         }
-        /// <summary>
-        /// 用户注册
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AddUser()
-        {
-            return View();
-        }
+       
         /// <summary>
         /// 获取单个用户信息
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetOneUser()
+        public ActionResult GetOneUser(int id)
         {
+
             return View();
         }
         /// <summary>
@@ -171,7 +180,92 @@ namespace Restaurant_Information_MVC.Controllers
         {
             return View();
         }
-       
+        /// <summary>
+        /// 添加员工
+        /// </summary>
+        /// <returns></returns>
+       public ActionResult AddRole(RoleViewModel roleView)
+        {
+            var dd = JsonConvert.SerializeObject(roleView);
+            string str = HttpClientHelper.Seng("post", "api/WorkApi/AddEmp", dd);
+            if(str.Contains("成功"))
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+        }
+        /// <summary>
+        /// 显示所有的角色信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowRole()
+        {
+            var str = HttpClientHelper.Seng("get","api/WorkApi/GetRoles",null);
+         
+            List<RoleViewModel> list = JsonConvert.DeserializeObject<List<RoleViewModel>>(str);
+            return View(list);
+
+        }
+        /// <summary>
+        /// 显示所有员工的信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowEmp()
+        {
+            var str = HttpClientHelper.Seng("get","api/WorkApi/ShowUserinfo",null);
+            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str);
+            return View(list);
+        }
+        /// <summary>
+        /// 显示个人的资料
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetOneuserinfo(int id)
+        {
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowUserinfo", null);
+           UserInfo list = JsonConvert.DeserializeObject<List<UserInfo>>(str).Where(c=>c.UserID==id).FirstOrDefault();
+            return View(list);
+        }
+
+        /// <summary>
+        /// 根据id显示审核界面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult UptProposer(int id)
+        {
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposer/?id=" + id,null);
+            ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).FirstOrDefault();
+            return View(proposerView);
+
+        }
+        public ActionResult UptProposer(ProposerViewModel proposerView)
+        {
+            var str1 = JsonConvert.SerializeObject(proposerView);
+            var str = HttpClientHelper.Seng("put", "api/WorkApi/UptProposer", str1);
+            if(str.Contains("成功"))
+            {
+                return Content("操作成功");
+            }
+            else
+            {
+                return Content("操作失败");
+            }
+        }
+        /// <summary>
+        /// 显示所有的待审核信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ShowProposer()
+        {
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
+            ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).FirstOrDefault();
+            return View(proposerView);
+        }
 
         public  string Yanzheng;
         [HttpGet]
@@ -191,6 +285,7 @@ namespace Restaurant_Information_MVC.Controllers
             e.Send();
             return validateCode;
         }
+       
 
 
 
@@ -216,6 +311,7 @@ namespace Restaurant_Information_MVC.Controllers
 
 
     }
+    
     public enum Stateinfo
     {
         待审核 = 0,
