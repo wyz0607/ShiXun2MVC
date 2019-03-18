@@ -286,8 +286,8 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult UptProposer(int id)
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposer/?id=" + id,null);
-            ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).FirstOrDefault();
-            return View(proposerView);
+           List<ProperOrderSherd> proposerView = JsonConvert.DeserializeObject<List<ProperOrderSherd>>(str);
+           return View(proposerView);
 
         }
         public ActionResult UptProposer(ProposerViewModel proposerView)
@@ -311,8 +311,21 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult ShowProposer()
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
-            ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).FirstOrDefault();
-            return View(proposerView);
+            List<ProposerViewModel> proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str);
+            var list = from s in proposerView.AsEnumerable()
+                       select new ProperOrderSherd
+                       {
+                           ProposerId=s.ProposerId,
+                           ShareHolderId=s.ShareHolderId,
+                           ProposerCause=s.ProposerCause,
+                           ProposerState=s.ProposerState,
+                           ProposerTime=s.ProposerTime,
+                          StateTime=s.StateTime,
+                           EndTime=s.EndTime,
+                           Uname=s.Menu.HolderName,
+                           Rname=s.Menu.Roles.RoleName
+                       };
+            return View(list);
         }
 
         public  string Yanzheng;
