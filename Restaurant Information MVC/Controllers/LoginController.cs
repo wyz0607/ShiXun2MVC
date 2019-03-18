@@ -31,7 +31,7 @@ namespace Restaurant_Information_MVC.Controllers
                 Session["UserID"] = user.UserID;
                 Session["Privilege"] = user.Privilege;
                 Response.Cookies["UserID"].Value = $"{user.UserID}";
-                return Content("<script>location.href='/Login/Show'</script>");
+                return Content("<script>location.href='/Login/Show?n=2'</script>");
             }
             else
             {
@@ -41,8 +41,16 @@ namespace Restaurant_Information_MVC.Controllers
         }
         [Authorize]
         [ShouQuanAttribute]
-        public ActionResult Show()
+        public ActionResult Show(int n=1)
         {
+            if (n==1)
+            {
+                Session["msg"] = 1;
+            }
+            else
+            {
+                Session["msg"] = 0;
+            }
             var time = DateTime.Now.ToString("yyyy年MM月dd日");
             //var time = "2019年02月28日";
             var num= HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + time,null);

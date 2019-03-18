@@ -23,11 +23,20 @@
                 <tr>
                     <td>@item.UserName</td>
                     <td>
-                       @item.UserSex
+                        @if(item.UserSex==true)
+                        {
+                           <i>男</i>
+                        }
+                        else
+                        {
+                            <i>女</i>
+                        }
+
+
                     </td>
                     <td>@item.Rname</td>
                     <td>
-                        <input id="Button1" type="button" value="删除" onclick="Del(@item.UserID)"/>
+                        <input id="Button1" type="button" value="删除" class="layui-btn layui-btn-danger" onclick="Del(@item.UserID)"/>
                     </td>
                 </tr>
             }
@@ -44,9 +53,10 @@
                     btn: ['确定', '取消']
                     , yes: function (index, layero) {
                         $.ajax({
-                            url: "/Work/DelUserinfo?id=" + id,
+                            url: "/Work/DelUser?id=" + id,
                             success: function (data) {
                                 layer.alert(data);
+                                location.reload();
                             }
                         })
                     }, btn2: function (index) {
