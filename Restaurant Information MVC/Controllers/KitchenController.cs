@@ -24,7 +24,7 @@ namespace Restaurant_Information_MVC.Controllers
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
-            kList = kit.Skip((pageindex - 1) * 6).Take(6).ToList();
+            kList = kit.Take(6).ToList();
             if (name != "")
             {
                 List<KitchenViewModel> k = kit.Where(m => m.MenuName.Contains(name)).ToList();
@@ -170,7 +170,7 @@ namespace Restaurant_Information_MVC.Controllers
                     Response.Write("<script>alert('下架成功')</script>");
                 }
             }
-            return View("ShowMenu", kList);
+            return Content("<script>location.href='/Kitchen/ShowMenu'</script>");
         }
         /// <summary>
         /// 获取一个菜式
