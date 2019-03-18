@@ -28,6 +28,7 @@ namespace Restaurant_Information_MVC.Controllers
             {
                 return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
             }
+            Session["p"] = Permission;
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
@@ -79,7 +80,7 @@ namespace Restaurant_Information_MVC.Controllers
             string result = HttpClientHelper.Seng("post", "api/KitchensApi/AddMenu",strJson);
             if (result.Contains("成功"))
             {
-                return Redirect("/Kitchen/ShowMenu");
+                return Redirect("/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "");
             }
             else
              {
@@ -132,7 +133,7 @@ namespace Restaurant_Information_MVC.Controllers
             string str = HttpClientHelper.Seng("put", "api/KitchensApi/UptMenu",jsonstr);
             if (str.Contains("成功"))
             {
-                return Redirect("/Kitchen/ShowMenu");
+                return Redirect("/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "");
             }
             else
             {
@@ -176,7 +177,7 @@ namespace Restaurant_Information_MVC.Controllers
                     Response.Write("<script>alert('下架成功')</script>");
                 }
             }
-            return Content("<script>location.href='/Kitchen/ShowMenu'</script>");
+            return Content("<script>location.href='/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "'</script>");
         }
         /// <summary>
         /// 获取一个菜式
