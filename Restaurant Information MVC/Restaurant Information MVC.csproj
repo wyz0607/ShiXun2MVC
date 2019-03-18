@@ -762,7 +762,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="bin\zh-Hans\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\ggg\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
