@@ -9,6 +9,8 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
+    [Authorize]
     public class KitchenController : Controller
     {
         public static List<KitchenViewModel> kList;
@@ -21,10 +23,11 @@ namespace Restaurant_Information_MVC.Controllers
             {
                 return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
             }
+            Session["p"] = Permission;
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
-            kList = kit.Skip((pageindex - 1) * 6).Take(6).ToList();
+            kList = kit;
             if (name != "")
             {
                 List<KitchenViewModel> k = kit.Where(m => m.MenuName.Contains(name)).ToList();
@@ -41,7 +44,6 @@ namespace Restaurant_Information_MVC.Controllers
                 return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
             }
         }
-
         public ActionResult Menu(int pageIndex, int pageSize=6)
         {
             ViewBag.pIndex = pageIndex;
@@ -73,7 +75,7 @@ namespace Restaurant_Information_MVC.Controllers
             string result = HttpClientHelper.Seng("post", "api/KitchensApi/AddMenu",strJson);
             if (result.Contains("成功"))
             {
-                return Redirect("/Kitchen/ShowMenu");
+                return Redirect("/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "");
             }
             else
              {
@@ -126,7 +128,7 @@ namespace Restaurant_Information_MVC.Controllers
             string str = HttpClientHelper.Seng("put", "api/KitchensApi/UptMenu",jsonstr);
             if (str.Contains("成功"))
             {
-                return Redirect("/Kitchen/ShowMenu");
+                return Redirect("/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "");
             }
             else
             {
@@ -170,7 +172,7 @@ namespace Restaurant_Information_MVC.Controllers
                     Response.Write("<script>alert('下架成功')</script>");
                 }
             }
-            return View("ShowMenu", kList);
+            return Content("<script>location.href='/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "'</script>");
         }
         /// <summary>
         /// 获取一个菜式
