@@ -757,6 +757,9 @@
     <Content Include="Views\Kitchen\Gettabless.cshtml" />
     <Content Include="Views\Work\UptProposer.cshtml" />
     <Content Include="Views\Work\GetOneuserinfo.cshtml" />
+    <Content Include="Views\Work\AddRole.cshtml" />
+    <Content Include="Views\Work\AddUserinfo.cshtml" />
+    <Content Include="Views\Work\ShowUserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
