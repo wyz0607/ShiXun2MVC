@@ -1,9 +1,10 @@
 ﻿@model Restaurant_Information_MVC.Models.ProperOrderSherd
-    @using Restaurant_Information_MVC.Controllers
+@using Restaurant_Information_MVC.Controllers
 @{
     ViewBag.Title = "审核店长";
 }
-
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layui/layui.js"></script>
 
 <div>
 
@@ -65,7 +66,7 @@
             </div>
 
         </div>
-        
+
 
     </form>
 </div>
@@ -79,7 +80,7 @@
             StateTime: $("#Starttime").val(),
             EndTime: $("#Endtime").val(),
             ProposerState: 1
-           
+
         }
         layui.use('layer', function () {
             layer.confirm("确认通过？", {
@@ -91,7 +92,7 @@
                         type: "post",
                         success: function (data) {
                             layer.alert(data);
-                           
+
 
                         }
                     })
@@ -109,7 +110,7 @@
             StateTime: $("#Starttime").val(),
             EndTime: $("#Endtime").val(),
             ProposerState: 2
-           
+
         }
         layui.use('layer', function () {
             layer.confirm("确认通过？", {

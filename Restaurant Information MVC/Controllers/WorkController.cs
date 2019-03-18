@@ -320,6 +320,7 @@ namespace Restaurant_Information_MVC.Controllers
                            ProposerCause=s.ProposerCause,
                            ProposerState=s.ProposerState,
                            ProposerTime=s.ProposerTime,
+                          StateTime=s.StateTime,
                            EndTime=s.EndTime,
                            Uname=s.Menu.HolderName,
                            Rname=s.Menu.Roles.RoleName
