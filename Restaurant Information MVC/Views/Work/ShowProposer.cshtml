@@ -1,18 +1,16 @@
-﻿@model IEnumerable<Restaurant_Information_MVC.Models.ProposerViewModel>
-
+﻿@model IEnumerable<Restaurant_Information_MVC.Models.ProperOrderSherd>
+@using Restaurant_Information_MVC.Controllers
 @{
-    ViewBag.Title = "ShowProposer";
+                ViewBag.Title = "显示带审核信息";
 }
 
 
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
 
-<h2>ShowProposer</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+
 <div class="layui-form">
     <table class="layui-table">
 
@@ -20,30 +18,57 @@
             <tr>
                 <th>编号</th>
                 <th>股东编号</th>
+                <th>股东名称</th>
+                <th>角色名称</th>
                 <th>申请原因</th>
                 <th>开始时间</th>
                 <th>结束时间</th>
                 <th>状态</th>
+
+
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>@item.ProposerId</td>
-                <td>
-                    @item.RoleId
-                </td>
-                <td>@item.ProposerCause</td>
-                <td>@item.ProposerTime</td>
-                <td>@item.StateTime</td>
-                <td>@item.EndTime</td>
-                <td>@item.ProposerState</td>
-                <td>
-                    <input id="Button1" type="button" value="删除" onclick="Del(@item.ProposerId )" />
-                    <input id="Button1" type="button" value="审核" onclick="Del(@item.ProposerId )" />
-                </td>
-            </tr>
+                <tr>
+                    <td>@item.ProposerId</td>
+                    <td>@item.ShareHolderId </td>
+                    <td>@item.Uname</td>
+                    <td>@item.Rname</td>
+                    <td>@item.ProposerCause</td>
+                    <td>@item.ProposerTime</td>
+                    <td>@item.StateTime</td>
+                    <td>@item.EndTime</td>
+
+                    <td>
+                        <p>
+                            <label id="state" style="margin-bottom:10px;">
+                                @{Stateinfo s = (Stateinfo)item.ProposerState;}
+
+                            </label>
+                            @if (s == Stateinfo.审核通过)
+                            {
+                                <b style="color:#808080;float:left;margin-right:50px;">已审核</b>
+                                <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId'" style="float:right;">详情</button>
+                            }
+                            else if (s == Stateinfo.驳回)
+                            {
+                                <b style="color:#808080;margin-right:20px;">已审核</b>
+                                <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId'" style="float:right;">详情</button>
+                            }
+                            else
+                            {
+                                <div style="width:100px;margin-right:10px;">
+                                    <b style="color:#ceca37;padding-right:50px;">@s</b>
+                                    <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId'" style="float:left;">审核</button>
+                                </div>
+
+                            }
+                        </p>
+
+                    </td>
+                </tr>
             }
 
         </tbody>
@@ -51,9 +76,3 @@
 </div>
 
 
-<script>
-
-
-
-
-</script>

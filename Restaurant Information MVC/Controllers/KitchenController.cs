@@ -151,11 +151,11 @@ namespace Restaurant_Information_MVC.Controllers
             {
                 if (mState == 1)
                 {
-                    Response.Write("<script>alert('已经是上架状态了')</script>");
+                    return Content("已经是上架状态了");
                 }
                 else
                 {
-                    Response.Write("<script>alert('已经是下架状态了')</script>");
+                    return Content("已经是下架状态了");
                 }
             }
             else
@@ -166,14 +166,17 @@ namespace Restaurant_Information_MVC.Controllers
             {
                 if (mState == 1)
                 {
-                    Response.Write("<script>alert('上架成功')</script>");
+                    return Content("上架成功");
                 }
                 else
                 {
-                    Response.Write("<script>alert('下架成功')</script>");
+                    return Content("下架成功");
                 }
             }
-            return Content("<script>location.href='/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "'</script>");
+            else
+            {
+                return Content("失败");
+            }
         }
         /// <summary>
         /// 获取一个菜式
@@ -246,7 +249,6 @@ namespace Restaurant_Information_MVC.Controllers
                 return ("操作失败");
             }
         }
-
     }
    
 }
