@@ -760,6 +760,7 @@
     <Content Include="Views\Work\AddRole.cshtml" />
     <Content Include="Views\Work\AddUserinfo.cshtml" />
     <Content Include="Views\Work\ShowUserInfo.cshtml" />
+    <Content Include="Views\Work\ShowProposer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

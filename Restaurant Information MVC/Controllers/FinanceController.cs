@@ -36,7 +36,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             gList = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
             glist = gList;
@@ -100,7 +101,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
                if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             bList = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             blist = bList.OrderByDescending(m => m.BillID).ToList();
@@ -159,7 +161,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             return View();
         }
@@ -221,7 +224,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             fp = Permission;
             glist = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));

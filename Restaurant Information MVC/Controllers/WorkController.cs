@@ -18,8 +18,6 @@ namespace Restaurant_Information_MVC.Controllers
     [Authorize]
     public class WorkController : Controller
     {
-
-
         // GET: Work
         /// <summary>
         /// 显示所有的评论
@@ -29,7 +27,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
             var str1 = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
@@ -96,7 +95,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             int id =Convert.ToInt32(Session["UserID"]);
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetOneUser/?userid="+id, null);
@@ -169,10 +169,10 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         public ActionResult DelUser(int id)
         {
-            string jsonstr = HttpClientHelper.Seng("put", "api/WorkApi/DelUserinfo?id="+id,null );
+            string jsonstr = HttpClientHelper.Seng("delete", "api/WorkApi/DelUserinfo?id="+id,null );
             if(jsonstr.Contains("成功"))
             {
-                return Redirect("/Work/ShowUserinfo");
+                return Content("删除成功");
             }
             else
             {
@@ -248,16 +248,7 @@ namespace Restaurant_Information_MVC.Controllers
             return View(list);
 
         }
-        /// <summary>
-        /// 显示所有角色的信息
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult ShowEmp()
-        {
-            var str = HttpClientHelper.Seng("get","api/WorkApi/ShowUserinfo",null);
-            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str);
-            return View(list);
-        }
+      
         /// <summary>
         /// 显示所有员工的信息
         /// </summary>
@@ -265,6 +256,7 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult ShowUserInfo()
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowUserinfo", null);
+            
             List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str).ToList();
             var list1 = from s in list
                         select new UserInfo
@@ -341,29 +333,7 @@ namespace Restaurant_Information_MVC.Controllers
             e.Send();
             return validateCode;
         }
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
     }
