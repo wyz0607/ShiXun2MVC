@@ -18,8 +18,6 @@ namespace Restaurant_Information_MVC.Controllers
     [Authorize]
     public class WorkController : Controller
     {
-
-
         // GET: Work
         /// <summary>
         /// 显示所有的评论
@@ -285,29 +283,7 @@ namespace Restaurant_Information_MVC.Controllers
             e.Send();
             return validateCode;
         }
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
     }
