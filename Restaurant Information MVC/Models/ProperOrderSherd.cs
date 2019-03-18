@@ -15,7 +15,7 @@ namespace Restaurant_Information_MVC.Models
         public string EndTime { get; set; }
         public int ProposerState { get; set; }
         public string Uname { get; set; }
-        public string Rname { get; set; }
+     
 
     }
 }

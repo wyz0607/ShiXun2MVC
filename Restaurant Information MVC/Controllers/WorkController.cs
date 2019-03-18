@@ -11,7 +11,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Net.Mail;
-
+using System.Data;
 namespace Restaurant_Information_MVC.Controllers
 {
     [ShouQuanAttribute]
@@ -283,13 +283,29 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public ActionResult UptProposer(int id)
         {
-            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposer/?id=" + id,null);
-           List<ProperOrderSherd> proposerView = JsonConvert.DeserializeObject<List<ProperOrderSherd>>(str);
-           return View(proposerView);
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
+            ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).Where(c=>c.ProposerId==id).FirstOrDefault();
+
+            ProperOrderSherd properOrder = new ProperOrderSherd
+            {
+                ProposerId = proposerView.ProposerId,
+                ShareHolderId = proposerView.ShareHolderId,
+                ProposerCause = proposerView.ProposerCause,
+                ProposerState = proposerView.ProposerState,
+                ProposerTime = proposerView.ProposerTime,
+                EndTime = proposerView.EndTime,
+                Uname = proposerView.Menu.HolderName,
+                StateTime=proposerView.StateTime
+
+
+            };
+            return View(properOrder);
 
         }
+        [HttpPost]
         public ActionResult UptProposer(ProposerViewModel proposerView)
         {
             var str1 = JsonConvert.SerializeObject(proposerView);
@@ -314,7 +330,7 @@ namespace Restaurant_Information_MVC.Controllers
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
             List<ProposerViewModel> proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str);
-            var list = from s in proposerView.AsEnumerable()
+            var list = from s in proposerView.ToList()
                        select new ProperOrderSherd
                        {
                            ProposerId=s.ProposerId,
@@ -325,7 +341,7 @@ namespace Restaurant_Information_MVC.Controllers
                           StateTime=s.StateTime,
                            EndTime=s.EndTime,
                            Uname=s.Menu.HolderName,
-                           Rname=s.Menu.Roles.RoleName
+                         
                        };
             return View(list);
         }
