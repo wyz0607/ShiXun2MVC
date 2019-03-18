@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="~/assets/css/admin.css">
     <link rel="stylesheet" href="~/assets/css/app.css">
     <script src="~/assets/js/echarts.min.js"></script>
+    <link href="~/icofont/icofont.css" rel="stylesheet" />
 </head>
 
 <body data-type="index">
@@ -30,8 +31,8 @@
                 @*<img src="~/assets/i/370f66afd8c84de16b588e5f9547abe1.png" />*@
             </a>
         </div>
-        <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
-
+        <div id="dao" class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
+            <label for="dao">切换导航栏状态</label>
         </div>
 
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
@@ -167,7 +168,7 @@
 
         <div class="tpl-left-nav tpl-left-nav-hover">
             <div class="tpl-left-nav-title">
-                Amaze UI 列表
+                用户功能列表
             </div>
             <div class="tpl-left-nav-list">
                 <ul class="tpl-left-nav-menu">
@@ -186,27 +187,22 @@
                         <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
                                 <a href="/Reception/ShowOrder?Permission=1">
-                                    <i class="am-icon-angle-right"></i>
                                     <span>订单管理</span>
                                 </a>
 
                                 <a href="/Reception/ShowFoodSelection?Permission=1">
-                                    <i class="am-icon-angle-right"></i>
                                     <span>点菜管理</span>
                                     
                                 </a>
-                                <a href="/Reception/ShowWaste?Permission=3">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Reception/ShowWaste?Permission=1">
                                     <span>废单管理</span>
                                     
                                 </a>
-                                <a href="/Reception/EatingYards?Permission=3">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Reception/EatingYards?Permission=1">
                                     <span>生成就餐码</span>
                                     
                                 </a>
-                                <a href="/Login/Gettables?Permission=3">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Kitchen/Gettabless?Permission=1">
                                     <span>餐桌信息</span>
                                     
                                 </a>
@@ -223,22 +219,17 @@
                         <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
                                 <a href="table-font-list.html">
-                                    <i class="am-icon-angle-right"></i>
                                     <span>添加职员</span>
-                                   
                                 </a>
 
-                                <a href="/Work/ShowComment?Permission=3">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Work/ShowComment?Permission=4">
                                     <span>审核评论</span>
                                     
                                 </a>
                                 <a href="form-news.html">
-                                    <i class="am-icon-angle-right"></i>
                                     <span>审核店长</span>
                                 </a>
-                                <a href="/Work/Uptuser?Permission=8">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Work/Uptuser?Permission=1">
                                     <span>修改密码</span>
                                 </a>
                             </li>
@@ -253,23 +244,19 @@
                         </a>
                         <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
-                                <a href="/Finance/ShowCost?Permission=8">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/ShowCost?Permission=4">
                                     <span>成本查询</span>
                                 </a>
 
-                                <a href="/Finance/ShowBill?Permission=8">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/ShowBill?Permission=4">
                                     <span>账目查询</span>
                                     
                                 </a>
-                                <a href="/Finance/ShowEarning?Permission=8">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/ShowEarning?Permission=4">
                                     <span>收入消费查询</span>
                                    
                                 </a>
-                                <a href="/Finance/FinancialStatement?Permission=8">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Finance/FinancialStatement?Permission=4">
                                     <span>财务报表打印</span>
                                 </a>
                             </li>
@@ -285,8 +272,7 @@
                         </a>
                         <ul class="tpl-left-nav-sub-menu" style="display: block;">
                             <li>
-                                <a href="/Kitchen/ShowMenu?Permission=3">
-                                    <i class="am-icon-angle-right"></i>
+                                <a href="/Kitchen/ShowMenu?Permission=1">
                                     <span>菜式设置</span>
                                 </a>
                             </li>
