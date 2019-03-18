@@ -3,14 +3,13 @@
 @{
     ViewBag.Title = "";
 }
-
 <h2>添加菜品</h2>
 <script src="~/layui/layui.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.form.js"></script>
 
 
-
+<div style="position:absolute;margin-left:350px">
     @using (Html.BeginForm("AddMenu", "Kitchen", FormMethod.Post, new { enctype = "multipart/form-data", @class = "layui-form" }))
     {
         @Html.AntiForgeryToken()
@@ -114,7 +113,7 @@
     <div>
         @Html.ActionLink("返回列表", "ShowMenu", null, new { @class = "layui-btn layui-btn-xs layui-btn-normal" })
     </div>
-
+</div>
     <script>
         layui.use('form', function () {
             var form = layui.form;

@@ -9,8 +9,11 @@ using System.Data;
 
 namespace Restaurant_Information_MVC.Controllers
 {
+    [ShouQuanAttribute]
+    [Authorize]
     public class KitchenController : Controller
     {
+        public static List<KitchenViewModel> kList;
         // GET: Kitchen
         [HttpGet]
         //显示
@@ -21,9 +24,11 @@ namespace Restaurant_Information_MVC.Controllers
                 Session["msg"] = "1";
                 return Content("<script>location.href='/Login/Show'</script>");
             }
+            Session["p"] = Permission;
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            kList = kit;
             if (name != "")
             {
                 List<KitchenViewModel> k = kit.Where(m => m.MenuName.Contains(name)).ToList();
@@ -40,7 +45,6 @@ namespace Restaurant_Information_MVC.Controllers
                 return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
             }
         }
-
         public ActionResult Menu(int pageIndex, int pageSize=6)
         {
             ViewBag.pIndex = pageIndex;
@@ -72,7 +76,7 @@ namespace Restaurant_Information_MVC.Controllers
             string result = HttpClientHelper.Seng("post", "api/KitchensApi/AddMenu",strJson);
             if (result.Contains("成功"))
             {
-                return Redirect("/Kitchen/ShowMenu");
+                return Redirect("/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "");
             }
             else
              {
@@ -125,12 +129,51 @@ namespace Restaurant_Information_MVC.Controllers
             string str = HttpClientHelper.Seng("put", "api/KitchensApi/UptMenu",jsonstr);
             if (str.Contains("成功"))
             {
-                return Redirect("/Kitchen/ShowMenu");
+                return Redirect("/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "");
             }
             else
             {
                 return Content("修改失败");
             }
+        }
+        /// <summary>
+        /// 上下架
+        /// </summary>
+        /// <param name="mState">0是下架状态，1是上架状态</param>
+        /// <param name="mId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UporDown(int mState,int mId)
+        {
+            int n = 0;
+            KitchenViewModel kit = kList.FirstOrDefault(m => m.MenuID == mId);
+            if (kit.MenuState == mState)
+            {
+                if (mState == 1)
+                {
+                    Response.Write("<script>alert('已经是上架状态了')</script>");
+                }
+                else
+                {
+                    Response.Write("<script>alert('已经是下架状态了')</script>");
+                }
+            }
+            else
+            {
+                n = int.Parse(HttpClientHelper.Seng("put", "api/KitchensApi/UporDown/?mState=" + mState + "&&mId=" + mId, mState.ToString()));
+            }
+            if (n > 0)
+            {
+                if (mState == 1)
+                {
+                    Response.Write("<script>alert('上架成功')</script>");
+                }
+                else
+                {
+                    Response.Write("<script>alert('下架成功')</script>");
+                }
+            }
+            return Content("<script>location.href='/Kitchen/ShowMenu?Permission=" + (Session["p"]) + "'</script>");
         }
         /// <summary>
         /// 获取一个菜式

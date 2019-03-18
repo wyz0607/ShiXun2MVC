@@ -18,8 +18,6 @@ namespace Restaurant_Information_MVC.Controllers
     [Authorize]
     public class WorkController : Controller
     {
-
-
         // GET: Work
         /// <summary>
         /// 显示所有的评论
@@ -33,7 +31,7 @@ namespace Restaurant_Information_MVC.Controllers
                 return Content("<script>location.href='/Login/Show'</script>");
             }
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
-            var str1 = HttpClientHelper.Seng("get","",null);
+            var str1 = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<CommentViewModel> list1 = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
             List<OrderViewModel> list2 = JsonConvert.DeserializeObject<List<OrderViewModel>>(str1);
             var list = from s in list1.AsEnumerable()
@@ -169,9 +167,17 @@ namespace Restaurant_Information_MVC.Controllers
         /// 删除用户信息
         /// </summary>
         /// <returns></returns>
-        public ActionResult DelUser()
+        public ActionResult DelUser(int id)
         {
-            return View();
+            string jsonstr = HttpClientHelper.Seng("put", "api/WorkApi/DelUserinfo?id="+id,null );
+            if(jsonstr.Contains("成功"))
+            {
+                return Redirect("/Work/ShowUserinfo");
+            }
+            else
+            {
+                return Content("删除失败");
+            }
         }
         
         /// <summary>
@@ -183,9 +189,15 @@ namespace Restaurant_Information_MVC.Controllers
             return View();
         }
         /// <summary>
-        /// 添加员工
+        /// 添加角色
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
+        public ActionResult AddRole()
+        {
+            return View();
+        }
+        [HttpPost]
        public ActionResult AddRole(RoleViewModel roleView)
         {
             var dd = JsonConvert.SerializeObject(roleView);
@@ -200,6 +212,31 @@ namespace Restaurant_Information_MVC.Controllers
             }
         }
         /// <summary>
+        /// 添加员工
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddUserInfo()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddUserinfo(UserInfo userInfo)
+        {
+            var dd = JsonConvert.SerializeObject(userInfo);
+            var str = HttpClientHelper.Seng("post","api/WorkApi/AddUser",dd);
+            if(str.Contains("成功"))
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+
+
+
+        }
+        /// <summary>
         /// 显示所有的角色信息
         /// </summary>
         /// <returns></returns>
@@ -212,13 +249,30 @@ namespace Restaurant_Information_MVC.Controllers
 
         }
         /// <summary>
-        /// 显示所有员工的信息
+        /// 显示所有角色的信息
         /// </summary>
         /// <returns></returns>
         public ActionResult ShowEmp()
         {
             var str = HttpClientHelper.Seng("get","api/WorkApi/ShowUserinfo",null);
             List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str);
+            return View(list);
+        }
+        /// <summary>
+        /// 显示所有员工的信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowUserInfo()
+        {
+            var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowUserinfo", null);
+            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str).ToList();
+            var list1 = from s in list
+                        select new UserInfo
+                        {
+                            UserName = s.UserName,
+                            UserSex = s.UserSex,
+                            Rname = s.Rname
+                        };
             return View(list);
         }
         /// <summary>
@@ -287,29 +341,7 @@ namespace Restaurant_Information_MVC.Controllers
             e.Send();
             return validateCode;
         }
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
     }

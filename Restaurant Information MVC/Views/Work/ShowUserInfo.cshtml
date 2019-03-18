@@ -1,0 +1,59 @@
+﻿@model List<Restaurant_Information_MVC.Models.UserInfo>
+@{
+    ViewBag.Title = "显示所有的信息";
+}
+
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layui/layui.js"></script>
+
+<div class="layui-form">
+    <table class="layui-table">
+       
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>性别</th>
+                <th>职位</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.UserName</td>
+                    <td>
+                       @item.UserSex
+                    </td>
+                    <td>@item.Rname</td>
+                    <td>
+                        <input id="Button1" type="button" value="删除" onclick="Del(@item.UserID)"/>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<script>
+    function Del(id, obj) {
+
+        layui.use('layer', function () {
+            layer.confirm('是否删除此员工?',
+                {
+                    btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        $.ajax({
+                            url: "/Work/DelUserinfo?id=" + id,
+                            success: function (data) {
+                                layer.alert(data);
+                            }
+                        })
+                    }, btn2: function (index) {
+                    }
+                })
+        })
+    }
+</script>
+
+
