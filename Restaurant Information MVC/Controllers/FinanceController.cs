@@ -28,8 +28,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <returns></returns>
      
-        public ActionResult ShowCost(int pageindex=1,int pagesize=5,string name="")
+        public ActionResult ShowCost(int Permission, int pageindex=1,int pagesize=5,string name="")
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             gList = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
             glist = gList;
             if (name == null)
@@ -88,8 +92,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <returns></returns>
        
-        public ActionResult ShowBill(int pageIndex = 1, int pagesize = 5)
+        public ActionResult ShowBill(int Permission,int pageIndex = 1, int pagesize = 5)
         {
+               if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             bList = JsonConvert.DeserializeObject<List<BillViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowBill", null));
             blist = bList.OrderByDescending(m => m.BillID).ToList();
             ViewBag.pIndex = pageIndex;
@@ -143,8 +151,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// 收入消费查询视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShowEarning()
+        public ActionResult ShowEarning(int Permission)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             return View();
         }
         //实例化list集合
@@ -201,8 +213,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// 财务报表视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult FinancialStatement(int pageIndex=1,int pageSize=5)
+        public ActionResult FinancialStatement(int Permission, int pageIndex=1,int pageSize=5)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             glist = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;

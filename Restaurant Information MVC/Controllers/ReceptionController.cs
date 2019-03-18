@@ -21,8 +21,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public ActionResult ShowOrder(int OrderId=0, int pageIndex=1,int pageSize=3)
+        public ActionResult ShowOrder(int Permission,int OrderId=0, int pageIndex=1,int pageSize=3)
         {
+            if (Permission!=(Permission&Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
@@ -42,14 +46,19 @@ namespace Restaurant_Information_MVC.Controllers
 
         public ActionResult Order(int OrderId = 0, int pageIndex = 1, int pageSize = 3)
         {
+          
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
             return Content(JsonConvert.SerializeObject(order.Skip((pageIndex-1)*pageSize).Take(pageSize)));
         }
 
-        public ActionResult ShowFoodSelection(int OrderId=0,int pageIndex=1,int pageSize=3)
+        public ActionResult ShowFoodSelection(int Permission,int OrderId=0,int pageIndex=1,int pageSize=3)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowFoodSelection", null);
@@ -82,8 +91,12 @@ namespace Restaurant_Information_MVC.Controllers
             return Content(JsonConvert.SerializeObject(list.Skip((pageIndex - 1) * pageSize).Take(pageSize)));
         }
 
-        public ActionResult ShowWaste(int WasteId=0,int pageIndex=1,int pageSize=3)
+        public ActionResult ShowWaste(int Permission,int WasteId=0,int pageIndex=1,int pageSize=3)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowWastes", null);
@@ -111,8 +124,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// 生成就餐码视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult EatingYards()
+        public ActionResult EatingYards(int Permission)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             return View();
         }
         //生成随机数函数中从strchar 数组中随机抽取

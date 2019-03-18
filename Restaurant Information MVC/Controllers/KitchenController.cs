@@ -14,8 +14,12 @@ namespace Restaurant_Information_MVC.Controllers
         // GET: Kitchen
         [HttpGet]
         //显示
-        public ActionResult ShowMenu(int pageindex = 1,string name="")
+        public ActionResult ShowMenu(int Permission,int pageindex = 1,string name="")
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
