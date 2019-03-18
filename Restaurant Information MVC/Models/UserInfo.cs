@@ -12,7 +12,8 @@ namespace Restaurant_Information_MVC.Models
         public string UserPhone { get; set; }
         public bool UserSex { get; set; }
         public string UserPwd { get; set; }
-        public string Role { get; set; }
+        public string RoleName { get; set; }
+        public string Rname { get; set; }
         public string Privilege { get; set; }
     }
 }

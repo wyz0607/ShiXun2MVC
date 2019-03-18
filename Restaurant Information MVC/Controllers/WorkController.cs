@@ -25,8 +25,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// 显示所有的评论
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShowComment(int pageindex = 1, int pagesize = 5)
+        public ActionResult ShowComment(int Permission,int pageindex = 1, int pagesize = 5)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
             List<CommentViewModel> list = JsonConvert.DeserializeObject<List<CommentViewModel>>(str);
             ViewBag.currentindex = pageindex;
@@ -73,8 +77,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Uptuser()
+        public ActionResult Uptuser(int Permission)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+            }
             int id =Convert.ToInt32(Session["UserID"]);
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetOneUser/?userid="+id, null);
             UserInfo user = JsonConvert.DeserializeObject<UserInfo>(str);
