@@ -20,7 +20,7 @@ namespace Restaurant_Information_MVC.Controllers
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
-            kList = kit;
+            kList = kit.Skip((pageindex - 1) * 6).Take(6).ToList();
             if (name != "")
             {
                 List<KitchenViewModel> k = kit.Where(m => m.MenuName.Contains(name)).ToList();
@@ -135,12 +135,12 @@ namespace Restaurant_Information_MVC.Controllers
         /// <param name="mState">0是下架状态，1是上架状态</param>
         /// <param name="mId"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public ActionResult UporDown(int mState,int mId)
         {
             int n = 0;
             KitchenViewModel kit = kList.FirstOrDefault(m => m.MenuID == mId);
-            if (kit.MenuID == mState)
+            if (kit.MenuState == mState)
             {
                 if (mState == 1)
                 {
@@ -166,7 +166,7 @@ namespace Restaurant_Information_MVC.Controllers
                     Response.Write("<script>alert('下架成功')</script>");
                 }
             }
-            return View("ShowMenu");
+            return View("ShowMenu", kList);
         }
         /// <summary>
         /// 获取一个菜式

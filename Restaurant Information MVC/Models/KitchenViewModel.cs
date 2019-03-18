@@ -37,5 +37,6 @@ namespace Restaurant_Information_MVC.Models
         //销售量
         [Display(Name = "销售量")]
         public int SalesVolume { get; set; }
+        public int MenuState { set; get; }
     }
 }
