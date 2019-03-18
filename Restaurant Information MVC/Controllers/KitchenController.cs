@@ -128,6 +128,32 @@ namespace Restaurant_Information_MVC.Controllers
             }
         }
         /// <summary>
+        /// 上下架
+        /// </summary>
+        /// <param name="mState"></param>
+        /// <param name="mId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UporDown(int mState,int mId)
+        {
+            int n = int.Parse(HttpClientHelper.Seng("put", "api/KitchensApi/UporDown/?mState=" + mState + "&&mId=" + mId, mState.ToString()));
+            if (n > 0)
+            {
+                if (mState == 1)
+                {
+                    return Content("上架成功！");
+                }
+                else
+                {
+                    return Content("下架成功！");
+                }
+            }
+            else
+            {
+                return Content("失败！");
+            }
+        }
+        /// <summary>
         /// 获取一个菜式
         /// </summary>
         /// <returns>类名</returns>
