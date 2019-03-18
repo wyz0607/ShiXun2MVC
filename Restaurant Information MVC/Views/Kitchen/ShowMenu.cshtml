@@ -64,8 +64,8 @@
                 <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
                     <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="location.href='/Kitchen/UptMenu?id=@item.MenuID'"><span class="am-icon-edit"></span> 修改</button>
                     <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(@item.MenuID,this)"><span class="am-icon-trash-o"></span> 删除</button>
-                    <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 上架</button>
-                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 下架</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus" onclick="location.href='/Kitchen/UporDown?mState=1&&mId=@item.MenuID'"></span> 上架</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive" onclick="location.href='/Kitchen/UporDown?mState=0&&mId=@item.MenuID'"></span> 下架</button>
                 </div>
             </div>
         </div>

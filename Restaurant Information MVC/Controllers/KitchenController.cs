@@ -11,6 +11,7 @@ namespace Restaurant_Information_MVC.Controllers
 {
     public class KitchenController : Controller
     {
+        public static List<KitchenViewModel> kList;
         // GET: Kitchen
         [HttpGet]
         //显示
@@ -19,6 +20,7 @@ namespace Restaurant_Information_MVC.Controllers
             //显示菜品信息
             string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
             List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            kList = kit;
             if (name != "")
             {
                 List<KitchenViewModel> k = kit.Where(m => m.MenuName.Contains(name)).ToList();
@@ -130,28 +132,41 @@ namespace Restaurant_Information_MVC.Controllers
         /// <summary>
         /// 上下架
         /// </summary>
-        /// <param name="mState"></param>
+        /// <param name="mState">0是下架状态，1是上架状态</param>
         /// <param name="mId"></param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult UporDown(int mState,int mId)
         {
-            int n = int.Parse(HttpClientHelper.Seng("put", "api/KitchensApi/UporDown/?mState=" + mState + "&&mId=" + mId, mState.ToString()));
-            if (n > 0)
+            int n = 0;
+            KitchenViewModel kit = kList.FirstOrDefault(m => m.MenuID == mId);
+            if (kit.MenuID == mState)
             {
                 if (mState == 1)
                 {
-                    return Content("上架成功！");
+                    Response.Write("<script>alert('已经是上架状态了')</script>");
                 }
                 else
                 {
-                    return Content("下架成功！");
+                    Response.Write("<script>alert('已经是下架状态了')</script>");
                 }
             }
             else
             {
-                return Content("失败！");
+                n = int.Parse(HttpClientHelper.Seng("put", "api/KitchensApi/UporDown/?mState=" + mState + "&&mId=" + mId, mState.ToString()));
             }
+            if (n > 0)
+            {
+                if (mState == 1)
+                {
+                    Response.Write("<script>alert('上架成功')</script>");
+                }
+                else
+                {
+                    Response.Write("<script>alert('下架成功')</script>");
+                }
+            }
+            return View("ShowMenu");
         }
         /// <summary>
         /// 获取一个菜式
