@@ -38,7 +38,7 @@
         <tbody Name="tr1">
             <tr>
                 <td>@item.OrderID</td>
-                <td>@item.UserID</td>
+                <td>@item.UserInfo_UserID</td>
                 <td>@item.UserName</td>
                 <td>@item.UserPhone</td>
                 <td>@item.ScheduledTime</td>
@@ -52,6 +52,7 @@
 </table>
 <div id="test1" style="margin-left:300px"></div>
 <script>
+   
     layui.use('laypage', function () {
         var laypage = layui.laypage;
 

@@ -25,7 +25,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission!=(Permission&Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
@@ -95,7 +96,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
@@ -128,7 +130,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             return View();
         }
