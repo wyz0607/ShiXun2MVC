@@ -11,6 +11,13 @@ namespace Restaurant_Information_MVC.Controllers
 {
     public class KitchenController : Controller
     {
+        [ShouQuanAttribute]
+        [Authorize]
+
+        public ActionResult Index()
+        {
+            return View();
+        }
         public static List<KitchenViewModel> kList;
         // GET: Kitchen
         [HttpGet]
@@ -41,7 +48,6 @@ namespace Restaurant_Information_MVC.Controllers
                 return View(kit.Skip((pageindex - 1) * 6).Take(6).ToList());
             }
         }
-
         public ActionResult Menu(int pageIndex, int pageSize=6)
         {
             ViewBag.pIndex = pageIndex;
