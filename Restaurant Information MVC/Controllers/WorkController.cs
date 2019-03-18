@@ -18,8 +18,6 @@ namespace Restaurant_Information_MVC.Controllers
     [Authorize]
     public class WorkController : Controller
     {
-
-
         // GET: Work
         /// <summary>
         /// 显示所有的评论
@@ -29,7 +27,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowComment", null);
             var str1 = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
@@ -96,7 +95,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
-                return Content("<script>alert('您没有权限');location.href='/Login/Show'</script>");
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
             }
             int id =Convert.ToInt32(Session["UserID"]);
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetOneUser/?userid="+id, null);
@@ -333,29 +333,7 @@ namespace Restaurant_Information_MVC.Controllers
             e.Send();
             return validateCode;
         }
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
     }
