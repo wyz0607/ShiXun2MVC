@@ -20,21 +20,21 @@
 
             </div>
         </div>
-        <div class="layui-form-item" style="float:left;">
+        @*<div class="layui-form-item" style="float:left;">
             <label class="layui-form-label">角色名称</label>
             <div class="layui-input-block">
                 <input id="Rname" type="text" name="title" required lay-verify="required" value="@Model.Rname" autocomplete="off" class="layui-input" style="width:300px;float:left">
 
             </div>
-        </div>
+        </div>*@
 
 
         <div class="layui-form-item">
             <label class="layui-form-label">所要申请时间</label>
             <div class="layui-input-block">
-                <input id="Starttime" type="text" name="title" required lay-verify="required" value="@Model.StateTime" autocomplete="off" class="layui-input" style="width:300px;">
-                至
-                <input id="Endtime" type="text" name="title" required lay-verify="required" value="@Model.EndTime" autocomplete="off" class="layui-input" style="width:300px;">
+                <input id="Starttime" type="text" name="title" required lay-verify="required" value="@Model.StateTime" disabled autocomplete="off" class="layui-input" style="width:300px;">
+                |
+                <input id="Endtime" type="text" name="title" required lay-verify="required" value="@Model.EndTime" disabled autocomplete="off" class="layui-input" style="width:300px;">
             </div>
 
 
@@ -42,7 +42,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">原因</label>
             <div class="layui-input-block">
-                <input id="case" type="text" name="title" required lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input" style="width:300px;height:300px;float:left">
+                <input id="case" type="text" name="title" required lay-verify="required" value="@Model.ProposerCause" disabled autocomplete="off" class="layui-input" style="width:300px;height:300px;float:left">
 
             </div>
 
@@ -60,8 +60,24 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Upt(@Model.ProposerId)" />
-                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Fan(@Model.ProposerId)" />
+                @{Stateinfo s = (Stateinfo)Model.ProposerState;}
+                @if (s == Stateinfo.审核通过)
+                {
+                    <b style="color:#60c336;margin-bottom:10px;">@s</b>
+
+                }
+                else if (s == Stateinfo.驳回)
+                {
+                    <b style="color:red;margin-bottom:10px;">@s</b>
+
+                }
+                else
+                {
+
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Upt(@Model.ProposerId)" />
+                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Fan(@Model.ProposerId)" />
+                }
+
 
             </div>
 
@@ -81,14 +97,14 @@
             EndTime: $("#Endtime").val(),
             ProposerState: 1
 
-        }
+        };
         layui.use('layer', function () {
             layer.confirm("确认通过？", {
                 btn: ['确定', '取消']
                 , yes: function (index, layero) {
                     $.ajax({
                         url: "/Work/UptProposer",
-                        data: { userInfo: o },
+                        data: { proposerView: o },
                         type: "post",
                         success: function (data) {
                             layer.alert(data);
@@ -110,15 +126,14 @@
             StateTime: $("#Starttime").val(),
             EndTime: $("#Endtime").val(),
             ProposerState: 2
-
-        }
+        };
         layui.use('layer', function () {
-            layer.confirm("确认通过？", {
+            layer.confirm("确认驳回？", {
                 btn: ['确定', '取消']
                 , yes: function (index, layero) {
                     $.ajax({
                         url: "/Work/UptProposer",
-                        data: { userInfo: o },
+                        data: { proposerView: o },
                         type: "post",
                         success: function (data) {
                             layer.alert(data);
