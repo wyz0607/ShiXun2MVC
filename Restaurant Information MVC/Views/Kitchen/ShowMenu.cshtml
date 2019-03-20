@@ -63,11 +63,11 @@
                     状态:
                     @if (item.MenuState == 1)
                     {
-                        <span>上架</span>
+                        <span id="sp">上架</span>
                     }
                     else
                     {
-                        <span>下架</span>
+                        <span id="sp">下架</span>
                     }
                 </div>
             </div>
@@ -140,7 +140,7 @@
                    +' 销售量: '+data[i].SalesVolume
                    +' <br />'
                    +' 状态:'
-                   + (data[i].MenuState==1?'上架':'下架')
+                   + '<span id="sp">'+(data[i].MenuState==1?'上架':'下架')+'</span>'
                 +'</div>'
             +'</div>'
             +'<div class="am-btn-toolbar">'
@@ -209,8 +209,8 @@
             data: { "mState": 1, "mId": mid },
             type: "get",
             success: function (data) {
-                layer.msg(data);
-                location.href ='/Kitchen/ShowMenu?Permission='+@Session["p"];
+                layer.msg(data, { time:1000 });
+                $("#sp").text('上架')
             }
         })
     }
@@ -220,8 +220,8 @@
             data: { "mState": 0, "mId": mid },
             type: "get",
             success: function (data) {
-                layer.msg(data);
-                location.href ='/Kitchen/ShowMenu?Permission='+@Session["p"];
+                layer.msg(data, { time: 1000 });
+                 $("#sp").text('下架')
             }
         })
     }
