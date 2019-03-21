@@ -73,6 +73,7 @@
             </div>
             <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
+                    <input id="Checkbox1" type="checkbox" name="Deles"/>
                     <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(@item.MenuID)"><span class="am-icon-edit"></span> 修改</button>
                     <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(@item.MenuID,this)"><span class="am-icon-trash-o"></span> 删除</button>
                     <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang(@item.MenuID)"><span class="am-icon-plus"></span> 上架</button>
@@ -144,7 +145,8 @@
                 +'</div>'
             +'</div>'
             +'<div class="am-btn-toolbar">'
-              +'  <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">'
+                                    + '  <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">'
+                                    +'<input id="Checkbox1" type="checkbox" name="Deles"/>'
                                     + '    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(' + data[i].MenuID +')"><span class="am-icon-edit"></span> 修改</button>'
                 +'    <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del('+data[i].MenuID+',this)"><span class="am-icon-trash-o"></span> 删除</button>'
                 +'    <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang('+data[i].MenuID+')"><span class="am-icon-plus"></span> 上架</button>'
