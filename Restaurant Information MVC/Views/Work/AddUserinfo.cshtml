@@ -23,8 +23,8 @@
     <div class="layui-form-item" style="float:left;">
         <label class="layui-form-label">性别</label>
         <div class="layui-input-block">
-            <input id="Radio1" type="radio" name="title" required lay-verify="required" value="男" autocomplete="off" class="layui-input" checked>男
-            <input id="Radio2" type="radio" name="title" required lay-verify="required" value="女" autocomplete="off" class="layui-input">女
+            <input id="Radio1" type="radio" name="title" required lay-verify="required" value="true" autocomplete="off" class="layui-input" checked>男
+            <input id="Radio2" type="radio" name="title" required lay-verify="required" value="false" autocomplete="off" class="layui-input">女
         </div>
     </div>
 
@@ -54,19 +54,15 @@
     })
     var xian = 0;
 
-    var sex = true;
-    if ($("#Radio1").attr("checked", true)) {
-        sex = true;
-    }
-    else {
-        sex = false;
-    }
+    
+    
+    
 
     function Add() {
         var o = {
             UserName: $("#Text1").val(),
             UserPhone: $("#email").val().trim(),
-            UserSex: sex,
+            UserSex: $('input[name="title"]:checked').val(),
             UserPwd: 123,
             RoleName: $("#select1").val(),
             Rname: $("#select1").val(),
@@ -81,7 +77,8 @@
                         data: { userInfo: o },
                         type: "post",
                         success: function (data) {
-                            layer.alert("添加成功");   
+                            layer.alert(data);
+                            Location.reload();
 
                         }
                     })

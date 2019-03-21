@@ -8,11 +8,11 @@
 <script src="~/layui/layui.js"></script>
 <h2>审核页面</h2>
 
-<div>
-    <i class="layui-icon layui-icon-return" style="font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowComment'"></i>
+<div style="position:absolute;">
+    <i class="layui-icon layui-icon-return" style="font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowComment?Permission=4'"></i>
     <hr />
     <input id="menu" type="hidden" value="@Model.MenuID" />
-    <table class="table-hover" style=" width:500px;height:350px;margin-left:400px;">
+    <table class="table-hover;" style=" width:500px;height:350px;margin-left:400px;">
         <tr>
             <td>@Html.DisplayName("评论编号:")</td>
             <td><label id="commentid">@Model.CommentId</label></td>
@@ -50,7 +50,7 @@
                 else
                 {
                     <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Tong(@Model.CommentId)" />
-                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
+                    <input id="Button1" class="layui-btn layui-btn-radius layui-btn-danger" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
 
                 }
 
