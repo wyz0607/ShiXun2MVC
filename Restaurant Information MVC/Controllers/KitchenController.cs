@@ -146,7 +146,9 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult UporDown(int mState,int mId)
         {
             int n = 0;
-            KitchenViewModel kit = kList.FirstOrDefault(m => m.MenuID == mId);
+            string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
+            List<KitchenViewModel> kits = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            KitchenViewModel kit = kits.FirstOrDefault(m => m.MenuID == mId);
             if (kit.MenuState == mState)
             {
                 if (mState == 1)
