@@ -209,7 +209,7 @@
             data: { "mState": 1, "mId": mid },
             type: "get",
             success: function (data) {
-                layer.msg(data);
+                layer.msg(data, { time:1000 });
                 $("#sp").text('上架')
             }
         })
@@ -220,7 +220,7 @@
             data: { "mState": 0, "mId": mid },
             type: "get",
             success: function (data) {
-                layer.msg(data);
+                layer.msg(data, { time: 1000 });
                  $("#sp").text('下架')
             }
         })
