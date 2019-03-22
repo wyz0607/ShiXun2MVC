@@ -1,6 +1,7 @@
 ﻿@model List<Restaurant_Information_MVC.Models.CtableViewModel>
+@using Restaurant_Information_MVC.Controllers
 @{
-    Layout = null;
+    ViewBag.Title = "ShowComment";
 }
 
 <!DOCTYPE html>
@@ -14,49 +15,56 @@
     <script src="~/Scripts/jquery-3.3.1.js"></script>
 </head>
 <body>
-    <h1 style="text-align:center">欢迎光临东华餐饮</h1>
-    <h2 style="text-align:center;color:red">请选座</h2>
-    <div style="margin:0 auto;width:100%;height:100%">
-        @foreach (var item in Model)
-        {
-            if (item.TableState == 0)
+    <div style=" width: 100%;
+        height: 100%;
+        border: solid 0px;
+        margin: 0 auto;
+        border-radius: 10%;
+        background-image: url('../../Images/zhuo.jpg');
+">
+        <h1 style="text-align:center">欢迎光临东华餐饮</h1>
+        <h2 style="text-align:center;color:red">请选座</h2>
+        <div style="margin:0 auto;width:100%;height:100%">
+            @foreach (var item in Model)
             {
-                <div style="width:200px;height:200px; background-color:#808080;border:solid 1px;margin-left:25%;text-align:center;border-radius:50%" value="@item.TableID" id="bbai" class="layui-btn layui-btn-normal">
-                    <input id="wei" type="radio" name="xuan" style="padding-right:10px;" value="@item.TableID" />
-                    <br />
-                    <label>
-                        @item.TableID
-                    </label>
-                    <br />
-                    <label>
-                        (@item.TableStyle)
-                    </label>
-                </div>
+                if (item.TableState == 0)
+                {
+                    <div style="width:200px;height:200px; background-color:#b01201;border:solid 1px;margin-left:25%;text-align:center;border-radius:50%" value="@item.TableID" id="bbai" class="layui-btn layui-btn-normal">
+                        <input id="wei" type="radio" name="xuan" style="padding-right:10px;" value="@item.TableID" />
+                        <br />
+                        <label>
+                            @item.TableID
+                        </label>
+                        <br />
+                        <label>
+                            (@item.TableStyle)
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    <div style="width:200px;height:200px; background-color:red;border:solid 1px;margin-left:25%;text-align:center;border-radius:50%" value="@item.TableID" id="bred" class="layui-btn layui-btn-danger">
+                        <input id="Radio1" type="radio" name="xuan" disabled />
+                        <br />
+                        <label>
+                            @item.TableID
+                        </label>
+                        <br />
+                        <label>
+                            (@item.TableStyle)
+                        </label>
+                        <br />
+
+                    </div>
+                }
             }
-            else
-            {
-                <div style="width:200px;height:200px; background-color:red;border:solid 1px;margin-left:25%;text-align:center;border-radius:50%" value="@item.TableID" id="bred" class="layui-btn layui-btn-danger">
-                    <input id="Radio1" type="radio" name="xuan" disabled />
-                    <br />
-                    <label>
-                        @item.TableID
-                    </label>
-                    <br />
-                    <label>
-                        (@item.TableStyle)
-                    </label>
-                    <br />
 
-                </div>
-            }
-        }
+        </div>
 
+        <div style="width:100%">
+            <button id="Save" style="margin-left:620px;" class="layui-btn layui-btn-radius" onclick="Que()">确定</button>
+        </div>
     </div>
-
-    <div style="width:100%">
-        <button id="Save" style="margin-left:950px;" class="layui-btn layui-btn-normal" onclick="Que()">确定</button>
-    </div>
-
 </body>
 </html>
 <script>
@@ -84,7 +92,7 @@
                     location.href = 'http://10.1.155.5:8080/#/goods';
                     window.history.forward();
                 }
-                
+
             }
         })
     }
