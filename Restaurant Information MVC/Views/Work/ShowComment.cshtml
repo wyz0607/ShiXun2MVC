@@ -84,7 +84,7 @@
     })
     function BtnUp() {
         if ($("#currentindex").text() != 1) {
-            location.href = "/Work/ShowComment?pageindex=" + Number(Number($("#currentindex").text()) - 1);
+            location.href = "/Work/ShowComment?Permission=4&pageindex=" + Number(Number($("#currentindex").text()) - 1);
         }
         else {
             layui.use('layer', function () {
@@ -95,7 +95,7 @@
     }
     function BtnDown() {
         if ($("#currentindex").text() != $("#totalpage").text()) {
-            location.href = "/Work/ShowComment?pageindex=" + Number(Number($("#currentindex").text()) + 1);
+            location.href = "/Work/ShowComment?Permission=4&pageindex=" + Number(Number($("#currentindex").text()) + 1);
         }
         else {
             layui.use('layer', function () {
