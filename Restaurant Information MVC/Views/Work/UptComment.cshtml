@@ -11,107 +11,117 @@
 <div style="position:absolute;">
     <i class="layui-icon layui-icon-return" style="font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowComment?Permission=4'"></i>
     <hr />
-    <input id="menu" type="hidden" value="@Model.MenuID" />
-    <table class="table-hover;" style=" width:500px;height:350px;margin-left:400px;">
-        <tr>
-            <td>@Html.DisplayName("评论编号:")</td>
-            <td><label id="commentid">@Model.CommentId</label></td>
-        </tr>
-        <tr hidden>
-            <td>@Html.DisplayName("订单号:")</td>
-            <td><label id="orderid">@Model.OrderID</label></td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayName("用户名称:")</td>
-            <td><label id="cname">@Model.CName</label></td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayName("评论信息:")</td>
-            <td><label id="comments">@Model.Comments</label></td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayName("申请时间:")</td>
-            <td><label id="ctime">@Model.Ctime</label></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                @{Stateinfo s = (Stateinfo)Model.ReviewState;}
-                @if (s == Stateinfo.审核通过)
-                {
-                    <b style="color:#60c336;margin-bottom:10px;">@s</b>
 
-                }
-                else if (s == Stateinfo.驳回)
-                {
-                    <b style="color:red;margin-bottom:10px;">@s</b>
+    <div style=" width: 475px;
+        height: 500px;
+        border: solid 0px;
+        margin-left:400px;
+        border-radius: 10%;
+        background-image: url('../../Images/xiang.png');
+">
+        
 
-                }
-                else
-                {
-                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Tong(@Model.CommentId)" />
-                    <input id="Button1" class="layui-btn layui-btn-radius layui-btn-danger" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
+        <input id="menu" type="hidden" value="@Model.MenuID" />
+        <table class="table-hover;" style=" width:500px;height:350px;margin-left:50px;margin-top:50px;">
+            <tr>
+                <td>@Html.DisplayName("评论编号:")</td>
+                <td><label id="commentid">@Model.CommentId</label></td>
+            </tr>
+            <tr hidden>
+                <td>@Html.DisplayName("订单号:")</td>
+                <td><label id="orderid">@Model.OrderID</label></td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayName("用户名称:")</td>
+                <td><label id="cname">@Model.CName</label></td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayName("评论信息:")</td>
+                <td><label id="comments">@Model.Comments</label></td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayName("申请时间:")</td>
+                <td><label id="ctime">@Model.Ctime</label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    @{Stateinfo s = (Stateinfo)Model.ReviewState;}
+                    @if (s == Stateinfo.审核通过)
+                    {
+                        <b style="color:#21b915;margin-bottom:10px;font-size:30px;">@s</b>
 
-                }
+                    }
+                    else if (s == Stateinfo.驳回)
+                    {
+                        <b style="color:red;margin-bottom:10px;font-size:30px;">@s</b>
 
-            </td>
-        </tr>
-    </table>
+                    }
+                    else
+                    {
+                        <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Tong(@Model.CommentId)" />
+                        <input id="Button1" class="layui-btn layui-btn-radius layui-btn-danger" type="button" value="驳回" onclick="Bo(@Model.CommentId)" />
 
+                    }
+
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 
-<script>
-    function Tong(id) {
-        var o = {
-            CommentId: id,
-            MenuID: $("#menu").val(),
-            OrderID: $("#orderid").text(),
-            Comments: $("#comments").text(),
-            Ctime: $("#ctime").text(),
-            Cname: $("#cname").text(),
-            ReviewState: 1
-        };
-        layui.use('layer', function () {
-            layer.confirm('确认审核通过？', {
-                btn: ['确定', '取消']
-            }, function (index, layero) {
-                $.ajax({
-                    url: "/Work/UptComment",
-                    data: { comment: o },
-                    type: "post",
-                    success: function (data) {
-                        layer.alert(data);
-                        location.href = '/Work/ShowComment';
-                    }
+    <script>
+        function Tong(id) {
+            var o = {
+                CommentId: id,
+                MenuID: $("#menu").val(),
+                OrderID: $("#orderid").text(),
+                Comments: $("#comments").text(),
+                Ctime: $("#ctime").text(),
+                Cname: $("#cname").text(),
+                ReviewState: 1
+            };
+            layui.use('layer', function () {
+                layer.confirm('确认审核通过？', {
+                    btn: ['确定', '取消']
+                }, function (index, layero) {
+                    $.ajax({
+                        url: "/Work/UptComment",
+                        data: { comment: o },
+                        type: "post",
+                        success: function (data) {
+                            layer.alert(data);
+                            location.href = '/Work/ShowComment';
+                        }
+                    })
                 })
+
             })
 
-        })
-
-    }
-    function Bo(id) {
-        var o = {
-            CommentId: id,
-            MenuID: $("#menu").val(),
-            OrderID: $("#orderid").text(),
-            Comments: $("#comments").text(),
-            ReviewState: 2
-        };
-        layui.use('layer', function () {
-            layer.confirm('确认审核驳回？', {
-                btn: ['确定', '取消']
-            }, function (index, layero) {
-                $.ajax({
-                    url: "/Work/UptComment",
-                    data: { comment: o },
-                    type: "post",
-                    success: function (data) {
-                        layer.alert(data);
-                        location.href = '/Work/ShowComment';
-                    }
+        }
+        function Bo(id) {
+            var o = {
+                CommentId: id,
+                MenuID: $("#menu").val(),
+                OrderID: $("#orderid").text(),
+                Comments: $("#comments").text(),
+                ReviewState: 2
+            };
+            layui.use('layer', function () {
+                layer.confirm('确认审核驳回？', {
+                    btn: ['确定', '取消']
+                }, function (index, layero) {
+                    $.ajax({
+                        url: "/Work/UptComment",
+                        data: { comment: o },
+                        type: "post",
+                        success: function (data) {
+                            layer.alert(data);
+                            location.href = '/Work/ShowComment';
+                        }
+                    })
                 })
-            })
 
-        })
-    }
-</script>
+            })
+        }
+    </script>
