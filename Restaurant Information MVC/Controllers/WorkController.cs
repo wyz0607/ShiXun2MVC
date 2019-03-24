@@ -297,9 +297,9 @@ namespace Restaurant_Information_MVC.Controllers
                 ProposerCause = proposerView.ProposerCause,
                 ProposerState = proposerView.ProposerState,
                 ProposerTime = proposerView.ProposerTime,
-                EndTime = proposerView.EndTime,
                 Uname = proposerView.Menu.HolderName,
-                StateTime=proposerView.StateTime
+                StateTime=proposerView.StateTime,
+                Ntime=proposerView.Menu.Ntime,
 
 
             };
@@ -344,8 +344,9 @@ namespace Restaurant_Information_MVC.Controllers
                            ProposerState=s.ProposerState,
                            ProposerTime=s.ProposerTime,
                           StateTime=s.StateTime,
-                           EndTime=s.EndTime,
                            Uname=c.HolderName,
+                           Ntime=c.Ntime,
+                           
                           
         };
             return View(list.ToList());
