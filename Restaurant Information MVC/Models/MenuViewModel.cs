@@ -16,5 +16,6 @@ namespace Restaurant_Information_MVC.Models
         public string MenuKind { get; set; }
         public double UnitPrice { get; set; }
         public int SalesVolume { get; set; }
+        public int MenuState { get; set; }
     }
 }
