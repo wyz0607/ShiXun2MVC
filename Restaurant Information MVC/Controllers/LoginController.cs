@@ -51,7 +51,7 @@ namespace Restaurant_Information_MVC.Controllers
             {
                 Session["msg"] = 0;
             }
-            var time = DateTime.Now.ToString("yyyy年MM月dd日");
+            var time = DateTime.Now.ToString("yyyy/M/dd");
             //var time = "2019年02月28日";
             var num= HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + time,null);
             ViewBag.OrderNum = num.ToString();
@@ -83,20 +83,20 @@ namespace Restaurant_Information_MVC.Controllers
                 string shi = "";
                 if (Convert.ToInt32( mon)<10 && day<10)
                 {
-                     shi = yea + "年" + "0" + mon + "月" + "0" + day + "日";
+                    shi = yea + "/" + mon + "/" + "0" + day;
                     
                 }
                 else if (Convert.ToInt32(mon)<10)
                 {
-                    shi = yea + "年" + "0" + mon + "月" + day + "日";
+                    shi = yea + "/"+ mon + "/" + day;
                 }
                 else if (day<10)
                 {
-                    shi = yea + "年"+ mon + "月" + "0" + day + "日";
+                    shi = yea + "/"+ mon + "/" + "0" + day;
                 }
                 else
                 {
-                    shi = yea + "年"+ mon + "月" + day + "日";
+                    shi = yea + "/"+ mon + "/" + day;
                 }
 
                 var numLine = HttpClientHelper.Seng("get", "api/Login/GetOrderNum?time=" + shi, null);
