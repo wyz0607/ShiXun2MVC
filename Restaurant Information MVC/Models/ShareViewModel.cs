@@ -12,6 +12,7 @@ namespace Restaurant_Information_MVC.Models
         public string HeadPortrait { get; set; }
         public string HolderSex { get; set; }
         public int RoleId { get; set; }
+        public int Ntime { get; set; }
         public virtual RoleViewModel Roles { get; set; }
     }
 }

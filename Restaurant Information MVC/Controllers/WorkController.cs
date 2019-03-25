@@ -288,7 +288,8 @@ namespace Restaurant_Information_MVC.Controllers
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
             ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).Where(c=>c.ProposerId==id).FirstOrDefault();
-
+            var str1 = HttpClientHelper.Seng("get", "api/ShareHolderApi/Shareholders", null);
+            
             ProperOrderSherd properOrder = new ProperOrderSherd
             {
                 ProposerId = proposerView.ProposerId,
@@ -296,15 +297,16 @@ namespace Restaurant_Information_MVC.Controllers
                 ProposerCause = proposerView.ProposerCause,
                 ProposerState = proposerView.ProposerState,
                 ProposerTime = proposerView.ProposerTime,
-                EndTime = proposerView.EndTime,
                 Uname = proposerView.Menu.HolderName,
-                StateTime=proposerView.StateTime
+                StateTime=proposerView.StateTime,
+                Ntime=proposerView.Menu.Ntime,
 
 
             };
             return View(properOrder);
 
         }
+
         [HttpPost]
         public ActionResult UptProposer(ProposerViewModel proposerView)
         {
@@ -330,7 +332,10 @@ namespace Restaurant_Information_MVC.Controllers
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
             List<ProposerViewModel> proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str);
-            var list = from s in proposerView.ToList()
+            var str1 = HttpClientHelper.Seng("get", "api/ShareHolderApi/Shareholders", null);
+            List<ShareViewModel> share = JsonConvert.DeserializeObject<List<ShareViewModel>>(str1);
+            var list = from s in proposerView join 
+                        c in share on s.ShareHolderId equals c.ShareHolderId
                        select new ProperOrderSherd
                        {
                            ProposerId=s.ProposerId,
@@ -339,11 +344,12 @@ namespace Restaurant_Information_MVC.Controllers
                            ProposerState=s.ProposerState,
                            ProposerTime=s.ProposerTime,
                           StateTime=s.StateTime,
-                           EndTime=s.EndTime,
-                           Uname=s.Menu.HolderName,
-                         
-                       };
-            return View(list);
+                           Uname=c.HolderName,
+                           Ntime=c.Ntime,
+                           
+                          
+        };
+            return View(list.ToList());
         }
 
         public  string Yanzheng;
@@ -364,8 +370,6 @@ namespace Restaurant_Information_MVC.Controllers
             e.Send();
             return validateCode;
         }
-    
-
 
     }
     
