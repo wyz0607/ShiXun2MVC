@@ -382,6 +382,11 @@
     <Content Include="Images\儒家图.PNG" />
     <Content Include="Images\微信.png" />
     <Content Include="Images\支付宝.png" />
+    <Content Include="Images\杂烩.jpg" />
+    <Content Include="Images\汤类.jpg" />
+    <Content Include="Images\素食.jpg" />
+    <Content Include="Images\肉类.jpg" />
+    <Content Include="Images\鱼虾类.jpg" />
     <Content Include="i\app-icon72x72%402x.png" />
     <Content Include="i\examples\admin-chrome.png" />
     <Content Include="i\examples\admin-firefox.png" />
