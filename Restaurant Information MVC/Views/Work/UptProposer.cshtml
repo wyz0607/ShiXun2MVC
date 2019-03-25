@@ -10,23 +10,24 @@
 
     <input id="Hidden1" type="hidden" value="@Model.ProposerId" />
     <input id="Hidden2" type="hidden" value="@Model.ShareHolderId" />
+    <input id="Hidden3" type="hidden" value="@Model.Ntime" />
 
 
     <form class="layui-form" style="width:700px;position:absolute">
         <div class="layui-form-item" style="float:left;">
-            <label class="layui-form-label">股东名称</label>
+            <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
                 <input id="Uname" type="text" name="title" required lay-verify="required" value="@Model.Uname" autocomplete="off" class="layui-input" style="width:300px;float:left">
 
             </div>
         </div>
         @*<div class="layui-form-item" style="float:left;">
-            <label class="layui-form-label">角色名称</label>
-            <div class="layui-input-block">
-                <input id="Rname" type="text" name="title" required lay-verify="required" value="@Model.Rname" autocomplete="off" class="layui-input" style="width:300px;float:left">
+                <label class="layui-form-label">角色名称</label>
+                <div class="layui-input-block">
+                    <input id="Rname" type="text" name="title" required lay-verify="required" value="@Model.Rname" autocomplete="off" class="layui-input" style="width:300px;float:left">
 
-            </div>
-        </div>*@
+                </div>
+            </div>*@
 
 
         <div class="layui-form-item">
@@ -95,7 +96,8 @@
             ProposerTime: $("#ptime").text(),
             StateTime: $("#Starttime").val(),
             EndTime: $("#Endtime").val(),
-            ProposerState: 1
+            ProposerState: 1,
+            Ntime=$("#Hidden3").val()-1,
 
         };
         layui.use('layer', function () {
@@ -125,7 +127,8 @@
             ProposerTime: $("#ptime").text(),
             StateTime: $("#Starttime").val(),
             EndTime: $("#Endtime").val(),
-            ProposerState: 2
+            ProposerState: 2,
+            Ntime=$("#Hidden3").val(),
         };
         layui.use('layer', function () {
             layer.confirm("确认驳回？", {
