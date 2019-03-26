@@ -5,10 +5,13 @@
 
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
-
+<h1>显示所有的员工</h1>
+<div style="margin:0 auto;width:150px;height:20px;">
+    <h2>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</h2>
+</div>
 <div class="layui-form">
     <table class="layui-table">
-       
+
         <thead>
             <tr>
                 <th>名称</th>
@@ -23,9 +26,9 @@
                 <tr>
                     <td>@item.UserName</td>
                     <td>
-                        @if(item.UserSex==true)
+                        @if (item.UserSex == true)
                         {
-                           <i>男</i>
+                            <i>男</i>
                         }
                         else
                         {
@@ -36,15 +39,56 @@
                     </td>
                     <td>@item.Rname</td>
                     <td>
-                        <input id="Button1" type="button" value="删除" class="layui-btn layui-btn-danger" onclick="Del(@item.UserID)"/>
+                        <input id="Button1" type="button" value="删除" class="layui-btn layui-btn-danger" onclick="Del(@item.UserID)" />
                     </td>
                 </tr>
             }
 
         </tbody>
     </table>
+    <p style="margin:0 auto;width:400px;height:50px;">
+        <span>
+            <span>当前第</span>
+            <span id="currentindex">@ViewBag.currentindex</span>
+            <span>页，总共</span>
+            <span id="totalpage">@ViewBag.totalpage</span>
+            <span>页</span>
+
+        </span>
+        <button class="layui-btn" onclick="BtnUp()">
+            <i class="layui-icon">上一页</i>
+        </button>
+        <button class="layui-btn" onclick="BtnDown()">
+            <i class="layui-icon">下一页</i>
+        </button>
+
+    </p>
 </div>
 <script>
+    $(function () {
+        $("#totalpage").text(Math.ceil(Number(Number($("#totaldata").text()) / 5)));
+    })
+    function BtnUp() {
+        if ($("#currentindex").text() != 1) {
+            location.href = "/Work/ShowUserInfo?Permission=4&pageindex=" + Number(Number($("#currentindex").text()) - 1);
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是首页了');
+            })
+
+        }
+    }
+    function BtnDown() {
+        if ($("#currentindex").text() != $("#totalpage").text()) {
+            location.href = "/Work/ShowUserInfo?Permission=4&pageindex=" + Number(Number($("#currentindex").text()) + 1);
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是尾页了');
+            })
+        }
+    }
     function Del(id, obj) {
 
         layui.use('layer', function () {

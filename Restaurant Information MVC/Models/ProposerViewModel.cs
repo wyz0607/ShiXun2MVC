@@ -14,6 +14,6 @@ namespace Restaurant_Information_MVC.Models
         public string StateTime { get; set; }
         public int ProposerState { get; set; }
 
-        public virtual ShareViewModel Menu { get; set; }
+        public virtual ShareViewModel ShareHolder { get; set; }
     }
 }

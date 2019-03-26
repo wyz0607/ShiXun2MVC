@@ -253,7 +253,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// 显示所有员工的信息
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShowUserInfo()
+        public ActionResult ShowUserInfo(int Permission=4, int pageindex = 1, int pagesize = 5)
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowUserinfo", null);
             
@@ -265,7 +265,11 @@ namespace Restaurant_Information_MVC.Controllers
                             UserSex = s.UserSex,
                             Rname = s.Rname
                         };
-            return View(list);
+            ViewBag.currentindex = pageindex;
+            ViewBag.totaldata = list.Count();
+            ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 5)) + 1;
+
+            return View(list.Skip((pageindex - 1) * 5).Take(5).ToList());
         }
         /// <summary>
         /// 显示个人的资料
@@ -289,20 +293,23 @@ namespace Restaurant_Information_MVC.Controllers
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
             ProposerViewModel proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str).Where(c=>c.ProposerId==id).FirstOrDefault();
             var str1 = HttpClientHelper.Seng("get", "api/ShareHolderApi/Shareholders", null);
-            
+            ShareViewModel shareView = JsonConvert.DeserializeObject<List<ShareViewModel>>(str1).Where(c => c.ShareHolderId == proposerView.ShareHolderId).FirstOrDefault();
             ProperOrderSherd properOrder = new ProperOrderSherd
             {
                 ProposerId = proposerView.ProposerId,
+
+
                 ShareHolderId = proposerView.ShareHolderId,
                 ProposerCause = proposerView.ProposerCause,
-                ProposerState = proposerView.ProposerState,
                 ProposerTime = proposerView.ProposerTime,
-                Uname = proposerView.Menu.HolderName,
-                StateTime=proposerView.StateTime,
-                Ntime=proposerView.Menu.Ntime,
+                StateTime = proposerView.StateTime,
 
+                ProposerState = proposerView.ProposerState,
+                Uname = shareView.HolderName,
+                Ntime = shareView.Ntime
 
             };
+           
             return View(properOrder);
 
         }
@@ -328,7 +335,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         
         [HttpGet]
-        public ActionResult ShowProposer()
+        public ActionResult ShowProposer(int Permission=8, int pageindex = 1, int pagesize = 5)
         {
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
             List<ProposerViewModel> proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str);
@@ -349,7 +356,12 @@ namespace Restaurant_Information_MVC.Controllers
                            
                           
         };
-            return View(list.ToList());
+            ViewBag.currentindex = pageindex;
+            ViewBag.totaldata = list.Count();
+            ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 5)) + 1;
+
+            return View(list.Skip((pageindex - 1) * 5).Take(5).ToList());
+           
         }
 
         public  string Yanzheng;
