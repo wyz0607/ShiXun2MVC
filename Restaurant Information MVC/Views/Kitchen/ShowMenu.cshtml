@@ -48,7 +48,14 @@
             </a>
             <div class="tpl-table-images-content-block">
                 <div class="tpl-i-font">
-                    菜式简介:@item.MenuIntroduce
+                    菜式简介:
+                    @if (item.MenuIntroduce.Length > 15)
+                    {
+                        <span>@item.MenuIntroduce.Substring(0,12)...</span>
+                    }
+                    else {
+                        <span>@item.MenuIntroduce</span>
+                    }
                     <br />
                     主要食材: @item.MenuIngredients
                     <br />
