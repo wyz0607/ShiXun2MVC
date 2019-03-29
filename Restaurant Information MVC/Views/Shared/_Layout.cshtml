@@ -76,7 +76,7 @@
             </li>
             <li class="has-subnav" style="margin-top:20px;">
                 <a href="javascript:;">
-                    <img src="~/Images/qiantaiguanli.png" alt="" style="height:30px;width:30px;margin-top:10px;margin-left:5px;" />                    
+                    <img src="~/Images/qiantaiguanli.png" alt="" style="height:30px;width:30px;margin-top:10px;margin-left:5px;" />
                     <span style="margin-left:20px;">
                         前台管理
                     </span>
@@ -137,7 +137,7 @@
                 <ul>
                     <li>
                         <a class="subnav-text" href="/Finance/ShowBill?Permission=4">
-                           账目查询
+                            账目查询
                         </a>
                     </li>
                     <li>
@@ -179,7 +179,7 @@
             </li>
         </ul>
     </nav>
-    <section class="wrapper scrollable">
+    
         <nav class="user-menu">
             <a href="javascript:;" class="main-menu-access">
                 <i class="icon-proton-logo"></i>
@@ -380,15 +380,13 @@
             </div>
             <div class="clearfix"> </div>
         </section>
-        <div class="main-grid">
 
-
-            @RenderBody()
-           
-        </div>
         <!-- footer -->
         <!-- //footer -->
-    </section>
+   
+    <div class="tpl-content-wrapper">
+        @RenderBody()
+    </div>
     <script src="~/JS/js/bootstrap.js"></script>
     <script src="~/JS/js/proton.js"></script>
 
