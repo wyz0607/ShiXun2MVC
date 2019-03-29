@@ -34,8 +34,7 @@
             <label class="layui-form-label">所要申请时间</label>
             <div class="layui-input-block">
                 <input id="Starttime" type="text" name="title" required lay-verify="required" value="@Model.StateTime" disabled autocomplete="off" class="layui-input" style="width:300px;">
-                |
-                <input id="Endtime" type="text" name="title" required lay-verify="required" value="@Model.EndTime" disabled autocomplete="off" class="layui-input" style="width:300px;">
+                
             </div>
 
 
@@ -76,7 +75,7 @@
                 {
 
                     <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="审核通过" onclick="Upt(@Model.ProposerId)" />
-                    <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="驳回" onclick="Fan(@Model.ProposerId)" />
+                    <input id="Button1" class="layui-btn layui-btn-radius layui-btn-danger" type="button" value="驳回" onclick="Fan(@Model.ProposerId)" />
                 }
 
 
@@ -88,7 +87,10 @@
     </form>
 </div>
 <script>
+    
     function Upt(id) {
+        let i = parseInt($("#Hidden3").val());
+        console.log(i);
         var o = {
             ProposerId: id,
             ShareHolderId: $("#Hidden2").val(),
@@ -97,7 +99,7 @@
             StateTime: $("#Starttime").val(),
             EndTime: $("#Endtime").val(),
             ProposerState: 1,
-            Ntime=$("#Hidden3").val()-1,
+            Ntime= 0,
 
         };
         layui.use('layer', function () {

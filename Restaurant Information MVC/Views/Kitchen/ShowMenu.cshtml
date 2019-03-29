@@ -35,53 +35,53 @@
 <div class="container" id="tb" style="width:1400px;height:580px;margin:0 auto;background-color:#f2f2f2;clear:both;position:absolute">
     @foreach (var item in Model)
     {
-    <div name="tr1" class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">
-        <a href="javascript:;" class="tpl-table-images-content-i">
-            <div class="tpl-table-images-content-i-info">
-                <span class="ico">
-                    <img src="@item.MenuPhoto" alt="">
-                    @item.MenuName
-                </span>
+        <div name="tr1" class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">
+            <a href="javascript:;" class="tpl-table-images-content-i">
+                <div class="tpl-table-images-content-i-info">
+                    <span class="ico">
+                        <img src="@item.MenuPhoto" alt="">
+                        @item.MenuName
+                    </span>
+                </div>
+                <span class="tpl-table-images-content-i-shadow"></span>
+                <img src="@item.MenuPhoto" style="width:432px;height:203px;" alt="">
+            </a>
+            <div class="tpl-table-images-content-block">
+                <div class="tpl-i-font">
+                    菜式简介:@item.MenuIntroduce
+                    <br />
+                    主要食材: @item.MenuIngredients
+                    <br />
+                    所属菜系:@item.MenuCuisine
+                    <br />
+                    种类:@item.MenuKind
+                    <br />
+                    单价:@item.UnitPrice
+                    <br />
+                    销售量: @item.SalesVolume
+                    <br />
+                    状态:
+                    @if (item.MenuState == 1)
+                    {
+                        <span id="sp">上架</span>
+                    }
+                    else
+                    {
+                        <span id="sp">下架</span>
+                    }
+                </div>
             </div>
-            <span class="tpl-table-images-content-i-shadow"></span>
-            <img src="@item.MenuPhoto" style="width:432px;height:203px;" alt="">
-        </a>
-        <div class="tpl-table-images-content-block">
-            <div class="tpl-i-font">
-                菜式简介:@item.MenuIntroduce
-                <br />
-                主要食材: @item.MenuIngredients
-                <br />
-                所属菜系:@item.MenuCuisine
-                <br />
-                种类:@item.MenuKind
-                <br />
-                单价:@item.UnitPrice
-                <br />
-                销售量: @item.SalesVolume
-                <br />
-                状态:
-                @if (item.MenuState == 1)
-                {
-                    <span id="sp">上架</span>
-                }
-                else
-                {
-                    <span id="sp">下架</span>
-                }
-            </div>
-        </div>
-        <input id="Deles" type="checkbox" name="Deles" value="@item.MenuID"/>
-        <div class="am-btn-toolbar">
-            <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
+            <input id="Deles" type="checkbox" name="Deles" value="@item.MenuID" />
+            <div class="am-btn-toolbar">
+                <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
 
-                <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(@item.MenuID)"><span class="am-icon-edit"></span> 修改</button>
-                <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(@item.MenuID,this)"><span class="am-icon-trash-o"></span> 删除</button>
-                <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang(@item.MenuID)"><span class="am-icon-plus"></span> 上架</button>
-                <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia(@item.MenuID)"><span class="am-icon-archive"></span> 下架</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(@item.MenuID)"><span class="am-icon-edit"></span> 修改</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(@item.MenuID,this)"><span class="am-icon-trash-o"></span> 删除</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang(@item.MenuID)"><span class="am-icon-plus"></span> 上架</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia(@item.MenuID)"><span class="am-icon-archive"></span> 下架</button>
+                </div>
             </div>
         </div>
-    </div>
     }
 </div>
 
@@ -92,7 +92,7 @@
     <input type="hidden" id="pIndex" value="@ViewBag.currentindex" />
 </p>
 
-<div id="test1" style="margin-left:300px;margin-top:100px">123</div>
+<div id="test1" style="margin-left:300px;margin-top:180px">123</div>
 
 <script>
     layui.use('laypage', function () {
@@ -116,92 +116,103 @@
                         success: function (data) {
                             var tbody = '';
                             for (var i in data) {
+                                console.log(data[i].MenuState)
+                                var Jias = data[i].MenuState == 1 ? '上架' : '下架';
+                                console.log(Jias);
                                 tbody += '<div name="tr1" class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">'
-           +' <a href="javascript:;" class="tpl-table-images-content-i">'
-             +'   <div class="tpl-table-images-content-i-info">'
-               +'     <span class="ico">'
-                 +'       <img src="'+data[i].MenuPhoto+'" alt="">'
-                   +     data[i].MenuName
-                   +' </span>'
-                +'</div>'
-                +'<span class="tpl-table-images-content-i-shadow"></span>'
-                +'<img src="'+data[i].MenuPhoto+'" style="width:432px;height:203px;" alt="">'
-            +'</a>'
-            +'<div class="tpl-table-images-content-block">'
-             +'   <div class="tpl-i-font">'
-               +'     菜式简介:'+data[i].MenuIntroduce
-                 +'   <br />'
-                   +' 主要食材:'+data[i].MenuIngredients
-                   +' <br />'
-                   +' 所属菜系:'+data[i].MenuCuisine
-                   +' <br />'
-                   +' 种类:'+data[i].MenuKind
-                   +' <br />'
-                   +'单价:'+data[i].UnitPrice
-                   +' <br />'
-                   +' 销售量: '+data[i].SalesVolume
-                   +' <br />'
-                   +' 状态:'
-                   + '<span id="sp">'+(data[i].MenuState==1?'上架':'下架')+'</span>'
-                +'</div>'
+                                    + '<a href="javascript:;" class="tpl-table-images-content-i">'
+                                    + '   <div class="tpl-table-images-content-i-info">'
+                                    + '      <span class="ico">'
+                                    + '        <img src="' + data[i].MenuPhoto + '" alt="">'
+                                    + data[i].MenuName
+                                    + '  </span>'
                                     + '</div>'
-                                '<input id="Deles" type="checkbox" name="Deles" value='+data[i].MenuID+'/>'
-            +'<div class="am-btn-toolbar">'
+                                    + '<span class="tpl-table-images-content-i-shadow"></span>'
+                                    + '<img src="' + data[i].MenuPhoto + '" style="width:432px;height:203px;" alt="">'
+                                    + ' </a>'
+                                    + '<div class="tpl-table-images-content-block">'
+                                    + '  <div class="tpl-i-font">'
+                                    + '     菜式简介:'
+                                    + data[i].MenuIntroduce
+                                    + '  <br />'
+                                    + ' 主要食材:'
+                                    + data[i].MenuIngredients
+                                    + '<br />'
+                                    + ' 所属菜系:'
+                                    + data[i].MenuCuisine
+                                    + ' <br />'
+                                    + ' 种类:'
+                                    + data[i].MenuKind
+                                    + '<br />'
+                                    + ' 单价:'
+                                    + data[i].UnitPrice
+                                    + '<br />'
+                                    + ' 销售量: '
+                                    + data[i].SalesVolume
+                                    + '<br />'
+                                    + '状态:'
+                                    + ' <span id="sp">' + Jias + '</span>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '<input id="Deles" type="checkbox" name="Deles" value="' + data[i].MenuID + '" />'
+                                    + '<div class="am-btn-toolbar">'
                                     + '  <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">'
-                                    + '    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(' + data[i].MenuID +')"><span class="am-icon-edit"></span> 修改</button>'
-                +'    <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del('+data[i].MenuID+',this)"><span class="am-icon-trash-o"></span> 删除</button>'
-                +'    <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang('+data[i].MenuID+')"><span class="am-icon-plus"></span> 上架</button>'
-                +'    <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia('+data[i].MenuID+')"><span class="am-icon-archive"></span> 下架</button>'
-                +'</div>'
-            +'</div>'
-        +'</div>';
-                            }
+
+                                    + '    <button type="button" class="am-btn am-btn-default am-btn-secondary" onclick="Upt(' + data[i].MenuID + ')"><span class="am-icon-edit"></span> 修改</button>'
+                                    + '   <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(' + data[i].MenuID + ',this)"><span class="am-icon-trash-o"></span> 删除</button>'
+                                    + '  <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang(' + data[i].MenuID + ')"><span class="am-icon-plus"></span> 上架</button>'
+                                    /**/
+                                    + ' <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia('+data[i].MenuID+')"><span class="am-icon-archive"></span> 下架</button>'
+    /**/
+    + '</div>'
+    + ' </div>'
+    + ' </div>'
+}
                             $("[name=tr1]").remove();
                             $("#tb").append(tbody);
-                        }
-                    })
-                }
+}
+})
+}
+}
+});
+});
+function Sel() {
+location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
+}
+function Dels() {
+var MenuIDs = [];
+$("[name='Deles']:checked").each(function () {
+MenuIDs.push($(this).val());
+});
+location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
+}
 
-            }
-        });
-    });
-    function Sel() {
-        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
-    }
-    function Dels() {
-        var MenuIDs = [];
-        $("[name='Deles']:checked").each(function () {
-            MenuIDs.push($(this).val());
-        });
-        location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
-    }
-
-    $(function () {
-        $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
-    })
-    function BtnUp() {
-        if ($("#currentindex").text() != 1) {
-            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
-        }
-        else {
-            layui.use('layer', function () {
-                layer.alert('已经是首页了');
-            })
-        }
-    }
-    function BtnDown() {
-        if ($("#currentindex").text() != $("#totalpage").text()) {
-            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
-        }
-        else {
-            layui.use('layer', function () {
-                layer.alert('已经是尾页了');
-            })
-        }
-    }
-    function Upt(Id) {
-        location.href = '/Kitchen/UptMenu?id='+ Id;
-    }
+$(function () {
+$("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
+})
+function BtnUp() {
+if ($("#currentindex").text() != 1) {
+location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
+}
+else {
+layui.use('layer', function () {
+layer.alert('已经是首页了');
+})
+}
+}
+function BtnDown() {
+if ($("#currentindex").text() != $("#totalpage").text()) {
+location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
+}
+else {
+layui.use('layer', function () {
+layer.alert('已经是尾页了');
+})
+}
+}
+function Upt(Id) {
+location.href = '/Kitchen/UptMenu?id=' + Id;
+}
 
 </script>
 
@@ -212,7 +223,7 @@
             data: { "mState": 1, "mId": mid },
             type: "get",
             success: function (data) {
-                layer.msg(data, { time:1000 });
+                layer.msg(data, { time: 1000 });
                 $("#sp").text('上架')
             }
         })
@@ -224,7 +235,7 @@
             type: "get",
             success: function (data) {
                 layer.msg(data, { time: 1000 });
-                 $("#sp").text('下架')
+                $("#sp").text('下架')
             }
         })
     }
@@ -271,5 +282,5 @@
                 })
         })
     }
- 
+
 </script>

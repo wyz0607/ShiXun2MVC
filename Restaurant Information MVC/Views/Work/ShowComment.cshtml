@@ -67,7 +67,7 @@
             <span>当前第</span>
             <span id="currentindex">@ViewBag.currentindex</span>
             <span>页，总共</span>
-            <span id="totalpage"></span>
+            <span id="totalpage">@ViewBag.totalpage</span>
             <span>页</span>
 
         </span>
@@ -82,7 +82,7 @@
 
 <script>
     $(function () {
-        $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 5)));
+        $("#totalpage").text(Math.ceil(Number(Number($("#totaldata").text()) / 5)));
     })
     function BtnUp() {
         if ($("#currentindex").text() != 1) {

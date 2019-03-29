@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Restaurant_Information_MVC.Models.ProperOrderSherd>
 @using Restaurant_Information_MVC.Controllers
 @{
-                ViewBag.Title = "显示带审核信息";
+    ViewBag.Title = "显示带审核信息";
 }
 
 
@@ -10,7 +10,10 @@
 
 
 
-
+<h1>显示所有的评论</h1>
+<div style="margin:0 auto;width:100px;height:20px;">
+    <h2>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</h2>
+</div>
 <div class="layui-form">
     <table class="layui-table">
 
@@ -29,9 +32,9 @@
             {
                 <tr>
                     <td>@item.ProposerId</td>
-                    
+
                     <td>@item.Uname</td>
-                   
+
                     <td>@item.ProposerCause</td>
                     <td>@item.ProposerTime</td>
                     <td>@item.StateTime</td>
@@ -68,6 +71,51 @@
 
         </tbody>
     </table>
+    <p style="margin:0 auto;width:400px;height:50px;">
+        <span>
+            <span>当前第</span>
+            <span id="currentindex">@ViewBag.currentindex</span>
+            <span>页，总共</span>
+            <span id="totalpage">@ViewBag.totalpage</span>
+            <span>页</span>
+
+        </span>
+        <button class="layui-btn" onclick="BtnUp()">
+            <i class="layui-icon">上一页</i>
+        </button>
+        <button class="layui-btn" onclick="BtnDown()">
+            <i class="layui-icon">下一页</i>
+        </button>
+
+    </p>
+
 </div>
+<script>
+    $(function () {
+        $("#totalpage").text(Math.ceil(Number(Number($("#totaldata").text()) / 5)));
+    })
+    function BtnUp() {
+        if ($("#currentindex").text() != 1) {
+            location.href = "/Work/ShowProposer?Permission=8&pageindex=" + Number(Number($("#currentindex").text()) - 1);
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是首页了');
+            })
+
+        }
+    }
+    function BtnDown() {
+        if ($("#currentindex").text() != $("#totalpage").text()) {
+            location.href = "/Work/ShowProposer?Permission=8&pageindex=" + Number(Number($("#currentindex").text()) + 1);
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是尾页了');
+            })
+        }
+    }
+</script>
+
 
 

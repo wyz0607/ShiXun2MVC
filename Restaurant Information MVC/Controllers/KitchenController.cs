@@ -49,8 +49,9 @@ namespace Restaurant_Information_MVC.Controllers
         {
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
-            List<MenuViewModel> menu = JsonConvert.DeserializeObject<List<MenuViewModel>>(json);
-            return Content(JsonConvert.SerializeObject(menu.Skip((pageIndex - 1) * pageSize).Take(pageSize)));
+            List<KitchenViewModel> menu = JsonConvert.DeserializeObject<List<KitchenViewModel>>(json);
+            string json1=JsonConvert.SerializeObject(menu.Skip((pageIndex - 1) * pageSize).Take(pageSize));
+            return Content(json1);
         }
 
 
