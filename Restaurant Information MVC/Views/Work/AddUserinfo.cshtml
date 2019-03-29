@@ -4,58 +4,60 @@
 }
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
+<i class="layui-icon layui-icon-return" style="font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowUserInfo?Permission=4'"></i>
+<div style="margin-left:30%">
+    <form class="layui-form" style="width:700px;position:absolute">
+        <div class="layui-form-item" style="float:left;">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input id="Text1" type="text" name="title" required lay-verify="required" placeholder="请输入员工名称" autocomplete="off" class="layui-input" style="width:300px;float:left">
 
-<form class="layui-form" style="width:700px;position:absolute">
-    <div class="layui-form-item" style="float:left;">
-        <label class="layui-form-label">名称</label>
-        <div class="layui-input-block">
-            <input id="Text1" type="text" name="title" required lay-verify="required" placeholder="请输入员工名称" autocomplete="off" class="layui-input" style="width:300px;float:left">
-
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item" style="float:left;">
-        <label class="layui-form-label">预存邮箱</label>
-        <div class="layui-input-block">
-            <input id="email" type="text" name="title" required lay-verify="required" placeholder="请输入员工的邮箱" autocomplete="off" class="layui-input" style="width:300px;float:left">
+        <div class="layui-form-item" style="float:left;">
+            <label class="layui-form-label">预存邮箱</label>
+            <div class="layui-input-block">
+                <input id="email" type="text" name="title" required lay-verify="required" placeholder="请输入员工的邮箱" autocomplete="off" class="layui-input" style="width:300px;float:left">
 
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item" style="float:left;">
-        <label class="layui-form-label">性别</label>
-        <div class="layui-input-block">
-            <input id="Radio1" type="radio" name="title" required lay-verify="required" value="true" autocomplete="off" class="layui-input" checked>男
-            <input id="Radio2" type="radio" name="title" required lay-verify="required" value="false" autocomplete="off" class="layui-input">女
-        </div>
-    </div>
-
-    <div class="layui-form-item" style="float:left;">
-        <label class="layui-form-label">选择职位</label>
-        <div class="layui-input-block">
-            <select id="select1" name="zhiwei">
-                <option value=""></option>
-                <option value="店员">店员</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="添加" onclick="Add()" />
-            <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="取消" onclick="Fan()" />
-
+        <div class="layui-form-item" style="float:left;">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input id="Radio1" type="radio" name="title" required lay-verify="required" value="true" autocomplete="off" class="layui-input" checked>男
+                <input id="Radio2" type="radio" name="title" required lay-verify="required" value="false" autocomplete="off" class="layui-input">女
+            </div>
         </div>
 
-    </div>
-</form>
+        <div class="layui-form-item" style="float:left;">
+            <label class="layui-form-label">选择职位</label>
+            <div class="layui-input-block">
+                <select id="select1" name="zhiwei">
+                    <option value=""></option>
+                    <option value="店员">店员</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input id="Button1" class="layui-btn layui-btn-radius" type="button" value="添加" onclick="Add()" />
+                <input id="Button1" class="layui-btn layui-btn-radius layui-btn-danger" type="button" value="取消" onclick="Fan()" />
+
+            </div>
+
+        </div>
+    </form>
+</div>
 <script>
     layui.use('form', function () {
         var form = layui.form;
     })
     var xian = 0;
 
-    
-    
-    
+
+
+
 
     function Add() {
         var o = {
@@ -65,7 +67,7 @@
             UserPwd: 123,
             RoleName: $("#select1").val(),
             Rname: $("#select1").val(),
-            Privilege: $("#select1").val()=="店长"?7:3
+            Privilege: $("#select1").val() == "店长" ? 7 : 3
         }
         layui.use('layer', function () {
             layer.confirm("确认添加？", {
