@@ -6,11 +6,11 @@
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui-v2.4.5/layui/layui.all.js"></script>
 <script src="~/layui-v2.4.5/layui/layui.js"></script>
-<script src="~/Kit/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/jquery.min.js"></script>
 
-<link rel="stylesheet" href="~/Kit/assets/css/amazeui.min.css" />
-<link rel="stylesheet" href="~/Kit/assets/css/admin.css">
-<link rel="stylesheet" href="~/Kit/assets/css/app.css">
+<link rel="stylesheet" href="~/assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="~/assets/css/admin.css">
+<link rel="stylesheet" href="~/assets/css/app.css">
 
 <div style="border:solid 0px yellow;overflow:auto;padding:0px;position:relative;height:38px;">
     <ul style="display:block;width:800px;position:absolute;left:50%;margin-left:-400px;overflow:auto;border:solid 0px red;float:right">
@@ -48,7 +48,14 @@
             </a>
             <div class="tpl-table-images-content-block">
                 <div class="tpl-i-font">
-                    菜式简介:@item.MenuIntroduce
+                    菜式简介:
+                    @if (item.MenuIntroduce.Length > 15)
+                    {
+                        <span>@item.MenuIntroduce.Substring(0,12)...</span>
+                    }
+                    else {
+                        <span>@item.MenuIntroduce</span>
+                    }
                     <br />
                     主要食材: @item.MenuIngredients
                     <br />
@@ -162,57 +169,57 @@
                                     + '   <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="Del(' + data[i].MenuID + ',this)"><span class="am-icon-trash-o"></span> 删除</button>'
                                     + '  <button type="button" class="am-btn am-btn-default am-btn-success" onclick="shang(' + data[i].MenuID + ')"><span class="am-icon-plus"></span> 上架</button>'
                                     /**/
-                                    + ' <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia('+data[i].MenuID+')"><span class="am-icon-archive"></span> 下架</button>'
-    /**/
-    + '</div>'
-    + ' </div>'
-    + ' </div>'
-}
+                                    + ' <button type="button" class="am-btn am-btn-default am-btn-warning" onclick="xia(' + data[i].MenuID + ')"><span class="am-icon-archive"></span> 下架</button>'
+                                    /**/
+                                    + '</div>'
+                                    + ' </div>'
+                                    + ' </div>'
+                            }
                             $("[name=tr1]").remove();
                             $("#tb").append(tbody);
-}
-})
-}
-}
-});
-});
-function Sel() {
-location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
-}
-function Dels() {
-var MenuIDs = [];
-$("[name='Deles']:checked").each(function () {
-MenuIDs.push($(this).val());
-});
-location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
-}
+                        }
+                    })
+                }
+            }
+        });
+    });
+    function Sel() {
+        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
+    }
+    function Dels() {
+        var MenuIDs = [];
+        $("[name='Deles']:checked").each(function () {
+            MenuIDs.push($(this).val());
+        });
+        location.href = "/Kitchen/DelMenu?id=" + MenuIDs;
+    }
 
-$(function () {
-$("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
-})
-function BtnUp() {
-if ($("#currentindex").text() != 1) {
-location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
-}
-else {
-layui.use('layer', function () {
-layer.alert('已经是首页了');
-})
-}
-}
-function BtnDown() {
-if ($("#currentindex").text() != $("#totalpage").text()) {
-location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
-}
-else {
-layui.use('layer', function () {
-layer.alert('已经是尾页了');
-})
-}
-}
-function Upt(Id) {
-location.href = '/Kitchen/UptMenu?id=' + Id;
-}
+    $(function () {
+        $("#totalpage").text(Math.ceil((Number($("#totaldata").text()) / 6)));
+    })
+    function BtnUp() {
+        if ($("#currentindex").text() != 1) {
+            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) - 1) + "&name=" + $("#txtSel").val();
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是首页了');
+            })
+        }
+    }
+    function BtnDown() {
+        if ($("#currentindex").text() != $("#totalpage").text()) {
+            location.href = "/Kitchen/ShowMenu?pageindex=" + Number(Number($("#currentindex").text()) + 1) + "&name=" + $("#txtSel").val();
+        }
+        else {
+            layui.use('layer', function () {
+                layer.alert('已经是尾页了');
+            })
+        }
+    }
+    function Upt(Id) {
+        location.href = '/Kitchen/UptMenu?id=' + Id;
+    }
 
 </script>
 
