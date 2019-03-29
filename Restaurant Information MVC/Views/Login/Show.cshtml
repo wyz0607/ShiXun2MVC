@@ -18,9 +18,9 @@
     </style>
 </head>
 <body>
-    @*<div class="admin-index">
+    @*/*<div class="admin-index">
             <dl data-am-scrollspy="{animation: 'slide-right', delay: 100}">
-                <dt class="qs"><i class="icofont-shopping-cart"></i></dt>
+                <dt class="qs"></dt>
                 <dd>@ViewBag.OrderNum</dd>
                 <dd class="f12">今日订单数</dd>
             </dl>
@@ -39,65 +39,55 @@
                 <dd>@ViewBag.money</dd>
                 <dd class="f12">历史收入</dd>
             </dl>
-        </div>*@
-    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
-        <div class="dashboard-stat blue">
-            <div class="visual">
-                <i class="am-icon-comments-o"></i>
+        </div>*/*@
+    <div class="grid-info" style="height:180px;">
+        <div class="col-md-3 top-comment-grid">
+            <div class="comments">
+                <div class="comments-icon">
+                    <img src="~/Images/dingdanguanli.png" alt="" style="width:100px;height:100px;" />
+                </div>
+                <div class="comments-info">
+                    <h3>@ViewBag.OrderNum</h3>
+                    <a href="#">今日订单数</a>
+                </div>
+                <div class="clearfix"> </div>
             </div>
-            <div class="details">
-                <div class="number"> @ViewBag.OrderNum </div>
-                <div class="desc"> 今日订单数 </div>
-            </div>
-            <a class="more" href="#">
-                查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
-            </a>
         </div>
-    </div>
-    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
-        <div class="dashboard-stat red">
-            <div class="visual">
-                <i class="am-icon-bar-chart-o"></i>
+        <div class="col-md-3 top-comment-grid">
+            <div class="comments tweets">
+                <div class="comments-icon">
+                    <img src="~/Images/qian.png" alt="" style="width:100px;height:100px;" />
+                </div>
+                <div class="comments-info tweets-info">
+                    <h3>@ViewBag.oneMoney</h3>
+                    <a href="#">今日收入</a>
+                </div>
+                <div class="clearfix"> </div>
             </div>
-            <div class="details">
-                <div class="number"> @ViewBag.oneMoney </div>
-                <div class="desc"> 今日收入 </div>
-            </div>
-            <a class="more" href="#">
-                查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
-            </a>
         </div>
-    </div>
-    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
-        <div class="dashboard-stat green">
-            <div class="visual">
-                <i class="am-icon-apple"></i>
+        <div class="col-md-3 top-comment-grid">
+            <div class="comments views">
+                <div class="comments-icon">
+                    <img src="~/Images/shuliang.png" alt="" style="width:100px;height:100px;" />
+                </div>
+                <div class="comments-info views-info">
+                    <h3>@ViewBag.menu</h3>
+                    <a href="#">菜式数量</a>
+                </div>
+                <div class="clearfix"> </div>
             </div>
-            <div class="details">
-                <div class="number"> @ViewBag.menu </div>
-                <div class="desc"> 菜式数量 </div>
-            </div>
-            <a class="more" href="#">
-                查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
-            </a>
         </div>
-    </div>
-    <div class="am-u-lg-3 am-u-md-6 am-u-sm-12">
-        <div class="dashboard-stat purple">
-            <div class="visual">
-                <i class="am-icon-android"></i>
+        <div class="col-md-3 top-comment-grid"style="height:200px;">
+            <div class="comments views">
+                <div class="comments-icon">
+                    <img src="~/Images/count.png" alt="" style="width:100px;height:100px;" />
+                </div>
+                <div class="comments-info views-info">
+                    <h3>@ViewBag.money</h3>
+                    <a href="#">历史收入</a>
+                </div>
+                <div class="clearfix"> </div>
             </div>
-            <div class="details">
-                <div class="number"> @ViewBag.money </div>
-                <div class="desc"> 历史收入 </div>
-            </div>
-            <a class="more" href="#">
-                查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
-            </a>
         </div>
     </div>
     <div id="container" style="width:600px;height:400px;margin-top:150px;margin-left:360px;position:absolute">
