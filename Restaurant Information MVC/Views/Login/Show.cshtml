@@ -15,10 +15,16 @@
             -webkit-user-select: none;
             -ms-user-select: none;
         }
+        canvas1 {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
     </style>
 </head>
 <body>
-    <div class="grid-info" style="height:180px; margin-left:30px;margin-top:100px;">
+    <input type="hidden" id="oneMoney" value="@ViewBag.money" />
+    <div class="grid-info" style="height:180px;">
         <div class="col-md-3 top-comment-grid">
             <div class="comments">
                 <div class="comments-icon">
@@ -55,7 +61,7 @@
                 <div class="clearfix"> </div>
             </div>
         </div>
-        <div class="col-md-3 top-comment-grid">
+        <div class="col-md-3 top-comment-grid" style="height:200px;">
             <div class="comments views">
                 <div class="comments-icon">
                     <img src="~/Images/count.png" alt="" style="width:100px;height:100px;" />
@@ -68,13 +74,22 @@
             </div>
         </div>
     </div>
-    <div id="container" style="width:600px;height:400px;margin-top:150px;margin-left:360px;position:absolute">
+    <div id="container" style="width:600px;height:400px;margin-top:150px;margin-left:700px;position:absolute">
         <div style="margin-left:200px;">
             <i class="icofont-chart-line" style="font-size:25px">近七日成交订单</i>
         </div>
         <hr class="layui-bg-green">
         <canvas id="canvas"></canvas>
     </div>
+
+    <div  style="width:600px;height:400px;margin-top:150px;margin-left:25px;position:absolute">
+        <div style="margin-left:25px;">
+            <i class="icofont-chart-line" style="font-size:25px">分红显示</i>
+        </div>
+        <hr class="layui-bg-green">
+        <canvas id="canvas1"></canvas>
+    </div>
+
 </body>
 </html>
 <script src="~/layui/layui.js"></script>
@@ -127,11 +142,67 @@
         datasets: [{
             borderColor: window.chartColors.green,
             borderWidth: 1,
-            data: Chartdata
+            data: Chartdata,
+            backgroundColor: window.chartColors.blue
         }]
 
 
     };
+     layui.use('layer', function () {
+     if (@Session["msg"]== "1") {
+            var layer = layui.layer;
+         layer.msg('您没有权限', { anim: 6, time: 500, icon: 2 })
+        }
+    });
+
+
+    var arr1 = ['贤者', '智者', '哲人','店长','店员','Boss'];
+    var Chartdata1 = [];
+    var Color1 = [
+        '#66FFFF', '#ffce56', '#ff6384', '#36a2eb', '#cc65fe', '#CCFF33'
+    ]
+    var Money = $("#oneMoney").val();
+    var zc = Money * 0.5, cd = Money * 0.25, kg = Money * 0.0175, zt = Money * 0.075, wdk = Money * 0.075, qg = Money * 0.085;
+    //$.ajax({
+    //    url: "/Attendance/GetChartsAttend",
+    //    dataType: "json",
+    //    contentType: "application/json",
+    //    async: false,
+    //    success: function (data) {
+    //        for (var i in data) {
+    //            if (data[i].AttenState == 1) {
+    //                zc = zc + 1;
+    //            }
+    //            else if (data[i].AttenState == 2) {
+    //                cd = cd + 1;
+    //            }
+    //            else if (data[i].AttenState == 4) {
+    //                zt = zt + 1;
+    //            }
+    //            else if (data[i].AttenState == 3) {
+    //                kg = kg + 1;
+    //            }
+    //            else {
+    //                wdk = wdk + 1;
+    //            }
+    //        }
+    //        Chartdata = [zc, cd, kg, zt, wdk];
+    //    }
+    //})
+    Chartdata1 = [zc, cd, kg, zt, wdk, qg];
+    var color11 = Chart.helpers.color;
+    var barChartData1 = {
+        labels: arr1,
+        datasets: [{
+            label: '分红展示',
+            backgroundColor: Color1,
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: Chartdata1
+        }]
+
+    };
+
     window.onload = function () {
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myBar = new Chart(ctx, {
@@ -148,13 +219,22 @@
                 }
             }
         });
-
+        var ctx1 = document.getElementById('canvas1').getContext('2d');
+        window.myBar = new Chart(ctx1, {
+            type: 'pie',
+            data: barChartData1,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'left',
+                },
+                title: {
+                    display: true,
+                    text: '',
+                   
+                }
+            }
+        });
 
     };
-     layui.use('layer', function () {
-     if (@Session["msg"]== "1") {
-            var layer = layui.layer;
-         layer.msg('您没有权限', { anim: 6, time: 500, icon: 2 })
-        }
-    });
 </script>
