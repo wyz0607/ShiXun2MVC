@@ -5,13 +5,14 @@
 
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
 <div style="width:20%;height:100%"></div>
 <h1>显示所有的员工</h1>
 <div style="margin:0 auto;width:300px;height:20px;">
     <h2>总记录数<span id="totaldata">@ViewBag.totaldata</span>条</h2>
 </div>
 <div class="layui-form">
-    <table class="layui-table">
+    @*<table class="layui-table">
 
         <thead>
             <tr>
@@ -46,7 +47,50 @@
             }
 
         </tbody>
-    </table>
+    </table>*@
+    <div class="container" style="width:1200px;height:580px;margin:0 auto;background-color:#f2f2f2">
+
+        @foreach (var item in Model)
+        {
+            <table class="col-lg-4" style="width:350px;height:250px;float:left;background-color:#ffffff;margin-left:20px;margin-top:30px;">
+                <tr>
+                    <td colspan="5">
+                        <img src="~/Images/@item.UserID .jpg" style="width:100px;height:100px;" />
+                        <div style="margin-left:20px;"> @item.UserName</div>
+
+                    </td>
+                    <td>
+                        <div style="float:right"><input value="@item.UserID" name="ckItem" type="checkbox" /></div>
+                        <div> @item.UserName</div>
+                        <div>
+                            @if (item.UserSex == true)
+                            {
+                                <i>男</i>
+                            }
+                            else
+                            {
+                                <i>女</i>
+                            }
+                            
+                        </div>
+                        <div>
+                            @item.Rname
+                        </div>
+                        <div>
+                            @item.UserPhone
+                        </div>
+                       
+                        <div>
+                            @*<button class="layui-btn layui-btn-radius" onclick="location.href='/Manager/UpdateEmp?id=@item.Id'">员工调职</button>*@
+                            <input id="Button1" type="button" value="开除员工" class="layui-btn layui-btn-danger" onclick="Del(@item.UserID)" />
+                        </div>
+                        @*<input id="Checkbox1" type="checkbox" style="float:right" />*@
+                    </td>
+                </tr>
+            </table>
+
+        }
+    </div>
     <p style="margin:0 auto;width:400px;height:50px;">
         <span>
             <span>当前第</span>
@@ -67,7 +111,7 @@
 </div>
 <script>
     $(function () {
-        $("#totalpage").text(Math.ceil(Number(Number($("#totaldata").text()) / 5)));
+        $("#totalpage").text(Math.ceil(Number(Number($("#totaldata").text()) / 6)));
     })
     function BtnUp() {
         if ($("#currentindex").text() != 1) {
