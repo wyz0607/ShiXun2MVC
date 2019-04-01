@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Restaurant_Information_MVC;
 using Newtonsoft.Json;
 using Restaurant_Information_MVC.Models;
+using System.Speech.Synthesis;
 
 namespace Restaurant_Information_MVC.Controllers
 {
@@ -42,12 +43,20 @@ namespace Restaurant_Information_MVC.Controllers
                 ViewBag.pCount = 1;
                 return View(order.Where(c=>c.OrderID==OrderId).ToList());
             }
+
             
         }
 
+       
         public ActionResult Order(int OrderId = 0, int pageIndex = 1, int pageSize = 3)
         {
-          
+
+            string yuyin = "您有一条新订单";
+            SpeechSynthesizer speech = new SpeechSynthesizer();//实例化语音
+            speech.SetOutputToDefaultAudioDevice();//将对象发送默认的音频
+            speech.Rate = -2;//语速
+            speech.Speak(yuyin);
+
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
