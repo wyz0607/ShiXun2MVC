@@ -100,23 +100,27 @@
             </label>
             @if (s == Stateinfo.审核通过)
             {
-                <b style="color:#808080;margin-left:150px;">已审核</b>
-                <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId'" style="margin-left:250px;margin-bottom:200px;">详情</button>
+                <div style="width:200px;margin-left:150px;">
+                    <b style="color:#808080;padding-right:20px;">已审核</b>
+                    <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId'" style="padding-left:20px;">详情</button>
+                </div>
             }
             else if (s == Stateinfo.驳回)
             {
-                <b style="color:#808080;margin-left:150px;">已审核</b>
-                <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId'" style="margin-left:250px ">详情</button>
-            }
-            else
-            {
                 <div style="width:200px;margin-left:150px;">
-                    <b style="color:#ceca37;padding-right:20px;">@s</b>
-                    <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId '" style="padding-left:20px;">审核</button>
-                </div>
+                    <b style="color:#808080;padding-right:20px;">已审核</b>
+                    <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId'" style="padding-left:20px; ">详情</button>
+                    </div>
+                    }
+                    else
+                    {
+                    <div style="width:200px;margin-left:150px;">
+                        <b style="color:#ceca37;padding-right:20px;">@s</b>
+                        <button class="layui-btn layui-btn-radius" onclick="location.href='/Work/UptProposer?id=@item.ProposerId '" style="padding-left:20px;">审核</button>
+                    </div>
 
-            }
-        </p>
+                    }
+            </p>
     </div>
 </div>
        }
