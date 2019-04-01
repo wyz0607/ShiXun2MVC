@@ -308,6 +308,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\sui-append.min.css" />
+    <Content Include="Content\sui.min.css" />
+    <Content Include="Content\sui.min.js" />
     <Content Include="css\admin.css" />
     <Content Include="css\amazeui.css" />
     <Content Include="css\amazeui.datatables.min.css" />
