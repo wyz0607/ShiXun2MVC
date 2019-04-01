@@ -71,6 +71,7 @@
             </div>
         }
     </div>
+    <div id="test1" style="margin-left:300px;position:absolute;top:700px"></div>
 </div>
 <script type="text/javascript">
     //触发隐藏的file表单
@@ -112,16 +113,33 @@
                         success: function (data) {
                             var tbody = '';
                             for (var i in data) {
-                                tbody += ' <tr name="tr1">'
-                                    + '<td>' + data[i].GoodsId + '</td> '
-                                    + '<td>' + data[i].GoodsName + '</td>'
-                                    + '<td>' + data[i].SellingPrice + '</td>'
-                                    + '<td>' + data[i].CostPrice + '</td>'
-                                    + '<td>' + data[i].GoodsProfit + '</td>'
-                                    + '</tr>'
+                                tbody += '<div name="tr1" class="am-u-sm-12 am-u-md-6 am-u-lg-4" style="margin-top:20px">'
+                                    + '<a href="javascript:;" class="tpl-table-images-content-i">'
+                                    + '  <div class="tpl-table-images-content-i-info">'
+                                    + '    <span class="ico">'
+                                    + '      <img src="' + data[i].MenuPhoto + '" alt="">'
+                                    + data[i].GoodsName
+                                    + '</span>'
+                                    + '</div>'
+                                    + '<span class="tpl-table-images-content-i-shadow"></span>'
+                                    + '<img src="' + data[i].MenuPhoto + '" style="width:432px;height:203px;" alt="">'
+                                    + '</a>'
+                                    + '<div class="tpl-table-images-content-block">'
+                                    + ' <div class="tpl-i-font">'
+                                    + '出售价格:'
+                                    + data[i].SellingPrice + '元'
+                                    + '<br />'
+                                    + ' 成本价格:' + data[i].CostPrice + ' 元'
+                                    + '<br />'
+                                    + ' 纯利润:' + data[i].GoodsProfit + ' 元'
+                                    + ' <br />'
+                                    + ' 销售数量:' + data[i].GoodsNum
+                                    + '</div>'
+                                    + '</div>'
+                                    + '</div>';
                             }
                             $("[name=tr1]").remove();
-                            $("#body").append(tbody);
+                            $("#tb").append(tbody);
                         }
                     })
                 }

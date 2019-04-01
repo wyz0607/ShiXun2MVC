@@ -240,8 +240,14 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pCount = glist.Count();
             return View(glist.Skip((pageIndex - 1) * pageSize).Take(pageSize));
         }
-        public ActionResult Statement(int pageIndex = 1, int pagesize = 5)
+        public ActionResult Statement(int pageIndex = 1, int pagesize = 6)
         {
+            string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
+            List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            foreach (var item in glist)
+            {
+                item.MenuPhoto = kit.FirstOrDefault(m => m.MenuName == item.GoodsName).MenuPhoto;
+            }
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pagesize;
             return Content(JsonConvert.SerializeObject(glist.Skip((pageIndex - 1) * pagesize).Take(pagesize)));

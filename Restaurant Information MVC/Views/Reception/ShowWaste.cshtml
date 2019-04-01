@@ -6,7 +6,6 @@
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
 
-<h2>ShowWaste</h2>
 
 <form action="/Reception/ShowWaste" method="get">
     <input type="hidden" id="pCount" value="@ViewBag.pCount" />
@@ -15,7 +14,7 @@
     <input type="text" placeholder="请输入您要查询的废单号" name="WasteId" style="width:240px;height:37px;float:left;margin-left:500px" value="" />
     <input type="submit" class="layui-btn" style="float:left" value="查询" />
 </form>
-<table id="tb" style="margin-top:60px" class="layui-table">
+<table id="tb" style="margin-top:60px;margin-left:60px;" class="layui-table">
     <colgroup>
         <col width="150">
         <col width="200">
