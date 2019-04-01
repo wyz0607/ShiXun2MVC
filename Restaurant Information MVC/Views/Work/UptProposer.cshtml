@@ -6,8 +6,9 @@
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
 
-<div>
-
+ <i class="layui-icon layui-icon-return" style="margin-left:20%;font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowProposer?Permission=8'"></i>
+<div style="margin-left:30%">
+   
     <input id="Hidden1" type="hidden" value="@Model.ProposerId" />
     <input id="Hidden2" type="hidden" value="@Model.ShareHolderId" />
     <input id="Hidden3" type="hidden" value="@Model.Ntime" />
@@ -34,7 +35,7 @@
             <label class="layui-form-label">所要申请时间</label>
             <div class="layui-input-block">
                 <input id="Starttime" type="text" name="title" required lay-verify="required" value="@Model.StateTime" disabled autocomplete="off" class="layui-input" style="width:300px;">
-                
+
             </div>
 
 
@@ -89,8 +90,8 @@
 <script>
     
     function Upt(id) {
-        let i = parseInt($("#Hidden3").val());
-        console.log(i);
+   
+       
         var o = {
             ProposerId: id,
             ShareHolderId: $("#Hidden2").val(),

@@ -32,16 +32,16 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
-            List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
-            ViewBag.pCount = order.Count();
+            List<OrderViewModel> orders = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
+            ViewBag.pCount = orders.Count();
             if (OrderId==0)
             {
-                return View(order.Skip((pageIndex - 1) * pageSize).Take(pageSize));
+                return View(orders.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             }
             else
             {
                 ViewBag.pCount = 1;
-                return View(order.Where(c=>c.OrderID==OrderId).ToList());
+                return View(orders.Where(c=>c.OrderID==OrderId).ToList());
             }
 
             
