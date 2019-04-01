@@ -4,7 +4,6 @@
 }
 <script src="~/layui/layui.js"></script>
 <link href="~/layui/css/layui.css" rel="stylesheet" />
-<h2>账目管理</h2>
 @using (Html.BeginForm())
 {
     <div style="margin-left:300px;">
@@ -31,7 +30,7 @@
 <input type="hidden" id="pCount" value="@ViewBag.pCount" />
 <input type="hidden" id="pSize" value="@ViewBag.pSize" />
 <input type="hidden" id="pIndex" value="@ViewBag.pIndex" />
-<table class="layui-table" id="table">
+<table class="layui-table" id="table" style="margin-left:60px;">
     <tr>
         <th>账单号</th>
         <th>支付时间</th>

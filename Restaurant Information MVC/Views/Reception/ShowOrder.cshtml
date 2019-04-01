@@ -8,7 +8,6 @@
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
 
-<h2>ShowOrder</h2>
 <input type="hidden" id="pCount" value="@ViewBag.pCount" />
 <input type="hidden" id="pageSize" value="@ViewBag.pSize" />
 <form action="/Reception/ShowOrder" method="get">
@@ -17,7 +16,7 @@
     <input type="hidden" name="Permission" value="@Session["Privilege"]" />
     <input type="submit" class="layui-btn" style="float:left" value="查询" />
 </form>
-<div style="padding: 20px; background-color: #F2F2F2;">
+<div style="padding: 20px; background-color: #F2F2F2; margin-left:60px;">
     <div class="layui-row layui-col-space15">
         @for (int i = 0; i < 8; i++)
         {
@@ -37,7 +36,7 @@
     </div>
 </div>
 
-<table id="tb" style="margin-top:60px;" class="layui-table">
+<table id="tb" style="margin-top:60px;margin-left:60px;" class="layui-table">
     <colgroup>
         <col width="100">
         <col width="150">
