@@ -220,7 +220,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// 财务报表视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult FinancialStatement(int Permission, int pageIndex=1,int pageSize=5)
+        public ActionResult FinancialStatement(int Permission, int pageIndex=1,int pageSize=6)
         {
             if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
             {
@@ -229,6 +229,12 @@ namespace Restaurant_Information_MVC.Controllers
             }
             fp = Permission;
             glist = JsonConvert.DeserializeObject<List<GoodsViewModel>>(HttpClientHelper.Seng("get", "api/FinanceApi/ShowCost", null));
+            string result = HttpClientHelper.Seng("get", "api/KitchensApi/ShowMenu", null);
+            List<KitchenViewModel> kit = JsonConvert.DeserializeObject<List<KitchenViewModel>>(result);
+            foreach (var item in glist)
+            {
+                item.MenuPhoto = kit.FirstOrDefault(m => m.MenuName == item.GoodsName).MenuPhoto;
+            }
             ViewBag.pIndex = pageIndex;
             ViewBag.pSize = pageSize;
             ViewBag.pCount = glist.Count();
