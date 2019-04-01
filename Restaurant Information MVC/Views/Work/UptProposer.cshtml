@@ -5,7 +5,8 @@
 }
 <link href="~/layui/css/layui.css" rel="stylesheet" />
 <script src="~/layui/layui.js"></script>
- <i class="layui-icon layui-icon-return" style="font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowProposer?Permission=8'"></i>
+
+ <i class="layui-icon layui-icon-return" style="margin-left:20%;font-size: 30px;color: #1E9FFF; " onclick="location.href='/Work/ShowProposer?Permission=8'"></i>
 <div style="margin-left:30%">
    
     <input id="Hidden1" type="hidden" value="@Model.ProposerId" />
@@ -89,8 +90,8 @@
 <script>
     
     function Upt(id) {
-        let i = parseInt($("#Hidden3").val());
-        console.log(i);
+   
+       
         var o = {
             ProposerId: id,
             ShareHolderId: $("#Hidden2").val(),

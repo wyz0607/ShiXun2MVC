@@ -215,8 +215,13 @@ namespace Restaurant_Information_MVC.Controllers
         /// 添加员工
         /// </summary>
         /// <returns></returns>
-        public ActionResult AddUserInfo()
+        public ActionResult AddUserInfo(int Permission)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
+            }
             return View();
         }
         [HttpPost]
@@ -253,12 +258,18 @@ namespace Restaurant_Information_MVC.Controllers
         /// 显示所有员工的信息
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShowUserInfo(int Permission=4, int pageindex = 1, int pagesize = 5)
+        public ActionResult ShowUserInfo(int Permission, int pageindex = 1, int pagesize = 6)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
+            }
             var str = HttpClientHelper.Seng("get", "api/WorkApi/ShowUserinfo", null);
             
-            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str).ToList();
+            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(str).Where(c=>c.Rname!="顾客") .ToList();
             var list1 = from s in list
+                        where s.Rname!="顾客"
                         select new UserInfo
                         {
                             UserName = s.UserName,
@@ -267,9 +278,9 @@ namespace Restaurant_Information_MVC.Controllers
                         };
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = list.Count();
-            ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 5)) + 1;
+            ViewBag.totalpage = (Math.Floor((list.Count() * 1.0) / 6)) + 1;
 
-            return View(list.Skip((pageindex - 1) * 5).Take(5).ToList());
+            return View(list.Skip((pageindex - 1) * 6).Take(6).ToList());
         }
         /// <summary>
         /// 显示个人的资料
@@ -335,8 +346,13 @@ namespace Restaurant_Information_MVC.Controllers
         /// <returns></returns>
         
         [HttpGet]
-        public ActionResult ShowProposer(int Permission=8, int pageindex = 1, int pagesize = 5)
+        public ActionResult ShowProposer(int Permission, int pageindex = 1, int pagesize = 5)
         {
+            if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            {
+                Session["msg"] = "1";
+                return Content("<script>location.href='/Login/Show'</script>");
+            }
             var str = HttpClientHelper.Seng("get", "api/WorkApi/GetProposers", null);
             List<ProposerViewModel> proposerView = JsonConvert.DeserializeObject<List<ProposerViewModel>>(str);
             var str1 = HttpClientHelper.Seng("get", "api/ShareHolderApi/Shareholders", null);
