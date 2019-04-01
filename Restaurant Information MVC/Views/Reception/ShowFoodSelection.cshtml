@@ -20,13 +20,19 @@
         @foreach (var item in ViewBag.FoodSelection)
         {
             <div class="layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">订单号 @item.OrderID</div>
-                    <div class="layui-card-body">
-                        用户名称:@item.Order.UserName<br>
-                        单价:@item.Menu.UnitPrice<br>
-                        菜式名称:@item.Menu.MenuName<br>
-                        数量:@item.Amount
+                <div class="layui-card"  style=" width: 465px;
+        height: 450px;
+     
+        margin: 0 auto;
+        border-radius: 50%;
+        background-image: url('../../Images/点餐.png');">
+                    <div class="layui-card-header" style="padding-left:180px;padding-top:150px;color:red">订单号 @item.OrderID  </div>
+                        <div class="layui-card-body" style="padding-left:180px;padding-top:50px">
+                            用户名称:@item.Order.UserName<br>
+                            单价:@item.Menu.UnitPrice<br>
+                            菜式名称:@item.Menu.MenuName<br>
+                            数量:@item.Amount
+
                     </div>
                 </div>
             </div>
