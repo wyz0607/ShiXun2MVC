@@ -22,7 +22,7 @@ namespace Restaurant_Information_MVC.Controllers
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public ActionResult ShowOrder(int Permission,int OrderId=0, int pageIndex=1,int pageSize=3)
+        public ActionResult ShowOrder(int Permission,int OrderId=0,int pageIndex=1,int pageSize=3)
         {
             if (Permission!=(Permission&Convert.ToInt32(Session["Privilege"])))
             {
@@ -33,6 +33,7 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> orders = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
+            ViewBag.Order = orders;
             ViewBag.pCount = orders.Count();
             if (OrderId==0)
             {
@@ -51,12 +52,6 @@ namespace Restaurant_Information_MVC.Controllers
         public ActionResult Order(int OrderId = 0, int pageIndex = 1, int pageSize = 3)
         {
 
-            string yuyin = "您有一条新订单";
-            SpeechSynthesizer speech = new SpeechSynthesizer();//实例化语音
-            speech.SetOutputToDefaultAudioDevice();//将对象发送默认的音频
-            speech.Rate = -2;//语速
-            speech.Speak(yuyin);
-
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowOrder", null);
             List<OrderViewModel> order = JsonConvert.DeserializeObject<List<OrderViewModel>>(json);
@@ -73,6 +68,7 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pSize = pageSize;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowFoodSelection", null);
             List<FoodSelectionViewModel> list = JsonConvert.DeserializeObject<List<FoodSelectionViewModel>>(json);
+            ViewBag.FoodSelection = list.Skip((pageIndex - 1) * 8).Take(8);
             ViewBag.pCount = list.Count();
             if (OrderId == 0)
             {
@@ -98,6 +94,7 @@ namespace Restaurant_Information_MVC.Controllers
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Seng("get", "api/ReceptionApi/ShowFoodSelection", null);
             List<FoodSelectionViewModel> list = JsonConvert.DeserializeObject<List<FoodSelectionViewModel>>(json);
+            ViewBag.FoodSelection = list.Skip((pageIndex - 1) * 8).Take(8);
             return Content(JsonConvert.SerializeObject(list.Skip((pageIndex - 1) * pageSize).Take(pageSize)));
         }
 

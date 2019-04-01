@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Restaurant_Information_MVC.Models.OrderViewModel>
 @{
+    /**/
+
     ViewBag.Title = "ShowOrder";
 }
 
@@ -12,13 +14,33 @@
 <form action="/Reception/ShowOrder" method="get">
     <input type="hidden" id="pIndex" value="@ViewBag.pIndex" />
     <input id="orderid" type="text" placeholder="请输入您要查询的订单号" name="OrderId" style="width:240px;height:37px;float:left;margin-left:500px" value="" />
+    <input type="hidden" name="Permission" value="@Session["Privilege"]" />
     <input type="submit" class="layui-btn" style="float:left" value="查询" />
 </form>
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        @for (int i = 0; i < 8; i++)
+        {
 
-<table id="tb" style="margin-top:60px" class="layui-table">
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">订单号:@ViewBag.Order[i].OrderID</div>
+                    <div class="layui-card-body">
+                        用户号:@ViewBag.Order[i].UserInfo_UserID<br>
+                        用户名:@ViewBag.Order[i].UserName<br>
+                        总额:@ViewBag.Order[i].TotalPrice<br>
+                        订单状态:@(ViewBag.Order[i].OrderState == 1 ? "已支付" : "待支付")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<table id="tb" style="margin-top:60px;" class="layui-table">
     <colgroup>
+        <col width="100">
         <col width="150">
-        <col width="200">
         <col>
     </colgroup>
     <thead>
@@ -53,10 +75,12 @@
 </table>
 <div id="test1" style="margin-left:300px"></div>
 <script>
-
-    layui.use('laypage', function () {
+    function Show() {
+        document.getElementById("tb").style.display = "inline"; 
+    }
+    layui.use(['laypage', 'element'], function () {
         var laypage = layui.laypage;
-
+        var element = layui.element;
         //执行一个laypage实例
         laypage.render({
             elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
@@ -98,6 +122,6 @@
             }
         });
     });
-
+    
 
 </script>
