@@ -13,5 +13,7 @@ namespace Restaurant_Information_MVC.Models
         public double CostPrice { get; set; }
         public double GoodsProfit { get; set; }
         public int GoodsNum { get; set; }
+
+        public string MenuPhoto { set; get; }
     }
 }
