@@ -84,6 +84,7 @@ namespace Restaurant_Information_MVC.Controllers
                 }
                 else
                 {
+                    ViewBag.pCount = list.Where(c => c.OrderID == OrderId).Count();
                     return View(listOrder);
                 }
             }

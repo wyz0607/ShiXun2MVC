@@ -184,7 +184,7 @@
         });
     });
     function Sel() {
-        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val();
+        location.href = "/Kitchen/ShowMenu?Name=" + $("[name=txtSel]").val() +"&Permission="+ @Session["Privilege"];
     }
     function Dels() {
         var MenuIDs = [];

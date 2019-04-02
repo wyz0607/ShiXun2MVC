@@ -99,7 +99,8 @@ namespace Restaurant_Information_MVC.Controllers
        
         public ActionResult ShowBill(int Permission,int pageIndex = 1, int pagesize = 5)
         {
-               if (Permission != (Permission & Convert.ToInt32(Session["Privilege"])))
+            int n = Convert.ToInt32(Session["Privilege"]);
+               if (Permission != (Permission & n))
             {
                 Session["msg"] = "1";
                 return Content("<script>location.href='/Login/Show'</script>");
